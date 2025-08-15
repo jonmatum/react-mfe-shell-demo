@@ -1,8 +1,29 @@
 {
-  "name": "test-mfe-shell",
-  "private": true,
+  "name": "react-mfe-shell-demo",
+  "private": false,
   "version": "0.0.0",
   "type": "module",
+  "description": "Comprehensive test application for @jonmatum/react-mfe-shell package",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jonmatum/react-mfe-shell-demo.git"
+  },
+  "homepage": "https://jonmatum.github.io/react-mfe-shell-demo",
+  "bugs": {
+    "url": "https://github.com/jonmatum/react-mfe-shell-demo/issues"
+  },
+  "author": "jonmatum",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "microfrontend",
+    "mfe",
+    "shell",
+    "components",
+    "typescript",
+    "tailwind",
+    "atomic-design"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -17,6 +38,7 @@
   "devDependencies": {
     "@eslint/js": "^9.33.0",
     "@tailwindcss/postcss": "^4.1.12",
+    "@types/node": "^24.3.0",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^5.0.0",

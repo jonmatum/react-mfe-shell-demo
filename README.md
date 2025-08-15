@@ -1,6 +1,11 @@
 # React MFE Shell Test App
 
-This is a comprehensive test application for the `@jonmatum/react-mfe-shell` package. It demonstrates all the components and features available in the MFE Shell.
+[![CI](https://github.com/jonmatum/react-mfe-shell-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/jonmatum/react-mfe-shell-demo/actions/workflows/ci.yml)
+[![Release](https://github.com/jonmatum/react-mfe-shell-demo/actions/workflows/release-please.yml/badge.svg)](https://github.com/jonmatum/react-mfe-shell-demo/actions/workflows/release-please.yml)
+
+**[Live Demo](https://jonmatum.github.io/react-mfe-shell-demo/)**
+
+This is a comprehensive test application for the `@jonmatum/react-mfe-shell` package. It demonstrates all the components and features available in the MFE Shell with automated releases and GitHub Pages deployment.
 
 ## Features Tested
 
@@ -84,4 +89,28 @@ npm run build
 
 # Preview production build
 npm run preview
+```
+
+## Deployment
+
+This application is automatically deployed to GitHub Pages on every release. The deployment process:
+
+1. **Automated Releases**: Uses [release-please](https://github.com/googleapis/release-please) to automatically create releases based on conventional commits
+2. **GitHub Pages**: Automatically deploys the built application to GitHub Pages when a new release is created
+3. **CI/CD Pipeline**: Runs tests, linting, and builds on every push and pull request
+
+### Release Process
+
+1. Make changes using conventional commit messages (e.g., `feat:`, `fix:`, `docs:`)
+2. Push to the `main` branch
+3. Release Please will automatically create a PR with version bump and changelog
+4. Merge the release PR to trigger a new release and deployment
+
+### Manual Deployment
+
+To deploy manually to GitHub Pages:
+
+```bash
+npm run build
+# Upload the dist/ folder to your hosting provider
 ```
