@@ -1,757 +1,724 @@
-import { useState } from 'react';
-import { 
-  SettingsProvider, 
-  Button, 
-  Modal, 
-  LoadingSpinner,
-  Switch,
+import React, { useState, useEffect } from 'react';
+import {
+  SettingsProvider,
+  Button,
   Input,
   Badge,
   Avatar,
+  Switch,
+  Modal,
+  LoadingSpinner,
   Card,
   Text,
   Label,
   Divider,
-  useSettings
+  useSettings,
 } from '@jonmatum/react-mfe-shell';
 
-// Demo Header Component
-function DemoHeader() {
-  const { settings, updateSettings } = useSettings();
-  
+// Types for our Task Management App
+interface Task {
+  id: string;
+  title: string;
+  description: string;
+  status: 'todo' | 'in-progress' | 'completed';
+  priority: 'low' | 'medium' | 'high';
+  assignee: string;
+  dueDate: string;
+  createdAt: string;
+  tags: string[];
+}
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string;
+  role: 'admin' | 'manager' | 'developer' | 'designer';
+}
+
+// Mock data
+const mockUsers: User[] = [
+  { id: '1', name: 'Sarah Chen', email: 'sarah@company.com', avatar: 'https://github.com/sarahchen.png', role: 'manager' },
+  { id: '2', name: 'Alex Rodriguez', email: 'alex@company.com', avatar: 'https://github.com/alexrodriguez.png', role: 'developer' },
+  { id: '3', name: 'Jordan Kim', email: 'jordan@company.com', avatar: 'https://github.com/jordankim.png', role: 'designer' },
+  { id: '4', name: 'Taylor Swift', email: 'taylor@company.com', avatar: 'https://github.com/taylorswift.png', role: 'developer' },
+];
+
+const mockTasks: Task[] = [
+  {
+    id: '1',
+    title: 'Implement user authentication',
+    description: 'Add OAuth2 integration with Google and GitHub providers',
+    status: 'in-progress',
+    priority: 'high',
+    assignee: 'Alex Rodriguez',
+    dueDate: '2025-08-30',
+    createdAt: '2025-08-20',
+    tags: ['backend', 'security', 'auth']
+  },
+  {
+    id: '2',
+    title: 'Design dashboard wireframes',
+    description: 'Create low-fidelity wireframes for the main dashboard layout',
+    status: 'completed',
+    priority: 'medium',
+    assignee: 'Jordan Kim',
+    dueDate: '2025-08-25',
+    createdAt: '2025-08-18',
+    tags: ['design', 'ux', 'wireframes']
+  },
+  {
+    id: '3',
+    title: 'Set up CI/CD pipeline',
+    description: 'Configure GitHub Actions for automated testing and deployment',
+    status: 'todo',
+    priority: 'high',
+    assignee: 'Taylor Swift',
+    dueDate: '2025-09-05',
+    createdAt: '2025-08-22',
+    tags: ['devops', 'automation', 'deployment']
+  },
+  {
+    id: '4',
+    title: 'Write API documentation',
+    description: 'Document all REST endpoints using OpenAPI specification',
+    status: 'todo',
+    priority: 'low',
+    assignee: 'Alex Rodriguez',
+    dueDate: '2025-09-10',
+    createdAt: '2025-08-21',
+    tags: ['documentation', 'api', 'backend']
+  },
+  {
+    id: '5',
+    title: 'Implement real-time notifications',
+    description: 'Add WebSocket support for live task updates and notifications',
+    status: 'in-progress',
+    priority: 'medium',
+    assignee: 'Taylor Swift',
+    dueDate: '2025-09-01',
+    createdAt: '2025-08-19',
+    tags: ['frontend', 'websockets', 'notifications']
+  }
+];
+
+// Main App Component
+function App() {
   return (
-    <header className="bg-surface-primary border-b border-border-primary sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-4">
-            <Avatar 
-              src="https://github.com/jonmatum.png" 
-              alt="Jonatan Mata" 
-              size="md" 
-            />
-            <div>
-              <h1 className="text-xl font-bold text-text-primary">
-                React MFE Shell Demo
-              </h1>
-              <Text variant="caption" className="text-text-secondary">
-                Comprehensive Component Showcase v6.1.0
-              </Text>
+    <SettingsProvider>
+      <div className="min-h-screen bg-background-primary">
+        <TaskManagementApp />
+      </div>
+    </SettingsProvider>
+  );
+}
+
+// Task Management Application
+function TaskManagementApp() {
+  const { settings, updateSettings } = useSettings();
+  const [tasks, setTasks] = useState<Task[]>(mockTasks);
+  const [users] = useState<User[]>(mockUsers);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [filter, setFilter] = useState<'all' | 'todo' | 'in-progress' | 'completed'>('all');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Simulate loading state
+  useEffect(() => {
+    setIsLoading(true);
+    const timer = setTimeout(() => setIsLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Filter tasks based on status and search
+  const filteredTasks = tasks.filter(task => {
+    const matchesFilter = filter === 'all' || task.status === filter;
+    const matchesSearch = task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         task.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         task.assignee.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
+
+  // Get status badge variant
+  const getStatusVariant = (status: Task['status']) => {
+    switch (status) {
+      case 'completed': return 'success';
+      case 'in-progress': return 'warning';
+      case 'todo': return 'secondary';
+      default: return 'secondary';
+    }
+  };
+
+  // Get priority badge variant
+  const getPriorityVariant = (priority: Task['priority']) => {
+    switch (priority) {
+      case 'high': return 'danger';
+      case 'medium': return 'warning';
+      case 'low': return 'success';
+      default: return 'secondary';
+    }
+  };
+
+  // Update task status
+  const updateTaskStatus = (taskId: string, newStatus: Task['status']) => {
+    setTasks(prev => prev.map(task => 
+      task.id === taskId ? { ...task, status: newStatus } : task
+    ));
+  };
+
+  // Create new task
+  const createTask = (taskData: Omit<Task, 'id' | 'createdAt'>) => {
+    const newTask: Task = {
+      ...taskData,
+      id: Date.now().toString(),
+      createdAt: new Date().toISOString().split('T')[0]
+    };
+    setTasks(prev => [newTask, ...prev]);
+    setIsCreateModalOpen(false);
+  };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <LoadingSpinner  color="primary" />
+          <Text>Loading your workspace...</Text>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background-primary">
+      {/* Header */}
+      <header className="bg-surface-primary border-b border-border-primary">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+                  <Text className="text-white font-bold text-sm">TM</Text>
+                </div>
+                <Text className="text-xl font-semibold text-text-primary">TaskMaster Pro</Text>
+              </div>
             </div>
+
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <Label htmlFor="theme-toggle" className="text-sm">Dark Mode</Label>
+                <Switch
+                  id="theme-toggle"
+                  checked={settings.theme === 'dark'}
+                  onChange={(checked) => updateSettings({ theme: checked ? 'dark' : 'light' })}
+                  size="sm"
+                />
+              </div>
+              
+              <Avatar
+                src="https://github.com/jonmatum.png"
+                alt="Current User"
+                size="sm"
+                fallback="JM"
+              />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Dashboard Header */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <Text className="text-3xl font-bold mb-2 text-text-primary">Project Dashboard</Text>
+              <Text className="text-text-secondary">Manage your team's tasks and track progress</Text>
+            </div>
+            <Button
+              variant="primary"
+              onClick={() => setIsCreateModalOpen(true)}
+              className="flex items-center space-x-2"
+            >
+              <span>+</span>
+              <span>New Task</span>
+            </Button>
+          </div>
+
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <Card className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Text className="text-sm font-medium text-text-secondary">Total Tasks</Text>
+                  <Text className="text-2xl font-bold text-text-primary">{tasks.length}</Text>
+                </div>
+                <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
+                  <Text className="text-primary-600 text-xl">📋</Text>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Text className="text-sm font-medium">In Progress</Text>
+                  <Text className="text-2xl font-bold">
+                    {tasks.filter(t => t.status === 'in-progress').length}
+                  </Text>
+                </div>
+                <div className="w-12 h-12 bg-warning-100 rounded-lg flex items-center justify-center">
+                  <Text className="text-warning-600 text-xl">⏳</Text>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Text className="text-sm font-medium">Completed</Text>
+                  <Text className="text-2xl font-bold">
+                    {tasks.filter(t => t.status === 'completed').length}
+                  </Text>
+                </div>
+                <div className="w-12 h-12 bg-success-100 rounded-lg flex items-center justify-center">
+                  <Text className="text-success-600 text-xl">✅</Text>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Text className="text-sm font-medium">High Priority</Text>
+                  <Text className="text-2xl font-bold">
+                    {tasks.filter(t => t.priority === 'high').length}
+                  </Text>
+                </div>
+                <div className="w-12 h-12 bg-danger-100 rounded-lg flex items-center justify-center">
+                  <Text className="text-danger-600 text-xl">🔥</Text>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+
+        {/* Filters and Search */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-6">
+          <div className="flex-1">
+            <Input
+              type="search"
+              placeholder="Search tasks, assignees, or descriptions..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full"
+            />
           </div>
           
-          <div className="flex items-center space-x-4">
-            <Badge variant="success" size="sm">
-              Latest Version
-            </Badge>
-            <div className="flex items-center space-x-2">
-              <Label htmlFor="theme-switch" className="text-sm">
-                {settings.theme === 'dark' ? '🌙' : '☀️'} Theme
-              </Label>
-              <Switch
-                id="theme-switch"
-                checked={settings.theme === 'dark'}
-                onChange={() => updateSettings({ 
-                  theme: settings.theme === 'dark' ? 'light' : 'dark' 
-                })}
+          <div className="flex space-x-2">
+            {(['all', 'todo', 'in-progress', 'completed'] as const).map((status) => (
+              <Button
+                key={status}
+                variant={filter === status ? 'primary' : 'secondary'}
                 size="sm"
-                color="primary"
+                onClick={() => setFilter(status)}
+                className="capitalize"
+              >
+                {status === 'all' ? 'All' : status.replace('-', ' ')}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        {/* Task List */}
+        <div className="space-y-4">
+          {filteredTasks.length === 0 ? (
+            <Card className="p-12 text-center">
+              <Text className="text-lg">
+                {searchQuery ? 'No tasks match your search criteria' : 'No tasks found'}
+              </Text>
+              <Button
+                variant="primary"
+                onClick={() => setIsCreateModalOpen(true)}
+                className="mt-4"
+              >
+                Create Your First Task
+              </Button>
+            </Card>
+          ) : (
+            filteredTasks.map((task) => (
+              <TaskCard
+                key={task.id}
+                task={task}
+                users={users}
+                onStatusChange={updateTaskStatus}
+                onViewDetails={setSelectedTask}
+                getStatusVariant={getStatusVariant}
+                getPriorityVariant={getPriorityVariant}
               />
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-  );
-}
-
-// Button Showcase Component
-function ButtonShowcase() {
-  const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
-  
-  const handleAsyncAction = (buttonId: string) => {
-    setLoadingStates(prev => ({ ...prev, [buttonId]: true }));
-    setTimeout(() => {
-      setLoadingStates(prev => ({ ...prev, [buttonId]: false }));
-    }, 2000);
-  };
-
-  return (
-    <Card className="p-6">
-      <h2 className="text-2xl font-bold mb-6 text-text-primary">
-        Button Components
-      </h2>
-      
-      <div className="space-y-8">
-        {/* Variants */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-text-primary">Variants</h3>
-          <div className="flex flex-wrap gap-4">
-            <Button variant="primary">Primary</Button>
-            <Button variant="secondary">Secondary</Button>
-            <Button variant="success">Success</Button>
-            <Button variant="warning">Warning</Button>
-            <Button variant="danger">Danger</Button>
-            <Button variant="ghost">Ghost</Button>
-          </div>
-        </div>
-
-        {/* Sizes */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-text-primary">Sizes</h3>
-          <div className="flex flex-wrap items-center gap-4">
-            <Button variant="primary" size="xs">Extra Small</Button>
-            <Button variant="primary" size="sm">Small</Button>
-            <Button variant="primary" size="md">Medium</Button>
-            <Button variant="primary" size="lg">Large</Button>
-            <Button variant="primary" size="xl">Extra Large</Button>
-          </div>
-        </div>
-
-        {/* States */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-text-primary">States</h3>
-          <div className="flex flex-wrap gap-4">
-            <Button 
-              variant="primary" 
-              loading={loadingStates.async1}
-              onClick={() => handleAsyncAction('async1')}
-            >
-              {loadingStates.async1 ? 'Processing...' : 'Async Action'}
-            </Button>
-            <Button variant="secondary" disabled>
-              Disabled
-            </Button>
-            <Button 
-              variant="success" 
-              loading={loadingStates.async2}
-              onClick={() => handleAsyncAction('async2')}
-            >
-              {loadingStates.async2 ? 'Saving...' : 'Save Changes'}
-            </Button>
-          </div>
-        </div>
-      </div>
-    </Card>
-  );
-}
-
-// Input Showcase Component
-function InputShowcase() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    search: '',
-    disabled: 'Cannot edit this'
-  });
-
-  return (
-    <Card className="p-6">
-      <h2 className="text-2xl font-bold mb-6 text-text-primary">
-        Input Components
-      </h2>
-      
-      <div className="space-y-6 max-w-md">
-        <Input
-          label="Email Address"
-          type="email"
-          placeholder="Enter your email"
-          value={formData.email}
-          onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-        />
-        
-        <Input
-          label="Password"
-          type="password"
-          placeholder="Enter your password"
-          value={formData.password}
-          onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
-          error={formData.password.length > 0 && formData.password.length < 8 ? 'Password must be at least 8 characters' : undefined}
-        />
-        
-        <Input
-          label="Search"
-          type="search"
-          placeholder="Search components..."
-          value={formData.search}
-          onChange={(e) => setFormData(prev => ({ ...prev, search: e.target.value }))}
-        />
-        
-        <Input
-          label="Disabled Input"
-          value={formData.disabled}
-          disabled
-        />
-      </div>
-    </Card>
-  );
-}
-
-// Badge Showcase Component
-function BadgeShowcase() {
-  const [removedBadges, setRemovedBadges] = useState<Set<string>>(new Set());
-  
-  const handleRemoveBadge = (badgeId: string) => {
-    setRemovedBadges(prev => new Set([...prev, badgeId]));
-  };
-
-  return (
-    <Card className="p-6">
-      <h2 className="text-2xl font-bold mb-6 text-text-primary">
-        Badge Components
-      </h2>
-      
-      <div className="space-y-8">
-        {/* Variants */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-text-primary">Variants</h3>
-          <div className="flex flex-wrap gap-3">
-            <Badge variant="primary">Primary</Badge>
-            <Badge variant="secondary">Secondary</Badge>
-            <Badge variant="success">Success</Badge>
-            <Badge variant="warning">Warning</Badge>
-            <Badge variant="danger">Danger</Badge>
-          </div>
-        </div>
-
-        {/* Sizes */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-text-primary">Sizes</h3>
-          <div className="flex flex-wrap items-center gap-3">
-            <Badge variant="primary" size="sm">Small</Badge>
-            <Badge variant="primary" size="md">Medium</Badge>
-            <Badge variant="primary" size="lg">Large</Badge>
-          </div>
-        </div>
-
-        {/* Removable Badges */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-text-primary">Removable Badges</h3>
-          <div className="flex flex-wrap gap-3">
-            {!removedBadges.has('tag1') && (
-              <Badge 
-                variant="primary" 
-                removable 
-                onRemove={() => handleRemoveBadge('tag1')}
-              >
-                React
-              </Badge>
-            )}
-            {!removedBadges.has('tag2') && (
-              <Badge 
-                variant="success" 
-                removable 
-                onRemove={() => handleRemoveBadge('tag2')}
-              >
-                TypeScript
-              </Badge>
-            )}
-            {!removedBadges.has('tag3') && (
-              <Badge 
-                variant="warning" 
-                removable 
-                onRemove={() => handleRemoveBadge('tag3')}
-              >
-                Tailwind
-              </Badge>
-            )}
-          </div>
-          {removedBadges.size > 0 && (
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={() => setRemovedBadges(new Set())}
-              className="mt-2"
-            >
-              Reset Badges
-            </Button>
+            ))
           )}
         </div>
-      </div>
-    </Card>
-  );
-}
-
-// Avatar Showcase Component
-function AvatarShowcase() {
-  return (
-    <Card className="p-6">
-      <h2 className="text-2xl font-bold mb-6 text-text-primary">
-        Avatar Components
-      </h2>
-      
-      <div className="space-y-8">
-        {/* Sizes */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-text-primary">Sizes</h3>
-          <div className="flex items-center gap-4">
-            <Avatar size="xs" src="https://github.com/jonmatum.png" alt="Jonatan Mata" />
-            <Avatar size="sm" src="https://github.com/jonmatum.png" alt="Jonatan Mata" />
-            <Avatar size="md" src="https://github.com/jonmatum.png" alt="Jonatan Mata" />
-            <Avatar size="lg" src="https://github.com/jonmatum.png" alt="Jonatan Mata" />
-            <Avatar size="xl" src="https://github.com/jonmatum.png" alt="Jonatan Mata" />
-          </div>
-        </div>
-
-        {/* Fallbacks */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-text-primary">Fallback Initials</h3>
-          <div className="flex items-center gap-4">
-            <Avatar size="md" alt="Jonatan Mata" />
-            <Avatar size="md" alt="Full-Stack Engineer" />
-            <Avatar size="md" alt="React Developer" />
-            <Avatar size="md" alt="MFE Architect" />
-          </div>
-        </div>
-      </div>
-    </Card>
-  );
-}
-
-// Loading Spinner Showcase Component
-function LoadingSpinnerShowcase() {
-  const [isLoading, setIsLoading] = useState(false);
-  
-  const simulateLoading = () => {
-    setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 3000);
-  };
-
-  return (
-    <Card className="p-6">
-      <h2 className="text-2xl font-bold mb-6 text-text-primary">
-        Loading Spinner Components
-      </h2>
-      
-      <div className="space-y-8">
-        {/* Sizes */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-text-primary">Sizes</h3>
-          <div className="flex items-center gap-8">
-            <div className="text-center">
-              <LoadingSpinner size="xs" />
-              <Text variant="caption" className="mt-2 block">Extra Small</Text>
-            </div>
-            <div className="text-center">
-              <LoadingSpinner size="sm" />
-              <Text variant="caption" className="mt-2 block">Small</Text>
-            </div>
-            <div className="text-center">
-              <LoadingSpinner size="md" />
-              <Text variant="caption" className="mt-2 block">Medium</Text>
-            </div>
-            <div className="text-center">
-              <LoadingSpinner size="lg" />
-              <Text variant="caption" className="mt-2 block">Large</Text>
-            </div>
-            <div className="text-center">
-              <LoadingSpinner size="xl" />
-              <Text variant="caption" className="mt-2 block">Extra Large</Text>
-            </div>
-          </div>
-        </div>
-
-        {/* Colors */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-text-primary">Colors</h3>
-          <div className="flex items-center gap-8">
-            <div className="text-center">
-              <LoadingSpinner color="primary" />
-              <Text variant="caption" className="mt-2 block">Primary</Text>
-            </div>
-            <div className="text-center">
-              <LoadingSpinner color="success" />
-              <Text variant="caption" className="mt-2 block">Success</Text>
-            </div>
-            <div className="text-center">
-              <LoadingSpinner color="warning" />
-              <Text variant="caption" className="mt-2 block">Warning</Text>
-            </div>
-            <div className="text-center">
-              <LoadingSpinner color="danger" />
-              <Text variant="caption" className="mt-2 block">Danger</Text>
-            </div>
-          </div>
-        </div>
-
-        {/* With Text */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-text-primary">With Text</h3>
-          <div className="space-y-4">
-            <Button variant="primary" onClick={simulateLoading} disabled={isLoading}>
-              {isLoading ? 'Loading...' : 'Start Loading Demo'}
-            </Button>
-            {isLoading && (
-              <div className="flex items-center justify-center p-8">
-                <LoadingSpinner size="lg" text="Processing your request..." />
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </Card>
-  );
-}
-
-// Switch Showcase Component
-function SwitchShowcase() {
-  const [switches, setSwitches] = useState({
-    notifications: true,
-    darkMode: false,
-    autoSave: true,
-    analytics: false
-  });
-
-  const updateSwitch = (key: keyof typeof switches) => {
-    setSwitches(prev => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  return (
-    <Card className="p-6">
-      <h2 className="text-2xl font-bold mb-6 text-text-primary">
-        Switch Components
-      </h2>
-      
-      <div className="space-y-8">
-        {/* Sizes */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-text-primary">Sizes</h3>
-          <div className="flex items-center gap-6">
-            <div className="flex items-center space-x-2">
-              <Switch size="sm" checked={true} onChange={() => {}} />
-              <Text variant="caption">Small</Text>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Switch size="md" checked={true} onChange={() => {}} />
-              <Text variant="caption">Medium</Text>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Switch size="lg" checked={true} onChange={() => {}} />
-              <Text variant="caption">Large</Text>
-            </div>
-          </div>
-        </div>
-
-        {/* Colors */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-text-primary">Colors</h3>
-          <div className="flex items-center gap-6">
-            <div className="flex items-center space-x-2">
-              <Switch color="primary" checked={true} onChange={() => {}} />
-              <Text variant="caption">Primary</Text>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Switch color="success" checked={true} onChange={() => {}} />
-              <Text variant="caption">Success</Text>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Switch color="warning" checked={true} onChange={() => {}} />
-              <Text variant="caption">Warning</Text>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Switch color="danger" checked={true} onChange={() => {}} />
-              <Text variant="caption">Danger</Text>
-            </div>
-          </div>
-        </div>
-
-        {/* Interactive Examples */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-text-primary">Interactive Settings</h3>
-          <div className="space-y-4 max-w-md">
-            <div className="flex items-center justify-between">
-              <div>
-                <Label>Push Notifications</Label>
-                <Text variant="caption" className="text-text-secondary block">
-                  Receive notifications about updates
-                </Text>
-              </div>
-              <Switch
-                checked={switches.notifications}
-                onChange={() => updateSwitch('notifications')}
-                color="primary"
-              />
-            </div>
-            
-            <div className="flex items-center justify-between">
-              <div>
-                <Label>Auto-save</Label>
-                <Text variant="caption" className="text-text-secondary block">
-                  Automatically save your work
-                </Text>
-              </div>
-              <Switch
-                checked={switches.autoSave}
-                onChange={() => updateSwitch('autoSave')}
-                color="success"
-              />
-            </div>
-            
-            <div className="flex items-center justify-between">
-              <div>
-                <Label>Analytics</Label>
-                <Text variant="caption" className="text-text-secondary block">
-                  Help improve our service
-                </Text>
-              </div>
-              <Switch
-                checked={switches.analytics}
-                onChange={() => updateSwitch('analytics')}
-                color="warning"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </Card>
-  );
-}
-
-// Modal Showcase Component
-function ModalShowcase() {
-  const [modals, setModals] = useState({
-    basic: false,
-    confirmation: false,
-    form: false
-  });
-
-  const [formData, setFormData] = useState({ name: '', email: '' });
-
-  const openModal = (type: keyof typeof modals) => {
-    setModals(prev => ({ ...prev, [type]: true }));
-  };
-
-  const closeModal = (type: keyof typeof modals) => {
-    setModals(prev => ({ ...prev, [type]: false }));
-  };
-
-  return (
-    <Card className="p-6">
-      <h2 className="text-2xl font-bold mb-6 text-text-primary">
-        Modal Components
-      </h2>
-      
-      <div className="space-y-4">
-        <div className="flex flex-wrap gap-4">
-          <Button variant="primary" onClick={() => openModal('basic')}>
-            Basic Modal
-          </Button>
-          <Button variant="warning" onClick={() => openModal('confirmation')}>
-            Confirmation Modal
-          </Button>
-          <Button variant="success" onClick={() => openModal('form')}>
-            Form Modal
-          </Button>
-        </div>
-
-        {/* Basic Modal */}
-        <Modal
-          isOpen={modals.basic}
-          onClose={() => closeModal('basic')}
-          title="Basic Modal"
-        >
-          <div className="p-6">
-            <Text variant="body" className="mb-4">
-              This is a basic modal demonstrating the modal component capabilities:
-            </Text>
-            <ul className="list-disc list-inside space-y-2 mb-6 text-text-secondary">
-              <li>Keyboard navigation (ESC to close)</li>
-              <li>Click outside to close</li>
-              <li>Focus management</li>
-              <li>Accessible ARIA attributes</li>
-              <li>Theme-aware styling</li>
-            </ul>
-            <div className="flex justify-end">
-              <Button variant="primary" onClick={() => closeModal('basic')}>
-                Close
-              </Button>
-            </div>
-          </div>
-        </Modal>
-
-        {/* Confirmation Modal */}
-        <Modal
-          isOpen={modals.confirmation}
-          onClose={() => closeModal('confirmation')}
-          title="Confirm Action"
-        >
-          <div className="p-6">
-            <Text variant="body" className="mb-6">
-              Are you sure you want to delete this item? This action cannot be undone.
-            </Text>
-            <div className="flex justify-end space-x-3">
-              <Button variant="ghost" onClick={() => closeModal('confirmation')}>
-                Cancel
-              </Button>
-              <Button variant="danger" onClick={() => closeModal('confirmation')}>
-                Delete
-              </Button>
-            </div>
-          </div>
-        </Modal>
-
-        {/* Form Modal */}
-        <Modal
-          isOpen={modals.form}
-          onClose={() => closeModal('form')}
-          title="User Information"
-        >
-          <div className="p-6">
-            <div className="space-y-4 mb-6">
-              <Input
-                label="Full Name"
-                value={formData.name}
-                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                placeholder="Enter your full name"
-              />
-              <Input
-                label="Email Address"
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                placeholder="Enter your email"
-              />
-            </div>
-            <div className="flex justify-end space-x-3">
-              <Button variant="ghost" onClick={() => closeModal('form')}>
-                Cancel
-              </Button>
-              <Button 
-                variant="success" 
-                onClick={() => {
-                  console.log('Form submitted:', formData);
-                  closeModal('form');
-                }}
-              >
-                Save
-              </Button>
-            </div>
-          </div>
-        </Modal>
-      </div>
-    </Card>
-  );
-}
-
-// Typography Showcase Component
-function TypographyShowcase() {
-  return (
-    <Card className="p-6">
-      <h2 className="text-2xl font-bold mb-6 text-text-primary">
-        Typography Components
-      </h2>
-      
-      <div className="space-y-6">
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-text-primary">Text Variants</h3>
-          <div className="space-y-3">
-            <Text variant="body">
-              This is body text. It's perfect for paragraphs and longer content. 
-              The typography system ensures consistent spacing and readability across all themes.
-            </Text>
-            <Text variant="caption" className="text-text-secondary">
-              This is caption text - smaller and typically used for metadata, 
-              descriptions, or supplementary information.
-            </Text>
-          </div>
-        </div>
-
-        <Divider />
-
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-text-primary">Colors</h3>
-          <div className="space-y-2">
-            <Text color="primary">Primary colored text</Text>
-            <Text color="secondary">Secondary colored text</Text>
-            <Text color="success">Success colored text</Text>
-            <Text color="warning">Warning colored text</Text>
-            <Text color="danger">Danger colored text</Text>
-          </div>
-        </div>
-      </div>
-    </Card>
-  );
-}
-
-// Main Demo Component
-function DemoApp() {
-  const { settings } = useSettings();
-
-  return (
-    <div className="min-h-screen bg-background-primary transition-colors duration-200">
-      <DemoHeader />
-      
-      <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="mb-12 text-center">
-          <h1 className="text-4xl font-bold mb-4 text-text-primary">
-            React MFE Shell v6.1.0
-          </h1>
-          <Text variant="body" className="text-text-secondary max-w-3xl mx-auto mb-6">
-            A comprehensive demonstration of all components and capabilities in the 
-            React Micro Frontend Shell. This demo showcases atomic design principles, 
-            theme management, accessibility features, and TypeScript integration.
-          </Text>
-          <div className="flex justify-center space-x-4">
-            <Badge variant="primary">React 19</Badge>
-            <Badge variant="success">TypeScript</Badge>
-            <Badge variant="warning">Tailwind CSS</Badge>
-            <Badge variant="secondary">Atomic Design</Badge>
-          </div>
-        </div>
-
-        <div className="space-y-12">
-          <ButtonShowcase />
-          <InputShowcase />
-          <BadgeShowcase />
-          <AvatarShowcase />
-          <LoadingSpinnerShowcase />
-          <SwitchShowcase />
-          <ModalShowcase />
-          <TypographyShowcase />
-        </div>
-
-        <footer className="mt-16 py-8 border-t border-border-primary">
-          <div className="text-center space-y-4">
-            <div className="flex justify-center items-center space-x-4">
-              <Avatar 
-                src="https://github.com/jonmatum.png" 
-                alt="Jonatan Mata" 
-                size="sm" 
-              />
-              <div className="text-left">
-                <Text variant="caption" className="font-medium">
-                  Built by Jonatan Mata
-                </Text>
-                <Text variant="caption" className="text-text-secondary">
-                  Full-Stack Engineer
-                </Text>
-              </div>
-            </div>
-            
-            <div className="flex justify-center space-x-6 text-sm">
-              <Badge variant="secondary" size="sm">
-                @jonmatum/react-mfe-shell v6.1.0
-              </Badge>
-              <Badge variant="primary" size="sm">
-                Current Theme: {settings.theme}
-              </Badge>
-            </div>
-            
-            <Text variant="caption" className="text-text-secondary">
-              Micro Frontend Shell • Atomic Design • Accessibility First • TypeScript
-            </Text>
-          </div>
-        </footer>
       </main>
+
+      {/* Task Details Modal */}
+      {selectedTask && (
+        <TaskDetailsModal
+          task={selectedTask}
+          users={users}
+          onClose={() => setSelectedTask(null)}
+          onStatusChange={updateTaskStatus}
+          getStatusVariant={getStatusVariant}
+          getPriorityVariant={getPriorityVariant}
+        />
+      )}
+
+      {/* Create Task Modal */}
+      {isCreateModalOpen && (
+        <CreateTaskModal
+          users={users}
+          onClose={() => setIsCreateModalOpen(false)}
+          onCreateTask={createTask}
+        />
+      )}
     </div>
   );
 }
 
-// Root App Component
-function App() {
+// Task Card Component
+interface TaskCardProps {
+  task: Task;
+  users: User[];
+  onStatusChange: (taskId: string, status: Task['status']) => void;
+  onViewDetails: (task: Task) => void;
+  getStatusVariant: (status: Task['status']) => string;
+  getPriorityVariant: (priority: Task['priority']) => string;
+}
+
+function TaskCard({ task, users, onStatusChange, onViewDetails, getStatusVariant, getPriorityVariant }: TaskCardProps) {
+  const assigneeUser = users.find(u => u.name === task.assignee);
+  const isOverdue = new Date(task.dueDate) < new Date() && task.status !== 'completed';
+
   return (
-    <SettingsProvider>
-      <DemoApp />
-    </SettingsProvider>
+    <Card className="p-6 hover:shadow-md transition-shadow">
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex-1">
+          <div className="flex items-center space-x-3 mb-2">
+            <Text className="text-lg font-semibold">{task.title}</Text>
+            <Badge variant={getStatusVariant(task.status) as any} size="sm">
+              {task.status.replace('-', ' ')}
+            </Badge>
+            <Badge variant={getPriorityVariant(task.priority) as any} size="sm">
+              {task.priority} priority
+            </Badge>
+            {isOverdue && (
+              <Badge variant="danger" size="sm">Overdue</Badge>
+            )}
+          </div>
+          <Text className="mb-3">{task.description}</Text>
+          
+          <div className="flex flex-wrap gap-2 mb-4">
+            {task.tags.map((tag) => (
+              <Badge key={tag} variant="secondary" size="sm">#{tag}</Badge>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex items-center space-x-2 ml-4">
+          {assigneeUser && (
+            <Avatar
+              src={assigneeUser.avatar}
+              alt={assigneeUser.name}
+              size="sm"
+              fallback={assigneeUser.name.split(' ').map(n => n[0]).join('')}
+            />
+          )}
+        </div>
+      </div>
+
+      <Divider className="my-4" />
+
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4 text-sm text-text-secondary">
+          <span>Due: {new Date(task.dueDate).toLocaleDateString()}</span>
+          <span>•</span>
+          <span>Assigned to: {task.assignee}</span>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          {task.status !== 'completed' && (
+            <Button
+              variant="success"
+              size="sm"
+              onClick={() => onStatusChange(task.id, 'completed')}
+            >
+              Mark Complete
+            </Button>
+          )}
+          
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => onViewDetails(task)}
+          >
+            View Details
+          </Button>
+        </div>
+      </div>
+    </Card>
+  );
+}
+
+// Task Details Modal Component
+interface TaskDetailsModalProps {
+  task: Task;
+  users: User[];
+  onClose: () => void;
+  onStatusChange: (taskId: string, status: Task['status']) => void;
+  getStatusVariant: (status: Task['status']) => string;
+  getPriorityVariant: (priority: Task['priority']) => string;
+}
+
+function TaskDetailsModal({ task, users, onClose, onStatusChange, getStatusVariant, getPriorityVariant }: TaskDetailsModalProps) {
+  const assigneeUser = users.find(u => u.name === task.assignee);
+
+  return (
+    <Modal isOpen onClose={onClose} >
+      <div className="p-6">
+        <div className="flex items-start justify-between mb-6">
+          <div>
+            <Text className="text-2xl font-bold mb-2">{task.title}</Text>
+            <div className="flex items-center space-x-2">
+              <Badge variant={getStatusVariant(task.status) as any}>
+                {task.status.replace('-', ' ')}
+              </Badge>
+              <Badge variant={getPriorityVariant(task.priority) as any}>
+                {task.priority} priority
+              </Badge>
+            </div>
+          </div>
+          <Button variant="ghost" onClick={onClose} size="sm">✕</Button>
+        </div>
+
+        <div className="space-y-6">
+          <div>
+            <Label className="text-sm font-medium text-text-secondary mb-2">Description</Label>
+            <Text>{task.description}</Text>
+          </div>
+
+          <div className="grid grid-cols-2 gap-6">
+            <div>
+              <Label className="text-sm font-medium text-text-secondary mb-2">Assignee</Label>
+              <div className="flex items-center space-x-3">
+                {assigneeUser && (
+                  <>
+                    <Avatar
+                      src={assigneeUser.avatar}
+                      alt={assigneeUser.name}
+                      size="sm"
+                      fallback={assigneeUser.name.split(' ').map(n => n[0]).join('')}
+                    />
+                    <div>
+                      <Text className="font-medium">{assigneeUser.name}</Text>
+                      <Text className="text-sm">{assigneeUser.role}</Text>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <Label className="text-sm font-medium text-text-secondary mb-2">Due Date</Label>
+              <Text>{new Date(task.dueDate).toLocaleDateString()}</Text>
+            </div>
+          </div>
+
+          <div>
+            <Label className="text-sm font-medium text-text-secondary mb-2">Tags</Label>
+            <div className="flex flex-wrap gap-2">
+              {task.tags.map((tag) => (
+                <Badge key={tag} variant="secondary">#{tag}</Badge>
+              ))}
+            </div>
+          </div>
+
+          <Divider />
+
+          <div className="flex items-center justify-between">
+            <Text className="text-sm">
+              Created on {new Date(task.createdAt).toLocaleDateString()}
+            </Text>
+            
+            <div className="flex space-x-2">
+              {(['todo', 'in-progress', 'completed'] as const).map((status) => (
+                <Button
+                  key={status}
+                  variant={task.status === status ? 'primary' : 'secondary'}
+                  size="sm"
+                  onClick={() => onStatusChange(task.id, status)}
+                  className="capitalize"
+                >
+                  {status.replace('-', ' ')}
+                </Button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </Modal>
+  );
+}
+
+// Create Task Modal Component
+interface CreateTaskModalProps {
+  users: User[];
+  onClose: () => void;
+  onCreateTask: (task: Omit<Task, 'id' | 'createdAt'>) => void;
+}
+
+function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps) {
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    status: 'todo' as Task['status'],
+    priority: 'medium' as Task['priority'],
+    assignee: users[0]?.name || '',
+    dueDate: '',
+    tags: [] as string[],
+  });
+  const [tagInput, setTagInput] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.title.trim() || !formData.description.trim()) return;
+
+    onCreateTask(formData);
+    onClose();
+  };
+
+  const addTag = () => {
+    if (tagInput.trim() && !formData.tags.includes(tagInput.trim())) {
+      setFormData(prev => ({
+        ...prev,
+        tags: [...prev.tags, tagInput.trim()]
+      }));
+      setTagInput('');
+    }
+  };
+
+  const removeTag = (tagToRemove: string) => {
+    setFormData(prev => ({
+      ...prev,
+      tags: prev.tags.filter(tag => tag !== tagToRemove)
+    }));
+  };
+
+  return (
+    <Modal isOpen onClose={onClose} >
+      <form onSubmit={handleSubmit} className="p-6">
+        <div className="flex items-center justify-between mb-6">
+          <Text className="text-xl font-bold">Create New Task</Text>
+          <Button variant="ghost" onClick={onClose} size="sm">✕</Button>
+        </div>
+
+        <div className="space-y-4">
+          <div>
+            <Label htmlFor="title">Task Title</Label>
+            <Input
+              id="title"
+              value={formData.title}
+              onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+              placeholder="Enter task title..."
+              required
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="description">Description</Label>
+            <Input
+              id="description"
+              value={formData.description}
+              onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+              placeholder="Describe the task..."
+              required
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="priority">Priority</Label>
+              <select
+                id="priority"
+                value={formData.priority}
+                onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value as Task['priority'] }))}
+                className="w-full px-3 py-2 border border-border-primary rounded-md bg-surface-primary text-text-primary"
+              >
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+            </div>
+
+            <div>
+              <Label htmlFor="assignee">Assignee</Label>
+              <select
+                id="assignee"
+                value={formData.assignee}
+                onChange={(e) => setFormData(prev => ({ ...prev, assignee: e.target.value }))}
+                className="w-full px-3 py-2 border border-border-primary rounded-md bg-surface-primary text-text-primary"
+              >
+                {users.map((user) => (
+                  <option key={user.id} value={user.name}>{user.name}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <Label htmlFor="dueDate">Due Date</Label>
+            <Input
+              id="dueDate"
+              value={formData.dueDate}
+              onChange={(e) => setFormData(prev => ({ ...prev, dueDate: e.target.value }))}
+              placeholder="YYYY-MM-DD"
+              required
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="tags">Tags</Label>
+            <div className="flex space-x-2 mb-2">
+              <Input
+                id="tags"
+                value={tagInput}
+                onChange={(e) => setTagInput(e.target.value)}
+                placeholder="Add a tag..."
+              />
+              <Button variant="secondary" onClick={addTag}>Add</Button>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {formData.tags.map((tag) => (
+                <Badge
+                  key={tag}
+                  variant="secondary"
+                  removable
+                  onRemove={() => removeTag(tag)}
+                >
+                  #{tag}
+                </Badge>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <Divider className="my-6" />
+
+        <div className="flex justify-end space-x-3">
+          <Button variant="secondary" onClick={onClose}>Cancel</Button>
+          <Button variant="primary">Create Task</Button>
+        </div>
+      </form>
+    </Modal>
   );
 }
 
