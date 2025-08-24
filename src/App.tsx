@@ -70,6 +70,18 @@ const BookIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
   </svg>
 );
 
+const SearchIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+  </svg>
+);
+
+const CalendarIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+  </svg>
+);
+
 const TagIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -243,7 +255,7 @@ function TaskManagementApp() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center space-y-4">
-          <LoadingSpinner  color="primary" />
+          <LoadingSpinner size="xl" />
           <Text>Loading your workspace...</Text>
         </div>
       </div>
@@ -298,11 +310,11 @@ function TaskManagementApp() {
             </div>
             <Button
               variant="primary"
+              size="md"
+              leftIcon={<PlusIcon />}
               onClick={() => setIsCreateModalOpen(true)}
-              className="flex items-center space-x-2"
             >
-              <PlusIcon />
-              <span>New Task</span>
+              New Task
             </Button>
           </div>
 
@@ -369,6 +381,8 @@ function TaskManagementApp() {
           <div className="flex-1">
             <Input
               type="search"
+              size="md"
+              leftIcon={<SearchIcon />}
               placeholder="Search tasks, assignees, or descriptions..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -582,6 +596,7 @@ function TaskCard({ task, users, onStatusChange, onViewDetails, getStatusVariant
             <Button
               variant="success"
               size="sm"
+              leftIcon={<CheckIcon className="w-4 h-4" />}
               onClick={() => onStatusChange(task.id, 'completed')}
             >
               Mark Complete
@@ -629,7 +644,14 @@ function TaskDetailsModal({ task, users, onClose, onStatusChange, getStatusVaria
               </Badge>
             </div>
           </div>
-          <Button variant="ghost" onClick={onClose} size="sm"><XIcon /></Button>
+          <Button 
+            variant="ghost" 
+            size="sm"
+            rightIcon={<XIcon />}
+            onClick={onClose}
+          >
+            Close
+          </Button>
         </div>
 
         <div className="space-y-6">
@@ -719,13 +741,17 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
     tags: [] as string[],
   });
   const [tagInput, setTagInput] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.title.trim() || !formData.description.trim()) return;
 
+    setIsSubmitting(true);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
     onCreateTask(formData);
-    onClose();
+    setIsSubmitting(false);
   };
 
   const addTag = () => {
@@ -750,31 +776,36 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
       <form onSubmit={handleSubmit} className="p-6">
         <div className="flex items-center justify-between mb-6">
           <Text className="text-xl font-bold">Create New Task</Text>
-          <Button variant="ghost" onClick={onClose} size="sm"><XIcon /></Button>
+          <Button 
+            variant="ghost" 
+            size="sm"
+            rightIcon={<XIcon />}
+            onClick={onClose}
+          >
+            Close
+          </Button>
         </div>
 
         <div className="space-y-4">
-          <div>
-            <Label htmlFor="title">Task Title</Label>
-            <Input
-              id="title"
-              value={formData.title}
-              onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-              placeholder="Enter task title..."
-              required
-            />
-          </div>
+          <Input
+            id="title"
+            label="Task Title"
+            size="md"
+            value={formData.title}
+            onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+            placeholder="Enter task title..."
+            required
+          />
 
-          <div>
-            <Label htmlFor="description">Description</Label>
-            <Input
-              id="description"
-              value={formData.description}
-              onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-              placeholder="Describe the task..."
-              required
-            />
-          </div>
+          <Input
+            id="description"
+            label="Description"
+            size="md"
+            value={formData.description}
+            onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+            placeholder="Describe the task..."
+            required
+          />
 
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -806,27 +837,35 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
             </div>
           </div>
 
-          <div>
-            <Label htmlFor="dueDate">Due Date</Label>
-            <Input
-              id="dueDate"
-              value={formData.dueDate}
-              onChange={(e) => setFormData(prev => ({ ...prev, dueDate: e.target.value }))}
-              placeholder="YYYY-MM-DD"
-              required
-            />
-          </div>
+          <Input
+            id="dueDate"
+            label="Due Date"
+            size="md"
+            leftIcon={<CalendarIcon />}
+            value={formData.dueDate}
+            onChange={(e) => setFormData(prev => ({ ...prev, dueDate: e.target.value }))}
+            placeholder="YYYY-MM-DD"
+            required
+          />
 
           <div>
             <Label htmlFor="tags">Tags</Label>
             <div className="flex space-x-2 mb-2">
               <Input
                 id="tags"
+                size="md"
+                leftIcon={<TagIcon />}
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 placeholder="Add a tag..."
               />
-              <Button variant="secondary" onClick={addTag}>Add</Button>
+              <Button 
+                variant="secondary" 
+                size="md"
+                onClick={addTag}
+              >
+                Add
+              </Button>
             </div>
             <div className="flex flex-wrap gap-2">
               {formData.tags.map((tag) => (
@@ -846,8 +885,22 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
         <Divider className="my-6" />
 
         <div className="flex justify-end space-x-3">
-          <Button variant="secondary" onClick={onClose}>Cancel</Button>
-          <Button variant="primary">Create Task</Button>
+          <Button 
+            variant="secondary" 
+            size="md"
+            disabled={isSubmitting}
+            onClick={onClose}
+          >
+            Cancel
+          </Button>
+          <Button 
+            variant="primary" 
+            size="md"
+            loading={isSubmitting}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Creating...' : 'Create Task'}
+          </Button>
         </div>
       </form>
     </Modal>
