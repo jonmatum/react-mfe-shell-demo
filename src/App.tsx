@@ -13,6 +13,7 @@ import {
   Label,
   Divider,
   useSettings,
+  type BadgeVariant,
 } from '@jonmatum/react-mfe-shell';
 
 // Simple SVG Icon Components
@@ -214,22 +215,22 @@ function TaskManagementApp() {
   });
 
   // Get status badge variant
-  const getStatusVariant = (status: Task['status']) => {
+  const getStatusVariant = (status: Task['status']): BadgeVariant => {
     switch (status) {
       case 'completed': return 'success';
       case 'in-progress': return 'warning';
       case 'todo': return 'secondary';
-      default: return 'secondary';
+      default: return 'default';
     }
   };
 
   // Get priority badge variant
-  const getPriorityVariant = (priority: Task['priority']) => {
+  const getPriorityVariant = (priority: Task['priority']): BadgeVariant => {
     switch (priority) {
       case 'high': return 'danger';
       case 'medium': return 'warning';
       case 'low': return 'success';
-      default: return 'secondary';
+      default: return 'default';
     }
   };
 
@@ -537,8 +538,8 @@ interface TaskCardProps {
   users: User[];
   onStatusChange: (taskId: string, status: Task['status']) => void;
   onViewDetails: (task: Task) => void;
-  getStatusVariant: (status: Task['status']) => string;
-  getPriorityVariant: (priority: Task['priority']) => string;
+  getStatusVariant: (status: Task['status']) => BadgeVariant;
+  getPriorityVariant: (priority: Task['priority']) => BadgeVariant;
 }
 
 function TaskCard({ task, users, onStatusChange, onViewDetails, getStatusVariant, getPriorityVariant }: TaskCardProps) {
@@ -551,10 +552,10 @@ function TaskCard({ task, users, onStatusChange, onViewDetails, getStatusVariant
         <div className="flex-1">
           <div className="flex items-center space-x-3 mb-2">
             <Text className="text-lg font-semibold">{task.title}</Text>
-            <Badge variant={getStatusVariant(task.status) as any} size="sm">
+            <Badge variant={getStatusVariant(task.status)} size="sm">
               {task.status.replace('-', ' ')}
             </Badge>
-            <Badge variant={getPriorityVariant(task.priority) as any} size="sm">
+            <Badge variant={getPriorityVariant(task.priority)} size="sm">
               {task.priority} priority
             </Badge>
             {isOverdue && (
@@ -622,26 +623,32 @@ interface TaskDetailsModalProps {
   users: User[];
   onClose: () => void;
   onStatusChange: (taskId: string, status: Task['status']) => void;
-  getStatusVariant: (status: Task['status']) => string;
-  getPriorityVariant: (priority: Task['priority']) => string;
+  getStatusVariant: (status: Task['status']) => BadgeVariant;
+  getPriorityVariant: (priority: Task['priority']) => BadgeVariant;
 }
 
 function TaskDetailsModal({ task, users, onClose, onStatusChange, getStatusVariant, getPriorityVariant }: TaskDetailsModalProps) {
   const assigneeUser = users.find(u => u.name === task.assignee);
 
   return (
-    <Modal isOpen onClose={onClose} >
-      <div className="p-6">
-        <div className="flex items-start justify-between mb-6">
-          <div>
-            <Text className="text-2xl font-bold mb-2">{task.title}</Text>
+    <Modal isOpen onClose={onClose}>
+      <div className="max-w-2xl">
+        {/* Modal Header */}
+        <div className="flex items-start justify-between p-6 border-b border-border-primary">
+          <div className="flex-1">
+            <Text className="text-2xl font-bold mb-3">{task.title}</Text>
             <div className="flex items-center space-x-2">
-              <Badge variant={getStatusVariant(task.status) as any}>
+              <Badge variant={getStatusVariant(task.status)} size="md">
                 {task.status.replace('-', ' ')}
               </Badge>
-              <Badge variant={getPriorityVariant(task.priority) as any}>
+              <Badge variant={getPriorityVariant(task.priority)} size="md">
                 {task.priority} priority
               </Badge>
+              {new Date(task.dueDate) < new Date() && task.status !== 'completed' && (
+                <Badge variant="danger" size="md" dot>
+                  Overdue
+                </Badge>
+              )}
             </div>
           </div>
           <Button 
@@ -654,68 +661,93 @@ function TaskDetailsModal({ task, users, onClose, onStatusChange, getStatusVaria
           </Button>
         </div>
 
-        <div className="space-y-6">
+        {/* Modal Body */}
+        <div className="p-6 space-y-6">
+          {/* Description */}
           <div>
             <Label className="text-sm font-medium text-text-secondary mb-2">Description</Label>
-            <Text>{task.description}</Text>
+            <div className="p-4 bg-surface-secondary rounded-lg">
+              <Text>{task.description}</Text>
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-6">
+          {/* Task Details Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Assignee */}
             <div>
-              <Label className="text-sm font-medium text-text-secondary mb-2">Assignee</Label>
-              <div className="flex items-center space-x-3">
+              <Label className="text-sm font-medium text-text-secondary mb-3">Assignee</Label>
+              <div className="flex items-center space-x-3 p-3 bg-surface-secondary rounded-lg">
                 {assigneeUser && (
                   <>
                     <Avatar
                       src={assigneeUser.avatar}
                       alt={assigneeUser.name}
-                      size="sm"
+                      size="md"
                       fallback={assigneeUser.name.split(' ').map(n => n[0]).join('')}
                     />
                     <div>
                       <Text className="font-medium">{assigneeUser.name}</Text>
-                      <Text className="text-sm">{assigneeUser.role}</Text>
+                      <Text className="text-sm text-text-secondary capitalize">{assigneeUser.role}</Text>
                     </div>
                   </>
                 )}
               </div>
             </div>
 
+            {/* Due Date */}
             <div>
-              <Label className="text-sm font-medium text-text-secondary mb-2">Due Date</Label>
-              <Text>{new Date(task.dueDate).toLocaleDateString()}</Text>
+              <Label className="text-sm font-medium text-text-secondary mb-3">Due Date</Label>
+              <div className="flex items-center space-x-2 p-3 bg-surface-secondary rounded-lg">
+                <CalendarIcon className="text-text-secondary" />
+                <Text>{new Date(task.dueDate).toLocaleDateString('en-US', { 
+                  weekday: 'short', 
+                  year: 'numeric', 
+                  month: 'short', 
+                  day: 'numeric' 
+                })}</Text>
+              </div>
             </div>
           </div>
 
+          {/* Tags */}
           <div>
-            <Label className="text-sm font-medium text-text-secondary mb-2">Tags</Label>
+            <Label className="text-sm font-medium text-text-secondary mb-3">Tags</Label>
             <div className="flex flex-wrap gap-2">
               {task.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">#{tag}</Badge>
+                <Badge key={tag} variant="primary" size="sm">
+                  #{tag}
+                </Badge>
               ))}
             </div>
           </div>
 
-          <Divider />
+          {/* Created Date */}
+          <div className="text-xs text-text-tertiary border-t border-border-primary pt-4">
+            Created on {new Date(task.createdAt).toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })}
+          </div>
+        </div>
 
-          <div className="flex items-center justify-between">
-            <Text className="text-sm">
-              Created on {new Date(task.createdAt).toLocaleDateString()}
-            </Text>
-            
-            <div className="flex space-x-2">
-              {(['todo', 'in-progress', 'completed'] as const).map((status) => (
-                <Button
-                  key={status}
-                  variant={task.status === status ? 'primary' : 'secondary'}
-                  size="sm"
-                  onClick={() => onStatusChange(task.id, status)}
-                  className="capitalize"
-                >
-                  {status.replace('-', ' ')}
-                </Button>
-              ))}
-            </div>
+        {/* Modal Footer */}
+        <div className="flex items-center justify-between p-6 border-t border-border-primary bg-surface-secondary">
+          <Text className="text-sm text-text-secondary">
+            Status Actions
+          </Text>
+          <div className="flex space-x-2">
+            {(['todo', 'in-progress', 'completed'] as const).map((status) => (
+              <Button
+                key={status}
+                variant={task.status === status ? 'primary' : 'secondary'}
+                size="sm"
+                onClick={() => onStatusChange(task.id, status)}
+                disabled={task.status === status}
+              >
+                {status.replace('-', ' ')}
+              </Button>
+            ))}
           </div>
         </div>
       </div>

@@ -356,6 +356,29 @@ export default {
     'transition-shadow',
     'capitalize',
     
+    // Modal and layout improvements
+    'max-w-xl',
+    'max-w-2xl',
+    'border-b',
+    'border-t',
+    'pt-4',
+    'pb-4',
+    'space-y-6',
+    'grid-cols-1',
+    'md:grid-cols-2',
+    'flex-1',
+    
+    // Badge variants - ALL variants and sizes
+    'badge-default',
+    'badge-primary', 
+    'badge-secondary',
+    'badge-success',
+    'badge-warning',
+    'badge-danger',
+    'badge-sm',
+    'badge-md',
+    'badge-lg',
+    
     // Footer specific classes
     'mt-16',
     'border-t',
