@@ -1,40 +1,79 @@
-# React MFE Shell Test App
+# React MFE Shell Demo Application
 
-[![CI](https://github.com/jonmatum/react-mfe-shell-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/jonmatum/react-mfe-shell-demo/actions/workflows/ci.yml)
-[![Release](https://github.com/jonmatum/react-mfe-shell-demo/actions/workflows/release-please.yml/badge.svg)](https://github.com/jonmatum/react-mfe-shell-demo/actions/workflows/release-please.yml)
+A comprehensive demonstration application showcasing all components and capabilities of the [@jonmatum/react-mfe-shell](https://www.npmjs.com/package/@jonmatum/react-mfe-shell) package.
 
-**[Live Demo](https://jonmatum.github.io/react-mfe-shell-demo/)**
+## 🚀 Live Demo
 
-This is a comprehensive test application for the `@jonmatum/react-mfe-shell` package. It demonstrates all the components and features available in the MFE Shell with automated releases and GitHub Pages deployment.
+**[View Live Demo](https://jonmatum.github.io/react-mfe-shell-demo/)**
 
-## Features Tested
+## 📋 What's Demonstrated
 
-### Components
-- **Button**: All variants (primary, secondary, ghost) and states
-- **Modal**: Accessible modal with keyboard navigation and backdrop click
-- **LoadingSpinner**: Different sizes and loading states
-- **Switch**: Toggle switches with proper state management
+This demo application provides a complete showcase of the React MFE Shell v6.1.0, including:
 
-### Context & State Management
-- **SettingsProvider**: Global settings management
-- **Theme Management**: Light, dark, and system theme modes
-- **useSettings Hook**: Access and update global settings
+### 🧩 **Component Library**
 
-### Design System
-- **Atomic Design**: Components following atomic design principles
-- **Tailwind CSS**: Consistent styling with the MFE Shell
-- **Dark Mode**: Full dark mode support with system preference detection
-- **Accessibility**: WCAG AA compliant components
+#### **Atoms (Basic Building Blocks)**
+- **Button Components**: All variants (primary, secondary, success, warning, danger, ghost), sizes (xs-xl), and states (loading, disabled)
+- **Input Components**: Text inputs with labels, validation, error states, and different types (email, password, search)
+- **Badge Components**: Status indicators with variants, sizes, and removable functionality
+- **Avatar Components**: Profile pictures with fallback initials, multiple sizes, and GitHub integration
+- **LoadingSpinner Components**: Animated spinners with sizes, colors, and text support
+- **Switch Components**: Toggle switches with sizes, colors, and interactive settings
+- **Typography Components**: Text variants, colors, and semantic styling
 
-## Getting Started
+#### **Molecules (Component Combinations)**
+- **Modal Components**: Accessible dialogs with different use cases (basic, confirmation, form modals)
+- **Card Components**: Layout containers with proper spacing and theming
+
+#### **Organisms (Complex Combinations)**
+- **Interactive Settings Panel**: Real-world switch usage examples
+- **Form Examples**: Complete form implementations with validation
+- **Navigation Header**: Sticky header with theme switching and user profile
+
+### 🎨 **Design System Features**
+
+#### **Theme Management**
+- **Light/Dark Mode**: Seamless theme switching with persistent preferences
+- **System Theme**: Automatic detection and following of system preferences
+- **Theme-Aware Components**: All components adapt to theme changes
+- **Smooth Transitions**: Animated theme transitions for better UX
+
+#### **Design Tokens**
+- **Color System**: Semantic color palette with theme variants
+- **Typography Scale**: Consistent text sizing and spacing
+- **Component Variants**: Standardized component variations
+- **Accessibility**: WCAG AA compliant color contrasts
+
+### ♿ **Accessibility Features**
+
+- **Keyboard Navigation**: Full keyboard support for all interactive elements
+- **Screen Reader Support**: Proper ARIA attributes and semantic HTML
+- **Focus Management**: Visible focus indicators and logical tab order
+- **Color Contrast**: WCAG AA compliant color combinations
+- **Responsive Design**: Mobile-first approach with consistent breakpoints
+
+### 🛠 **Technical Implementation**
+
+- **React 19**: Latest React features and performance optimizations
+- **TypeScript**: Full type safety and IntelliSense support
+- **Tailwind CSS**: Utility-first styling with design token integration
+- **Vite**: Fast development and optimized production builds
+- **Atomic Design**: Structured component hierarchy and reusability
+
+## 🏃‍♂️ Quick Start
 
 ### Prerequisites
-- Node.js 22.x LTS (jod) or higher
+
+- Node.js 22.x LTS or higher
 - npm 10.x or higher
 
-### Installation
+### Installation & Development
 
 ```bash
+# Clone the repository
+git clone https://github.com/jonmatum/react-mfe-shell-demo.git
+cd react-mfe-shell-demo
+
 # Install dependencies
 npm install
 
@@ -42,75 +81,196 @@ npm install
 npm run dev
 ```
 
-### Usage
+### Building for Production
 
-The app demonstrates:
+```bash
+# Build the application
+npm run build
 
-1. **Component Library**: All available components with different variants
-2. **Theme Switching**: Toggle between light, dark, and system themes
-3. **State Management**: Global settings that persist across components
-4. **Integration**: How components work together in a real application
+# Preview the production build
+npm run preview
+```
 
-## Package Information
+## 📦 Package Integration
 
-- **Package**: `@jonmatum/react-mfe-shell@3.0.0`
-- **Repository**: https://github.com/jonmatum/react-mfe-shell
-- **Documentation**: https://github.com/jonmatum/react-mfe-shell/wiki
+This demo uses the latest version of the React MFE Shell:
 
-## Test Scenarios
+```json
+{
+  "dependencies": {
+    "@jonmatum/react-mfe-shell": "^6.1.0"
+  }
+}
+```
 
-### Manual Testing
-1. **Theme Switching**: Use the switch to toggle between themes
-2. **Modal Interaction**: Open modal, test keyboard navigation (ESC, Tab)
-3. **Button States**: Test all button variants and disabled states
-4. **Loading States**: Trigger loading spinner with different sizes
-5. **Responsive Design**: Test on different screen sizes
+### Basic Usage Example
 
-### Integration Testing
-- All components share the same theme context
-- Settings persist across page refreshes
-- Components maintain consistent styling
-- Accessibility features work across all components
+```tsx
+import React from 'react';
+import { 
+  SettingsProvider, 
+  Button, 
+  Input, 
+  Badge,
+  useSettings 
+} from '@jonmatum/react-mfe-shell';
 
-## Development
+function MyApp() {
+  return (
+    <SettingsProvider>
+      <MyComponent />
+    </SettingsProvider>
+  );
+}
 
-This test app uses:
-- **Vite**: Fast development server and build tool
-- **React 18**: Latest React features
-- **TypeScript**: Type safety
-- **Tailwind CSS**: Utility-first CSS framework
-- **@jonmatum/react-mfe-shell**: The MFE Shell package being tested
+function MyComponent() {
+  const { settings, updateSettings } = useSettings();
+  
+  return (
+    <div className="p-4 space-y-4">
+      <Button 
+        variant="primary"
+        onClick={() => updateSettings({ 
+          theme: settings.theme === 'light' ? 'dark' : 'light' 
+        })}
+      >
+        Toggle Theme
+      </Button>
+      
+      <Input 
+        label="Email"
+        type="email"
+        placeholder="Enter your email"
+      />
+      
+      <Badge variant="success">
+        Active
+      </Badge>
+    </div>
+  );
+}
+```
 
-## Build
+## 🎯 Demo Sections
+
+### 1. **Button Showcase**
+- Complete button variant demonstration
+- Size variations from extra-small to extra-large
+- Interactive loading states and async actions
+- Disabled state examples
+
+### 2. **Input Showcase**
+- Form input examples with validation
+- Different input types (email, password, search)
+- Error states and helper text
+- Disabled input demonstration
+
+### 3. **Badge Showcase**
+- All badge variants and colors
+- Size demonstrations
+- Interactive removable badges with reset functionality
+
+### 4. **Avatar Showcase**
+- Size progression demonstration
+- Real GitHub profile integration
+- Fallback initial generation examples
+
+### 5. **Loading Spinner Showcase**
+- Size and color variations
+- Interactive loading simulation
+- Text integration examples
+
+### 6. **Switch Showcase**
+- Size and color demonstrations
+- Real-world settings panel implementation
+- Interactive state management
+
+### 7. **Modal Showcase**
+- Basic modal with accessibility features
+- Confirmation dialog patterns
+- Form modal with input integration
+
+### 8. **Typography Showcase**
+- Text component variants
+- Color system demonstration
+- Semantic text usage
+
+## 🔧 Configuration
+
+### Tailwind CSS Integration
+
+The demo includes proper Tailwind configuration for design token integration:
+
+```javascript
+// tailwind.config.js
+export default {
+  content: [
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/@jonmatum/react-mfe-shell/dist/**/*.{js,ts,jsx,tsx}"
+  ],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      // Design token integration
+      colors: {
+        primary: { /* ... */ },
+        success: { /* ... */ },
+        // Theme-aware colors
+        'background-primary': 'rgb(var(--color-background-primary) / <alpha-value>)',
+        'text-primary': 'rgb(var(--color-text-primary) / <alpha-value>)',
+      }
+    }
+  }
+}
+```
+
+## 🚀 Deployment
+
+This demo is automatically deployed to GitHub Pages on every push to the main branch.
+
+### Manual Deployment
 
 ```bash
 # Build for production
 npm run build
 
-# Preview production build
-npm run preview
+# Deploy to your hosting platform
+# The built files are in the `dist` directory
 ```
 
-## Deployment
+## 📚 Documentation
 
-This application is automatically deployed to GitHub Pages on every release. The deployment process:
+- **[Main Package Documentation](https://github.com/jonmatum/react-mfe-shell)**
+- **[Component API Reference](https://github.com/jonmatum/react-mfe-shell#component-library)**
+- **[Design Tokens Guide](https://github.com/jonmatum/react-mfe-shell/docs/design-tokens.md)**
+- **[Implementation Guide](https://github.com/jonmatum/react-mfe-shell/docs/implementation-guide.md)**
 
-1. **Automated Releases**: Uses [release-please](https://github.com/googleapis/release-please) to automatically create releases based on conventional commits
-2. **GitHub Pages**: Automatically deploys the built application to GitHub Pages when a new release is created
-3. **CI/CD Pipeline**: Runs tests, linting, and builds on every push and pull request
+## 🤝 Contributing
 
-### Release Process
+This demo application serves as both a testing ground and documentation for the React MFE Shell package. Contributions are welcome!
 
-1. Make changes using conventional commit messages (e.g., `feat:`, `fix:`, `docs:`)
-2. Push to the `main` branch
-3. Release Please will automatically create a PR with version bump and changelog
-4. Merge the release PR to trigger a new release and deployment
+### Development Workflow
 
-### Manual Deployment
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-demo`
+3. Make your changes
+4. Test the demo: `npm run dev`
+5. Build for production: `npm run build`
+6. Commit your changes: `git commit -m "feat: add amazing demo feature"`
+7. Push and create a pull request
 
-To deploy manually to GitHub Pages:
+## 📄 License
 
-```bash
-npm run build
-# Upload the dist/ folder to your hosting provider
-```
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+
+## 👨‍💻 Author
+
+**Jonatan Mata** - Full-Stack Engineer
+- GitHub: [@jonmatum](https://github.com/jonmatum)
+- Package: [@jonmatum/react-mfe-shell](https://www.npmjs.com/package/@jonmatum/react-mfe-shell)
+
+---
+
+**Built with ❤️ for the micro frontend community**
+
+*Showcasing the power of atomic design, accessibility-first development, and modern React patterns.*
