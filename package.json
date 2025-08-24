@@ -1,7 +1,7 @@
 {
   "name": "react-mfe-shell-demo",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "Comprehensive test application for @jonmatum/react-mfe-shell package",
   "repository": {
