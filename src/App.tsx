@@ -77,6 +77,12 @@ const CalendarIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
   </svg>
 );
 
+const TaskMasterIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+);
+
 const TagIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
@@ -456,9 +462,13 @@ function TaskManagementApp() {
       <footer className="bg-surface-primary border-t border-border-primary mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2">
+                <TaskMasterIcon className="text-primary-600" />
+                <Text className="font-semibold text-text-primary">TaskMaster Pro</Text>
+              </div>
               <Text className="text-text-secondary text-sm">
-                Powered by
+                powered by
               </Text>
               <a
                 href="https://www.npmjs.com/package/@jonmatum/react-mfe-shell"
@@ -472,10 +482,9 @@ function TaskManagementApp() {
                 <Text className="text-text-primary font-medium text-sm">
                   React MFE Shell
                 </Text>
-                <div className="inline-flex items-center space-x-1 px-2 py-0.5 bg-border-secondary rounded text-xs font-medium text-text-secondary">
-                  <TagIcon className="w-3 h-3" />
-                  <span>v6.2.0</span>
-                </div>
+                <Badge variant="default" size="sm">
+                  v6.2.0
+                </Badge>
               </a>
             </div>
 
@@ -715,27 +724,20 @@ function TaskDetailsModal({ task, users, onClose, onStatusChange, getStatusVaria
           </div>
         </div>
 
-        {/* Modal Footer - Status Actions */}
-        <div className="p-6 border-t border-border-primary bg-surface-secondary">
-          <Label className="text-sm font-medium text-text-secondary mb-4">Change Status</Label>
-          <div className="space-y-2">
-            {(['todo', 'in-progress', 'completed'] as const).map((status) => (
-              <Button
-                key={status}
-                variant={task.status === status ? 'primary' : 'secondary'}
-                size="md"
-                fullWidth
-                onClick={() => onStatusChange(task.id, status)}
-                disabled={task.status === status}
-              >
-                {task.status === status ? '✓ ' : ''}
-                {status === 'todo' ? 'Mark as To Do' : 
-                 status === 'in-progress' ? 'Mark as In Progress' : 
-                 'Mark as Completed'}
-              </Button>
-            ))}
+        {/* Modal Footer - Simplified */}
+        {task.status !== 'completed' && (
+          <div className="p-6 border-t border-border-primary">
+            <Button
+              variant="success"
+              size="md"
+              fullWidth
+              leftIcon={<CheckIcon className="w-4 h-4" />}
+              onClick={() => onStatusChange(task.id, 'completed')}
+            >
+              Mark as Completed
+            </Button>
           </div>
-        </div>
+        )}
       </div>
     </Modal>
   );
@@ -902,7 +904,7 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
           </div>
         </div>
 
-        <div className="p-6 border-t border-border-primary bg-surface-secondary space-y-3">
+        <div className="p-6 border-t border-border-primary">
           <Button 
             variant="primary" 
             size="md"
@@ -911,15 +913,6 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
             disabled={isSubmitting}
           >
             {isSubmitting ? 'Creating Task...' : 'Create Task'}
-          </Button>
-          <Button 
-            variant="secondary" 
-            size="md"
-            fullWidth
-            disabled={isSubmitting}
-            onClick={onClose}
-          >
-            Cancel
           </Button>
         </div>
       </form>

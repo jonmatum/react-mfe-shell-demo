@@ -389,6 +389,7 @@ export default {
     'md:flex-row',
     'md:space-y-0',
     'space-y-4',
+    'space-x-3',
     'bg-surface-secondary',
     'hover:bg-surface-tertiary',
     'border-border-secondary',
@@ -403,6 +404,8 @@ export default {
     'w-3',
     'h-3',
     'inline-flex',
+    'text-primary-600',
+    'font-semibold',
     
     // Text classes used by MFE components
     'text-danger-700',
