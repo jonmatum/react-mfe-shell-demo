@@ -356,6 +356,22 @@ export default {
     'transition-shadow',
     'capitalize',
     
+    // Footer specific classes
+    'mt-16',
+    'border-t',
+    'md:flex-row',
+    'md:space-y-0',
+    'space-y-4',
+    'bg-primary-50',
+    'hover:bg-primary-100',
+    'border-primary-200',
+    'text-primary-700',
+    'text-xs',
+    'text-text-tertiary',
+    'hover:text-text-primary',
+    'duration-200',
+    'space-x-6',
+    
     // Text classes used by MFE components
     'text-danger-700',
     'text-error-700',

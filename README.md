@@ -32,6 +32,7 @@ Experience a fully functional project management dashboard showcasing:
 - **Responsive Layout**: Optimized for desktop, tablet, and mobile devices
 - **Accessibility**: WCAG AA compliant with proper ARIA attributes
 - **Theme Switching**: Light/dark mode with persistent preferences
+- **Professional Footer**: Package attribution with version display and helpful links
 
 ### Technical Showcase
 - **MFE Component Library**: Demonstrates all React MFE Shell components

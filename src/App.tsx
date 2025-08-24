@@ -418,6 +418,73 @@ function TaskManagementApp() {
           onCreateTask={createTask}
         />
       )}
+
+      {/* Footer */}
+      <footer className="bg-surface-primary border-t border-border-primary mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+            <div className="flex items-center space-x-2">
+              <Text className="text-text-secondary text-sm">
+                Powered by
+              </Text>
+              <a
+                href="https://www.npmjs.com/package/@jonmatum/react-mfe-shell"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center space-x-2 px-3 py-1 bg-primary-50 hover:bg-primary-100 border border-primary-200 rounded-md transition-colors duration-200"
+              >
+                <div className="w-5 h-5 bg-primary-600 rounded flex items-center justify-center">
+                  <Text className="text-white font-bold text-xs">R</Text>
+                </div>
+                <Text className="text-primary-700 font-medium text-sm">
+                  React MFE Shell
+                </Text>
+                <Badge variant="primary" size="sm">
+                  v6.2.0
+                </Badge>
+              </a>
+            </div>
+
+            <div className="flex items-center space-x-6 text-sm text-text-secondary">
+              <a
+                href="https://github.com/jonmatum/react-mfe-shell"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-text-primary transition-colors duration-200"
+              >
+                GitHub
+              </a>
+              <a
+                href="https://www.npmjs.com/package/@jonmatum/react-mfe-shell"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-text-primary transition-colors duration-200"
+              >
+                npm Package
+              </a>
+              <a
+                href="https://jonmatum.github.io/react-mfe-shell/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-text-primary transition-colors duration-200"
+              >
+                Documentation
+              </a>
+            </div>
+          </div>
+
+          <Divider className="my-6" />
+
+          <div className="flex flex-col md:flex-row items-center justify-between space-y-2 md:space-y-0">
+            <Text className="text-text-tertiary text-xs">
+              © 2025 TaskMaster Pro. Built with React MFE Shell for demonstration purposes.
+            </Text>
+            <Text className="text-text-tertiary text-xs">
+              Showcasing micro frontend architecture and component library capabilities.
+            </Text>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
