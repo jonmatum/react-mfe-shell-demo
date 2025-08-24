@@ -271,6 +271,91 @@ export default {
     'bg-warning-600',
     'bg-warning-800',
     
+    // Additional background classes used in TaskMaster Pro
+    'bg-background-primary',
+    'bg-danger-100',
+    
+    // Text color classes used in TaskMaster Pro
+    'text-danger-600',
+    'text-primary-600',
+    'text-success-600',
+    'text-warning-600',
+    'text-text-primary',
+    'text-text-secondary',
+    'text-white',
+    
+    // Layout and sizing classes used in application
+    'w-6',
+    'h-6',
+    'w-8',
+    'h-8',
+    'w-12',
+    'h-12',
+    'w-16',
+    'h-16',
+    'w-5',
+    'h-5',
+    
+    // Grid and flex classes
+    'grid-cols-1',
+    'grid-cols-2',
+    'md:grid-cols-4',
+    'lg:grid-cols-4',
+    'flex-col',
+    'flex-wrap',
+    'items-start',
+    'justify-end',
+    
+    // Spacing classes used in application
+    'space-x-2',
+    'space-x-3',
+    'space-x-4',
+    'space-y-4',
+    'space-y-6',
+    'gap-2',
+    'gap-4',
+    'gap-6',
+    'mb-2',
+    'mb-3',
+    'mb-4',
+    'mb-6',
+    'mb-8',
+    'mt-4',
+    'ml-4',
+    'my-4',
+    'my-6',
+    'p-12',
+    'px-3',
+    'py-2',
+    'py-8',
+    
+    // Typography classes
+    'text-sm',
+    'text-lg',
+    'text-xl',
+    'text-2xl',
+    'text-3xl',
+    'font-medium',
+    'font-semibold',
+    'font-bold',
+    
+    // Border and radius classes
+    'border-b',
+    'border-border-primary',
+    'rounded-lg',
+    'rounded-md',
+    
+    // Responsive classes
+    'sm:flex-row',
+    'sm:px-6',
+    'lg:px-8',
+    'max-w-7xl',
+    
+    // Interactive classes
+    'hover:shadow-md',
+    'transition-shadow',
+    'capitalize',
+    
     // Text classes used by MFE components
     'text-danger-700',
     'text-error-700',

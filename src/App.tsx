@@ -15,6 +15,43 @@ import {
   useSettings,
 } from '@jonmatum/react-mfe-shell';
 
+// Simple SVG Icon Components
+const TasksIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+  </svg>
+);
+
+const ClockIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+);
+
+const CheckIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+  </svg>
+);
+
+const FireIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 1-4 4-4 2.207 0 4 1.793 4 4 0 .211-.025.417-.075.612C18.832 11.987 20 14.793 20 18a3 3 0 01-3 3 2.99 2.99 0 01-2.343-1.157z" />
+  </svg>
+);
+
+const PlusIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+  </svg>
+);
+
+const XIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+  </svg>
+);
+
 // Types for our Task Management App
 interface Task {
   id: string;
@@ -240,7 +277,7 @@ function TaskManagementApp() {
               onClick={() => setIsCreateModalOpen(true)}
               className="flex items-center space-x-2"
             >
-              <span>+</span>
+              <PlusIcon />
               <span>New Task</span>
             </Button>
           </div>
@@ -254,7 +291,7 @@ function TaskManagementApp() {
                   <Text className="text-2xl font-bold text-text-primary">{tasks.length}</Text>
                 </div>
                 <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
-                  <Text className="text-primary-600 text-xl">📋</Text>
+                  <TasksIcon className="w-6 h-6 text-primary-600" />
                 </div>
               </div>
             </Card>
@@ -268,7 +305,7 @@ function TaskManagementApp() {
                   </Text>
                 </div>
                 <div className="w-12 h-12 bg-warning-100 rounded-lg flex items-center justify-center">
-                  <Text className="text-warning-600 text-xl">⏳</Text>
+                  <ClockIcon className="w-6 h-6 text-warning-600" />
                 </div>
               </div>
             </Card>
@@ -282,7 +319,7 @@ function TaskManagementApp() {
                   </Text>
                 </div>
                 <div className="w-12 h-12 bg-success-100 rounded-lg flex items-center justify-center">
-                  <Text className="text-success-600 text-xl">✅</Text>
+                  <CheckIcon className="w-6 h-6 text-success-600" />
                 </div>
               </div>
             </Card>
@@ -296,7 +333,7 @@ function TaskManagementApp() {
                   </Text>
                 </div>
                 <div className="w-12 h-12 bg-danger-100 rounded-lg flex items-center justify-center">
-                  <Text className="text-danger-600 text-xl">🔥</Text>
+                  <FireIcon className="w-6 h-6 text-danger-600" />
                 </div>
               </div>
             </Card>
@@ -497,7 +534,7 @@ function TaskDetailsModal({ task, users, onClose, onStatusChange, getStatusVaria
               </Badge>
             </div>
           </div>
-          <Button variant="ghost" onClick={onClose} size="sm">✕</Button>
+          <Button variant="ghost" onClick={onClose} size="sm"><XIcon /></Button>
         </div>
 
         <div className="space-y-6">
@@ -618,7 +655,7 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
       <form onSubmit={handleSubmit} className="p-6">
         <div className="flex items-center justify-between mb-6">
           <Text className="text-xl font-bold">Create New Task</Text>
-          <Button variant="ghost" onClick={onClose} size="sm">✕</Button>
+          <Button variant="ghost" onClick={onClose} size="sm"><XIcon /></Button>
         </div>
 
         <div className="space-y-4">
