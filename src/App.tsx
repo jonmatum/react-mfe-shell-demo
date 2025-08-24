@@ -47,12 +47,6 @@ const PlusIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   </svg>
 );
 
-const XIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-  </svg>
-);
-
 const GitHubIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24">
     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
@@ -634,31 +628,21 @@ function TaskDetailsModal({ task, users, onClose, onStatusChange, getStatusVaria
     <Modal isOpen onClose={onClose}>
       <div className="max-w-2xl">
         {/* Modal Header */}
-        <div className="flex items-start justify-between p-6 border-b border-border-primary">
-          <div className="flex-1">
-            <Text className="text-2xl font-bold mb-3">{task.title}</Text>
-            <div className="flex items-center space-x-2">
-              <Badge variant={getStatusVariant(task.status)} size="md">
-                {task.status.replace('-', ' ')}
+        <div className="p-6 border-b border-border-primary">
+          <Text className="text-2xl font-bold mb-3">{task.title}</Text>
+          <div className="flex items-center space-x-2">
+            <Badge variant={getStatusVariant(task.status)} size="md">
+              {task.status.replace('-', ' ')}
+            </Badge>
+            <Badge variant={getPriorityVariant(task.priority)} size="md">
+              {task.priority} priority
+            </Badge>
+            {new Date(task.dueDate) < new Date() && task.status !== 'completed' && (
+              <Badge variant="danger" size="md" dot>
+                Overdue
               </Badge>
-              <Badge variant={getPriorityVariant(task.priority)} size="md">
-                {task.priority} priority
-              </Badge>
-              {new Date(task.dueDate) < new Date() && task.status !== 'completed' && (
-                <Badge variant="danger" size="md" dot>
-                  Overdue
-                </Badge>
-              )}
-            </div>
+            )}
           </div>
-          <Button 
-            variant="ghost" 
-            size="sm"
-            rightIcon={<XIcon />}
-            onClick={onClose}
-          >
-            Close
-          </Button>
         </div>
 
         {/* Modal Body */}
@@ -731,21 +715,23 @@ function TaskDetailsModal({ task, users, onClose, onStatusChange, getStatusVaria
           </div>
         </div>
 
-        {/* Modal Footer */}
-        <div className="flex items-center justify-between p-6 border-t border-border-primary bg-surface-secondary">
-          <Text className="text-sm text-text-secondary">
-            Status Actions
-          </Text>
-          <div className="flex space-x-2">
+        {/* Modal Footer - Status Actions */}
+        <div className="p-6 border-t border-border-primary bg-surface-secondary">
+          <Label className="text-sm font-medium text-text-secondary mb-4">Change Status</Label>
+          <div className="space-y-2">
             {(['todo', 'in-progress', 'completed'] as const).map((status) => (
               <Button
                 key={status}
                 variant={task.status === status ? 'primary' : 'secondary'}
-                size="sm"
+                size="md"
+                fullWidth
                 onClick={() => onStatusChange(task.id, status)}
                 disabled={task.status === status}
               >
-                {status.replace('-', ' ')}
+                {task.status === status ? '✓ ' : ''}
+                {status === 'todo' ? 'Mark as To Do' : 
+                 status === 'in-progress' ? 'Mark as In Progress' : 
+                 'Mark as Completed'}
               </Button>
             ))}
           </div>
@@ -806,19 +792,14 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
   return (
     <Modal isOpen onClose={onClose} >
       <form onSubmit={handleSubmit} className="p-6">
-        <div className="flex items-center justify-between mb-6">
+        <div className="p-6 border-b border-border-primary">
           <Text className="text-xl font-bold">Create New Task</Text>
-          <Button 
-            variant="ghost" 
-            size="sm"
-            rightIcon={<XIcon />}
-            onClick={onClose}
-          >
-            Close
-          </Button>
+          <Text className="text-sm text-text-secondary mt-1">
+            Fill in the details below to create a new task
+          </Text>
         </div>
 
-        <div className="space-y-4">
+        <div className="p-6 space-y-6">
           <Input
             id="title"
             label="Task Title"
@@ -827,6 +808,7 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
             onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
             placeholder="Enter task title..."
             required
+            disabled={isSubmitting}
           />
 
           <Input
@@ -837,6 +819,7 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
             onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
             placeholder="Describe the task..."
             required
+            disabled={isSubmitting}
           />
 
           <div className="grid grid-cols-2 gap-4">
@@ -847,10 +830,11 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
                 value={formData.priority}
                 onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value as Task['priority'] }))}
                 className="w-full px-3 py-2 border border-border-primary rounded-md bg-surface-primary text-text-primary"
+                disabled={isSubmitting}
               >
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
+                <option value="low">Low Priority</option>
+                <option value="medium">Medium Priority</option>
+                <option value="high">High Priority</option>
               </select>
             </div>
 
@@ -861,6 +845,7 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
                 value={formData.assignee}
                 onChange={(e) => setFormData(prev => ({ ...prev, assignee: e.target.value }))}
                 className="w-full px-3 py-2 border border-border-primary rounded-md bg-surface-primary text-text-primary"
+                disabled={isSubmitting}
               >
                 {users.map((user) => (
                   <option key={user.id} value={user.name}>{user.name}</option>
@@ -878,6 +863,7 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
             onChange={(e) => setFormData(prev => ({ ...prev, dueDate: e.target.value }))}
             placeholder="YYYY-MM-DD"
             required
+            disabled={isSubmitting}
           />
 
           <div>
@@ -890,11 +876,13 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
                 value={tagInput}
                 onChange={(e) => setTagInput(e.target.value)}
                 placeholder="Add a tag..."
+                disabled={isSubmitting}
               />
               <Button 
                 variant="secondary" 
                 size="md"
                 onClick={addTag}
+                disabled={isSubmitting || !tagInput.trim()}
               >
                 Add
               </Button>
@@ -914,24 +902,24 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
           </div>
         </div>
 
-        <Divider className="my-6" />
-
-        <div className="flex justify-end space-x-3">
+        <div className="p-6 border-t border-border-primary bg-surface-secondary space-y-3">
+          <Button 
+            variant="primary" 
+            size="md"
+            fullWidth
+            loading={isSubmitting}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Creating Task...' : 'Create Task'}
+          </Button>
           <Button 
             variant="secondary" 
             size="md"
+            fullWidth
             disabled={isSubmitting}
             onClick={onClose}
           >
             Cancel
-          </Button>
-          <Button 
-            variant="primary" 
-            size="md"
-            loading={isSubmitting}
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? 'Creating...' : 'Create Task'}
           </Button>
         </div>
       </form>

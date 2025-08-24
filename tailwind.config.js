@@ -364,9 +364,13 @@ export default {
     'pt-4',
     'pb-4',
     'space-y-6',
+    'space-y-3',
+    'space-y-2',
     'grid-cols-1',
     'md:grid-cols-2',
     'flex-1',
+    'mb-4',
+    'mt-1',
     
     // Badge variants - ALL variants and sizes
     'badge-default',
