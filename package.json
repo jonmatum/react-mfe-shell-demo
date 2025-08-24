@@ -31,7 +31,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@jonmatum/react-mfe-shell": "^6.1.0",
+    "@jonmatum/react-mfe-shell": "^6.1.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
