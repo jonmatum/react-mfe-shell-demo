@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/jonmatum/react-mfe-shell-demo/compare/react-mfe-shell-demo-v2.0.0...react-mfe-shell-demo-v3.0.0) (2025-08-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* MaturityItem interface now requires description and successCriteria fields
+
+### Features
+
+* enhance maturity assessment with detailed item modals and improved UX ([f730fd7](https://github.com/jonmatum/react-mfe-shell-demo/commit/f730fd72b06cb2e47ba754d5769ba67d8a449668))
+
 ## [2.0.0](https://github.com/jonmatum/react-mfe-shell-demo/compare/react-mfe-shell-demo-v1.2.0...react-mfe-shell-demo-v2.0.0) (2025-08-26)
 
 
