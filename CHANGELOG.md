@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.0.2](https://github.com/jonmatum/react-mfe-shell-demo/compare/react-mfe-shell-demo-v3.0.1...react-mfe-shell-demo-v3.0.2) (2025-08-26)
+
+
+### Bug Fixes
+
+* **build:** resolve react-is dependency resolution issue ([557a978](https://github.com/jonmatum/react-mfe-shell-demo/commit/557a978bc633602e00038c0174cd014178bfeb47))
+* **ci:** force install all optional dependencies and rebuild rollup ([789d144](https://github.com/jonmatum/react-mfe-shell-demo/commit/789d144f126c1cbe1e3755eb0a60c557c607a45e))
+* **ci:** use npm 8 and enhanced vite config for rollup issues ([f0d4510](https://github.com/jonmatum/react-mfe-shell-demo/commit/f0d45108b827097f25ad8dc8e99c26c662e553e0))
+
 ## [3.0.1](https://github.com/jonmatum/react-mfe-shell-demo/compare/react-mfe-shell-demo-v3.0.0...react-mfe-shell-demo-v3.0.1) (2025-08-26)
 
 
