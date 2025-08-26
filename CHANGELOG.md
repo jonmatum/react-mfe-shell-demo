@@ -1,5 +1,17 @@
 # Changelog
 
+## [3.1.0](https://github.com/jonmatum/react-mfe-shell-demo/compare/react-mfe-shell-demo-v3.0.2...react-mfe-shell-demo-v3.1.0) (2025-08-26)
+
+
+### Features
+
+* simplify CI workflows to use Node.js LTS (v22.18.0) only ([3735d59](https://github.com/jonmatum/react-mfe-shell-demo/commit/3735d5999bd6ac20e545ba300c63f021799fefee))
+
+
+### Bug Fixes
+
+* **ci:** comprehensive Rollup native dependency fix for all workflows ([53b5c2a](https://github.com/jonmatum/react-mfe-shell-demo/commit/53b5c2a3432a86d0766d64eab83be57218c7de50))
+
 ## [3.0.2](https://github.com/jonmatum/react-mfe-shell-demo/compare/react-mfe-shell-demo-v3.0.1...react-mfe-shell-demo-v3.0.2) (2025-08-26)
 
 
