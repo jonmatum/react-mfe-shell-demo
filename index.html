@@ -1,13 +1,24 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Maturity Assessment Platform - React MFE Shell Demo</title>
-    <meta name="description" content="A comprehensive organizational maturity assessment platform built with React MFE Shell - showcasing real-world micro frontend capabilities" />
-    <meta name="keywords" content="maturity assessment, organizational assessment, platform engineering, software development, micro frontend, react, mfe, dashboard" />
+    
+    <!-- Primary Meta Tags -->
+    <title>Maturity Assessment Platform - Comprehensive Organizational Evaluation Tool</title>
+    <meta name="title" content="Maturity Assessment Platform - Comprehensive Organizational Evaluation Tool" />
+    <meta name="description" content="Evaluate your organization's maturity in Platform Engineering and Software Development with our comprehensive assessment tool. Built with React MFE Shell, featuring interactive scoring, real-time analytics, and detailed progress tracking." />
+    <meta name="keywords" content="maturity assessment, organizational assessment, platform engineering, software development, micro frontend, react, mfe, dashboard, evaluation tool, code quality, ci/cd, devops, agile, digital transformation" />
     <meta name="author" content="React MFE Shell Demo" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="distribution" content="Global" />
+    <meta name="rating" content="General" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://jonmatum.github.io/react-mfe-shell-demo/" />
     
     <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#3b82f6" />
@@ -16,27 +27,92 @@
     <meta name="apple-mobile-web-app-title" content="MaturityApp" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="application-name" content="MaturityApp" />
+    <meta name="msapplication-TileColor" content="#3b82f6" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Maturity Assessment Platform - React MFE Shell Demo" />
-    <meta property="og:description" content="A comprehensive organizational maturity assessment platform showcasing React MFE Shell capabilities" />
+    <meta property="og:site_name" content="Maturity Assessment Platform" />
+    <meta property="og:title" content="Maturity Assessment Platform - Comprehensive Organizational Evaluation Tool" />
+    <meta property="og:description" content="Evaluate your organization's maturity in Platform Engineering and Software Development with our comprehensive assessment tool featuring interactive scoring and real-time analytics." />
     <meta property="og:url" content="https://jonmatum.github.io/react-mfe-shell-demo/" />
+    <meta property="og:image" content="https://jonmatum.github.io/react-mfe-shell-demo/screenshot-wide.png" />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="720" />
+    <meta property="og:image:alt" content="Maturity Assessment Platform Dashboard Screenshot" />
+    <meta property="og:locale" content="en_US" />
     
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:title" content="Maturity Assessment Platform - React MFE Shell Demo" />
-    <meta property="twitter:description" content="A comprehensive organizational maturity assessment platform showcasing React MFE Shell capabilities" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@reactmfeshell" />
+    <meta name="twitter:creator" content="@reactmfeshell" />
+    <meta name="twitter:title" content="Maturity Assessment Platform - Comprehensive Organizational Evaluation Tool" />
+    <meta name="twitter:description" content="Evaluate your organization's maturity in Platform Engineering and Software Development with our comprehensive assessment tool featuring interactive scoring and real-time analytics." />
+    <meta name="twitter:image" content="https://jonmatum.github.io/react-mfe-shell-demo/screenshot-wide.png" />
+    <meta name="twitter:image:alt" content="Maturity Assessment Platform Dashboard Screenshot" />
     
-    <!-- Favicon and PWA Icons -->
+    <!-- LinkedIn -->
+    <meta property="linkedin:owner" content="React MFE Shell" />
+    
+    <!-- Additional SEO -->
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="geo.region" content="US" />
+    <meta name="geo.placename" content="United States" />
+    <meta name="coverage" content="Worldwide" />
+    
+    <!-- Favicon and Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="mask-icon" href="/masked-icon.svg" color="#3b82f6">
     
-    <!-- Preconnect to external domains for performance -->
-    <link rel="preconnect" href="https://github.com">
+    <!-- Preconnect and DNS Prefetch for Performance -->
+    <link rel="preconnect" href="https://github.com" crossorigin>
     <link rel="dns-prefetch" href="https://github.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Maturity Assessment Platform",
+      "description": "Comprehensive organizational maturity evaluation tool for Platform Engineering and Software Development practices",
+      "url": "https://jonmatum.github.io/react-mfe-shell-demo/",
+      "image": "https://jonmatum.github.io/react-mfe-shell-demo/screenshot-wide.png",
+      "author": {
+        "@type": "Organization",
+        "name": "React MFE Shell Demo"
+      },
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Platform Engineering Assessment",
+        "Software Development Maturity Evaluation",
+        "Interactive Scoring System",
+        "Real-time Analytics",
+        "Progress Tracking",
+        "Data Export/Import",
+        "Offline Functionality",
+        "Mobile Responsive Design"
+      ],
+      "screenshot": "https://jonmatum.github.io/react-mfe-shell-demo/screenshot-wide.png",
+      "softwareVersion": "3.1.0",
+      "datePublished": "2024-08-26",
+      "inLanguage": "en-US",
+      "isAccessibleForFree": true,
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "softwareRequirements": "Modern web browser"
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

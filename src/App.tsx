@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import {
   SettingsProvider,
   Text,
@@ -11,6 +12,7 @@ import {
 import { MaturityScoring } from './components/MaturityScoring';
 import { ModelSelector } from './components/ModelSelector';
 import { PWAInstallPrompt } from './components/PWAInstallPrompt';
+import { SEO } from './components/SEO';
 import { platformMaturityModel } from './data/platformMaturityModel';
 import { softwareMaturityModel } from './data/softwareMaturityModel';
 import { getReactMfeShellVersion, getCurrentYear } from './utils/packageInfo';
@@ -75,6 +77,24 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-background-primary">
+      {/* SEO Configuration */}
+      <SEO 
+        title={`${selectedModel.title} - Maturity Assessment Platform`}
+        description={`${selectedModel.description} Evaluate your organization's practices with our comprehensive assessment tool featuring interactive scoring and real-time analytics.`}
+        keywords={[
+          'maturity assessment',
+          'organizational maturity',
+          selectedModelKey === 'platform' ? 'platform engineering' : 'software development',
+          selectedModelKey === 'platform' ? 'micro frontend' : 'code quality',
+          selectedModelKey === 'platform' ? 'architecture' : 'testing practices',
+          'react',
+          'assessment tool',
+          'evaluation platform',
+          'development practices',
+          'engineering maturity'
+        ]}
+      />
+      
       {/* Enhanced Header with Theme Toggle */}
       <header className="bg-surface-primary border-b border-border-primary shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -210,9 +230,11 @@ function AppContent() {
 
 function App() {
   return (
-    <SettingsProvider>
-      <AppContent />
-    </SettingsProvider>
+    <HelmetProvider>
+      <SettingsProvider>
+        <AppContent />
+      </SettingsProvider>
+    </HelmetProvider>
   );
 }
 

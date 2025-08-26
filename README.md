@@ -65,6 +65,38 @@ Experience a fully functional maturity assessment platform showcasing:
 - **PostCSS**: CSS processing and optimization
 - **GitHub Actions**: Automated deployment to GitHub Pages
 
+## SEO & Performance Optimization
+
+### Search Engine Optimization
+- **Comprehensive Meta Tags**: Title, description, keywords, and author information
+- **Open Graph Protocol**: Rich social media sharing with custom images and descriptions
+- **Twitter Cards**: Enhanced Twitter sharing experience with large image cards
+- **LinkedIn Integration**: Professional network sharing optimization
+- **Structured Data**: JSON-LD schema markup for rich search results
+- **Canonical URLs**: Proper URL canonicalization to avoid duplicate content
+- **Robots.txt**: Search engine crawling instructions and sitemap location
+- **Sitemap.xml**: Complete site structure for search engine indexing
+
+### Technical SEO
+- **React Helmet Async**: Dynamic meta tag management for SPA SEO
+- **Semantic HTML**: Proper heading hierarchy and semantic markup
+- **Mobile-First Design**: Responsive design optimized for mobile search rankings
+- **Page Speed Optimization**: Optimized assets and lazy loading for fast load times
+- **Core Web Vitals**: Optimized for Google's Core Web Vitals metrics
+- **Accessibility**: WCAG AA compliant for better search engine understanding
+
+### Social Media Optimization
+- **Open Graph Images**: Custom 1280x720 preview images for social sharing
+- **Twitter Card Images**: Optimized images for Twitter sharing
+- **Dynamic Meta Tags**: Context-aware meta tags based on selected assessment model
+- **Rich Snippets**: Structured data for enhanced search result appearance
+
+### Performance Features
+- **Preconnect Links**: DNS prefetching for external resources
+- **Resource Hints**: Optimized loading of fonts and external assets
+- **Gzip Compression**: Compressed assets for faster loading
+- **Bundle Optimization**: Code splitting and tree shaking for minimal bundle size
+
 ## Architecture & Patterns
 
 ### Micro Frontend Approach
