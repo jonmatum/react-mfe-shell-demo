@@ -13,7 +13,17 @@ import {
   Label,
   Divider,
   useSettings,
+  // New v9.0.0 components that are confirmed to work
+  SearchBox,
+  FeatureChip,
+  Select,
+  Heading,
+  // Design tokens
+  formatNumber,
+  generateId,
+  // Types
   type BadgeVariant,
+  type FeatureChipVariant,
 } from '@jonmatum/react-mfe-shell';
 
 // Simple SVG Icon Components
@@ -44,12 +54,6 @@ const FireIcon = ({ className = "w-6 h-6" }: { className?: string }) => (
 const PlusIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-  </svg>
-);
-
-const SearchIcon = ({ className = "w-4 h-4" }: { className?: string }) => (
-  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
   </svg>
 );
 
@@ -92,12 +96,12 @@ interface User {
   role: 'admin' | 'manager' | 'developer' | 'designer';
 }
 
-// Mock data
+// Mock data - The Beatles
 const mockUsers: User[] = [
-  { id: '1', name: 'Sarah Chen', email: 'sarah@company.com', avatar: 'https://github.com/sarahchen.png', role: 'manager' },
-  { id: '2', name: 'Alex Rodriguez', email: 'alex@company.com', avatar: 'https://github.com/alexrodriguez.png', role: 'developer' },
-  { id: '3', name: 'Jordan Kim', email: 'jordan@company.com', avatar: 'https://github.com/jordankim.png', role: 'designer' },
-  { id: '4', name: 'Taylor Swift', email: 'taylor@company.com', avatar: 'https://github.com/taylorswift.png', role: 'developer' },
+  { id: '1', name: 'John Lennon', email: 'john@beatles.com', avatar: 'https://github.com/johnlennon.png', role: 'manager' },
+  { id: '2', name: 'Paul McCartney', email: 'paul@beatles.com', avatar: 'https://github.com/paulmccartney.png', role: 'developer' },
+  { id: '3', name: 'George Harrison', email: 'george@beatles.com', avatar: 'https://github.com/georgeharrison.png', role: 'designer' },
+  { id: '4', name: 'Ringo Starr', email: 'ringo@beatles.com', avatar: 'https://github.com/ringostarr.png', role: 'developer' },
 ];
 
 const mockTasks: Task[] = [
@@ -107,7 +111,7 @@ const mockTasks: Task[] = [
     description: 'Add OAuth2 integration with Google and GitHub providers',
     status: 'in-progress',
     priority: 'high',
-    assignee: 'Alex Rodriguez',
+    assignee: 'Paul McCartney',
     dueDate: '2025-08-30',
     createdAt: '2025-08-20',
     tags: ['backend', 'security', 'auth']
@@ -118,7 +122,7 @@ const mockTasks: Task[] = [
     description: 'Create low-fidelity wireframes for the main dashboard layout',
     status: 'completed',
     priority: 'medium',
-    assignee: 'Jordan Kim',
+    assignee: 'George Harrison',
     dueDate: '2025-08-25',
     createdAt: '2025-08-18',
     tags: ['design', 'ux', 'wireframes']
@@ -129,7 +133,7 @@ const mockTasks: Task[] = [
     description: 'Configure GitHub Actions for automated testing and deployment',
     status: 'todo',
     priority: 'high',
-    assignee: 'Taylor Swift',
+    assignee: 'Ringo Starr',
     dueDate: '2025-09-05',
     createdAt: '2025-08-22',
     tags: ['devops', 'automation', 'deployment']
@@ -140,7 +144,7 @@ const mockTasks: Task[] = [
     description: 'Document all REST endpoints using OpenAPI specification',
     status: 'todo',
     priority: 'low',
-    assignee: 'Alex Rodriguez',
+    assignee: 'Paul McCartney',
     dueDate: '2025-09-10',
     createdAt: '2025-08-21',
     tags: ['documentation', 'api', 'backend']
@@ -151,7 +155,7 @@ const mockTasks: Task[] = [
     description: 'Add WebSocket support for live task updates and notifications',
     status: 'in-progress',
     priority: 'medium',
-    assignee: 'Taylor Swift',
+    assignee: 'Ringo Starr',
     dueDate: '2025-09-01',
     createdAt: '2025-08-19',
     tags: ['frontend', 'websockets', 'notifications']
@@ -183,7 +187,7 @@ function TaskManagementApp() {
   // Simulate loading state
   useEffect(() => {
     setIsLoading(true);
-    const timer = setTimeout(() => setIsLoading(false), 1000);
+    const timer = setTimeout(() => setIsLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -216,6 +220,27 @@ function TaskManagementApp() {
     }
   };
 
+  // Get feature chip variant for task tags (using available variants)
+  const getFeatureChipVariant = (tag: string): FeatureChipVariant => {
+    const tagVariants: Record<string, FeatureChipVariant> = {
+      'backend': 'primary',
+      'frontend': 'success',
+      'security': 'warning',
+      'design': 'secondary',
+      'devops': 'primary',
+      'api': 'warning',
+      'auth': 'success',
+      'ux': 'secondary',
+      'documentation': 'primary',
+      'testing': 'warning',
+      'websockets': 'success',
+      'notifications': 'warning',
+      'automation': 'primary',
+      'deployment': 'primary',
+    };
+    return tagVariants[tag] || 'default';
+  };
+
   // Update task status
   const updateTaskStatus = (taskId: string, newStatus: Task['status']) => {
     setTasks(prev => prev.map(task => 
@@ -223,11 +248,11 @@ function TaskManagementApp() {
     ));
   };
 
-  // Create new task
+  // Create new task with v9.0.0 generateId
   const createTask = (taskData: Omit<Task, 'id' | 'createdAt'>) => {
     const newTask: Task = {
       ...taskData,
-      id: Date.now().toString(),
+      id: generateId('task'),
       createdAt: new Date().toISOString().split('T')[0]
     };
     setTasks(prev => [newTask, ...prev]);
@@ -285,12 +310,11 @@ function TaskManagementApp() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Dashboard Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <Text className="text-3xl font-bold mb-2 text-text-primary">Project Dashboard</Text>
-              <Text className="text-text-secondary">Manage your team's tasks and track progress</Text>
+              <Heading level={1} size="2xl" className="mb-2">Project Dashboard</Heading>
+              <Text className="text-text-secondary">Manage your team's tasks</Text>
             </div>
             <Button
               variant="primary"
@@ -304,11 +328,11 @@ function TaskManagementApp() {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <Card className="p-6">
+            <Card className="p-6 hover:shadow-lg transition-all duration-200">
               <div className="flex items-center justify-between">
                 <div>
                   <Text className="text-sm font-medium text-text-secondary">Total Tasks</Text>
-                  <Text className="text-2xl font-bold text-text-primary">{tasks.length}</Text>
+                  <Text className="text-2xl font-bold text-text-primary">{formatNumber(tasks.length)}</Text>
                 </div>
                 <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
                   <TasksIcon className="w-6 h-6 text-primary-600" />
@@ -316,12 +340,12 @@ function TaskManagementApp() {
               </div>
             </Card>
 
-            <Card className="p-6">
+            <Card className="p-6 hover:shadow-lg transition-all duration-200">
               <div className="flex items-center justify-between">
                 <div>
                   <Text className="text-sm font-medium">In Progress</Text>
                   <Text className="text-2xl font-bold">
-                    {tasks.filter(t => t.status === 'in-progress').length}
+                    {formatNumber(tasks.filter(t => t.status === 'in-progress').length)}
                   </Text>
                 </div>
                 <div className="w-12 h-12 bg-warning-100 rounded-lg flex items-center justify-center">
@@ -330,12 +354,12 @@ function TaskManagementApp() {
               </div>
             </Card>
 
-            <Card className="p-6">
+            <Card className="p-6 hover:shadow-lg transition-all duration-200">
               <div className="flex items-center justify-between">
                 <div>
                   <Text className="text-sm font-medium">Completed</Text>
                   <Text className="text-2xl font-bold">
-                    {tasks.filter(t => t.status === 'completed').length}
+                    {formatNumber(tasks.filter(t => t.status === 'completed').length)}
                   </Text>
                 </div>
                 <div className="w-12 h-12 bg-success-100 rounded-lg flex items-center justify-center">
@@ -344,12 +368,12 @@ function TaskManagementApp() {
               </div>
             </Card>
 
-            <Card className="p-6">
+            <Card className="p-6 hover:shadow-lg transition-all duration-200">
               <div className="flex items-center justify-between">
                 <div>
                   <Text className="text-sm font-medium">High Priority</Text>
                   <Text className="text-2xl font-bold">
-                    {tasks.filter(t => t.priority === 'high').length}
+                    {formatNumber(tasks.filter(t => t.priority === 'high').length)}
                   </Text>
                 </div>
                 <div className="w-12 h-12 bg-danger-100 rounded-lg flex items-center justify-center">
@@ -363,14 +387,12 @@ function TaskManagementApp() {
         {/* Filters and Search */}
         <div className="flex flex-col sm:flex-row gap-4 mb-6">
           <div className="flex-1">
-            <Input
-              type="search"
-              size="md"
-              leftIcon={<SearchIcon />}
+            <SearchBox
               placeholder="Search tasks, assignees, or descriptions..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full"
+              onChange={setSearchQuery}
+              showClearButton
+              size="md"
             />
           </div>
           
@@ -414,6 +436,7 @@ function TaskManagementApp() {
                 onViewDetails={setSelectedTask}
                 getStatusVariant={getStatusVariant}
                 getPriorityVariant={getPriorityVariant}
+                getFeatureChipVariant={getFeatureChipVariant}
               />
             ))
           )}
@@ -429,6 +452,7 @@ function TaskManagementApp() {
           onStatusChange={updateTaskStatus}
           getStatusVariant={getStatusVariant}
           getPriorityVariant={getPriorityVariant}
+          getFeatureChipVariant={getFeatureChipVariant}
         />
       )}
 
@@ -449,13 +473,13 @@ function TaskManagementApp() {
               <Text className="text-text-secondary text-sm">
                 powered by
               </Text>
-              <Badge variant="default" size="md">
-                React MFE Shell v6.2.0
-              </Badge>
+              <FeatureChip variant="primary" size="md">
+                React MFE Shell v9.0.0
+              </FeatureChip>
             </div>
             
             <Text className="text-text-tertiary text-xs text-center">
-              © 2025 TaskMaster Pro. Built with React MFE Shell for demonstration purposes.
+              © 2025 TaskMaster Pro. Built with React MFE Shell.
             </Text>
           </div>
         </div>
@@ -472,14 +496,15 @@ interface TaskCardProps {
   onViewDetails: (task: Task) => void;
   getStatusVariant: (status: Task['status']) => BadgeVariant;
   getPriorityVariant: (priority: Task['priority']) => BadgeVariant;
+  getFeatureChipVariant: (tag: string) => FeatureChipVariant;
 }
 
-function TaskCard({ task, users, onStatusChange, onViewDetails, getStatusVariant, getPriorityVariant }: TaskCardProps) {
+function TaskCard({ task, users, onStatusChange, onViewDetails, getStatusVariant, getPriorityVariant, getFeatureChipVariant }: TaskCardProps) {
   const assigneeUser = users.find(u => u.name === task.assignee);
   const isOverdue = new Date(task.dueDate) < new Date() && task.status !== 'completed';
 
   return (
-    <Card className="p-6 hover:shadow-md transition-shadow">
+    <Card className="p-6 hover:shadow-lg transition-all duration-200 task-card">
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1">
           <div className="flex items-center space-x-3 mb-2">
@@ -491,14 +516,16 @@ function TaskCard({ task, users, onStatusChange, onViewDetails, getStatusVariant
               {task.priority} priority
             </Badge>
             {isOverdue && (
-              <Badge variant="danger" size="sm">Overdue</Badge>
+              <Badge variant="danger" size="sm" dot>Overdue</Badge>
             )}
           </div>
           <Text className="mb-3">{task.description}</Text>
           
           <div className="flex flex-wrap gap-2 mb-4">
             {task.tags.map((tag) => (
-              <Badge key={tag} variant="secondary" size="sm">#{tag}</Badge>
+              <FeatureChip key={tag} variant={getFeatureChipVariant(tag)} size="sm">
+                {tag}
+              </FeatureChip>
             ))}
           </div>
         </div>
@@ -519,9 +546,9 @@ function TaskCard({ task, users, onStatusChange, onViewDetails, getStatusVariant
 
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4 text-sm text-text-secondary">
-          <span>Due: {new Date(task.dueDate).toLocaleDateString()}</span>
-          <span>•</span>
-          <span>Assigned to: {task.assignee}</span>
+          <Text size="sm">Due: {new Date(task.dueDate).toLocaleDateString()}</Text>
+          <Text size="sm">•</Text>
+          <Text size="sm">Assigned to: {task.assignee}</Text>
         </div>
 
         <div className="flex items-center space-x-2">
@@ -531,6 +558,7 @@ function TaskCard({ task, users, onStatusChange, onViewDetails, getStatusVariant
               size="sm"
               leftIcon={<CheckIcon className="w-4 h-4" />}
               onClick={() => onStatusChange(task.id, 'completed')}
+              className="btn-enhanced"
             >
               Mark Complete
             </Button>
@@ -540,6 +568,7 @@ function TaskCard({ task, users, onStatusChange, onViewDetails, getStatusVariant
             variant="secondary"
             size="sm"
             onClick={() => onViewDetails(task)}
+            className="btn-enhanced"
           >
             View Details
           </Button>
@@ -557,9 +586,10 @@ interface TaskDetailsModalProps {
   onStatusChange: (taskId: string, status: Task['status']) => void;
   getStatusVariant: (status: Task['status']) => BadgeVariant;
   getPriorityVariant: (priority: Task['priority']) => BadgeVariant;
+  getFeatureChipVariant: (tag: string) => FeatureChipVariant;
 }
 
-function TaskDetailsModal({ task, users, onClose, onStatusChange, getStatusVariant, getPriorityVariant }: TaskDetailsModalProps) {
+function TaskDetailsModal({ task, users, onClose, onStatusChange, getStatusVariant, getPriorityVariant, getFeatureChipVariant }: TaskDetailsModalProps) {
   const assigneeUser = users.find(u => u.name === task.assignee);
 
   return (
@@ -567,7 +597,7 @@ function TaskDetailsModal({ task, users, onClose, onStatusChange, getStatusVaria
       <div className="max-w-2xl">
         {/* Modal Header */}
         <div className="p-6 border-b border-border-primary">
-          <Text className="text-2xl font-bold mb-3">{task.title}</Text>
+          <Heading level={2} size="xl" className="mb-3">{task.title}</Heading>
           <div className="flex items-center space-x-2">
             <Badge variant={getStatusVariant(task.status)} size="md">
               {task.status.replace('-', ' ')}
@@ -631,14 +661,14 @@ function TaskDetailsModal({ task, users, onClose, onStatusChange, getStatusVaria
             </div>
           </div>
 
-          {/* Tags */}
+          {/* Enhanced Tags with FeatureChips */}
           <div>
             <Label className="text-sm font-medium text-text-secondary mb-3">Tags</Label>
             <div className="flex flex-wrap gap-2">
               {task.tags.map((tag) => (
-                <Badge key={tag} variant="primary" size="sm">
-                  #{tag}
-                </Badge>
+                <FeatureChip key={tag} variant={getFeatureChipVariant(tag)} size="sm">
+                  {tag}
+                </FeatureChip>
               ))}
             </div>
           </div>
@@ -724,7 +754,7 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
     <Modal isOpen onClose={onClose} >
       <form onSubmit={handleSubmit} className="p-6">
         <div className="p-6 border-b border-border-primary">
-          <Text className="text-xl font-bold">Create New Task</Text>
+          <Heading level={2} size="lg">Create New Task</Heading>
           <Text className="text-sm text-text-secondary mt-1">
             Fill in the details below to create a new task
           </Text>
@@ -754,35 +784,27 @@ function CreateTaskModal({ users, onClose, onCreateTask }: CreateTaskModalProps)
           />
 
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <Label htmlFor="priority">Priority</Label>
-              <select
-                id="priority"
-                value={formData.priority}
-                onChange={(e) => setFormData(prev => ({ ...prev, priority: e.target.value as Task['priority'] }))}
-                className="w-full px-3 py-2 border border-border-primary rounded-md bg-surface-primary text-text-primary"
-                disabled={isSubmitting}
-              >
-                <option value="low">Low Priority</option>
-                <option value="medium">Medium Priority</option>
-                <option value="high">High Priority</option>
-              </select>
-            </div>
+            <Select
+              id="priority"
+              label="Priority"
+              value={formData.priority}
+              onChange={(value) => setFormData(prev => ({ ...prev, priority: value as Task['priority'] }))}
+              disabled={isSubmitting}
+              options={[
+                { value: 'low', label: 'Low Priority' },
+                { value: 'medium', label: 'Medium Priority' },
+                { value: 'high', label: 'High Priority' }
+              ]}
+            />
 
-            <div>
-              <Label htmlFor="assignee">Assignee</Label>
-              <select
-                id="assignee"
-                value={formData.assignee}
-                onChange={(e) => setFormData(prev => ({ ...prev, assignee: e.target.value }))}
-                className="w-full px-3 py-2 border border-border-primary rounded-md bg-surface-primary text-text-primary"
-                disabled={isSubmitting}
-              >
-                {users.map((user) => (
-                  <option key={user.id} value={user.name}>{user.name}</option>
-                ))}
-              </select>
-            </div>
+            <Select
+              id="assignee"
+              label="Assignee"
+              value={formData.assignee}
+              onChange={(value) => setFormData(prev => ({ ...prev, assignee: String(value) }))}
+              disabled={isSubmitting}
+              options={users.map(user => ({ value: user.name, label: user.name }))}
+            />
           </div>
 
           <Input
