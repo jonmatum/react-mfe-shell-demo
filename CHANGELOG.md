@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.1](https://github.com/jonmatum/react-mfe-shell-demo/compare/react-mfe-shell-demo-v3.0.0...react-mfe-shell-demo-v3.0.1) (2025-08-26)
+
+
+### Bug Fixes
+
+* **ci:** improve Rollup dependency handling with fallback strategy ([6addaa5](https://github.com/jonmatum/react-mfe-shell-demo/commit/6addaa5653a24e2465df13c9814c6058717c4e28))
+* **ci:** resolve Rollup native dependency issue in GitHub Actions ([ac6973e](https://github.com/jonmatum/react-mfe-shell-demo/commit/ac6973e814fa4670514ee5fab4a074404352ecb2))
+
 ## [3.0.0](https://github.com/jonmatum/react-mfe-shell-demo/compare/react-mfe-shell-demo-v2.0.0...react-mfe-shell-demo-v3.0.0) (2025-08-26)
 
 
