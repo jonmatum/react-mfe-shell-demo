@@ -120,7 +120,7 @@ export default {
       },
     },
   },
-  // Use the MFE Shell specific safelist
+  // Use the MFE Shell safelist which includes dark mode classes
   safelist: mfeShellSafelist,
   plugins: [],
 };

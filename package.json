@@ -3,7 +3,7 @@
   "private": false,
   "version": "1.2.0",
   "type": "module",
-  "description": "Comprehensive test application for @jonmatum/react-mfe-shell package",
+  "description": "Maturity Assessment Platform - Comprehensive organizational maturity evaluation tool built with @jonmatum/react-mfe-shell",
   "repository": {
     "type": "git",
     "url": "https://github.com/jonmatum/react-mfe-shell-demo.git"
@@ -27,8 +27,14 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
     "preview": "vite preview",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext ts,tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "type-check": "tsc --noEmit",
+    "quality": "npm run type-check && npm run lint && npm run format:check",
+    "quality:fix": "npm run type-check && npm run lint:fix && npm run format",
     "safelist:minimal": "node scripts/smart-safelist.js minimal",
     "safelist:standard": "node scripts/smart-safelist.js standard",
     "safelist:comprehensive": "node scripts/smart-safelist.js comprehensive",
@@ -36,9 +42,10 @@
     "safelist:mfe": "node scripts/mfe-shell-safelist.js"
   },
   "dependencies": {
-    "@jonmatum/react-mfe-shell": "^9.0.0",
+    "@jonmatum/react-mfe-shell": "^10.0.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "recharts": "^3.1.2"
   },
   "overrides": {
     "react": "^18.3.1",
@@ -49,13 +56,18 @@
     "@types/node": "^24.3.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.41.0",
+    "@typescript-eslint/parser": "^8.41.0",
     "@vitejs/plugin-react": "^5.0.0",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.33.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
     "postcss": "^8.5.6",
+    "prettier": "^3.6.2",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.39.1",
