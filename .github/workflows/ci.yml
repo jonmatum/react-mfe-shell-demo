@@ -23,14 +23,39 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Use npm 8 for better optional dependency handling
-        run: npm install -g npm@8
-
-      - name: Clean install dependencies
+      - name: Aggressive Rollup dependency fix
         run: |
-          # Clean install with npm 8 which handles optional deps better
+          # Complete clean slate
           rm -rf node_modules package-lock.json
-          npm install --legacy-peer-deps
+          
+          # Install with specific npm configuration
+          npm config set fund false
+          npm config set audit false
+          
+          # Install dependencies with specific flags
+          npm install --no-optional --no-package-lock
+          
+          # Explicitly install Rollup native binaries
+          npm install @rollup/rollup-linux-x64-gnu --save-optional --no-package-lock
+          
+          # Verify installation
+          ls -la node_modules/@rollup/ || echo "Rollup native binaries directory not found"
+          
+          # Force rebuild rollup
+          npm rebuild rollup --no-package-lock
+
+      - name: Verify Rollup functionality
+        run: |
+          # Test that rollup can be imported
+          node -e "
+            try {
+              const rollup = require('rollup');
+              console.log('✅ Rollup loaded successfully');
+            } catch (error) {
+              console.error('❌ Rollup failed to load:', error.message);
+              process.exit(1);
+            }
+          "
 
       - name: Run linter
         run: npm run lint

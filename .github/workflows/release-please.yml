@@ -41,10 +41,24 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-          cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install dependencies with Rollup fix
+        run: |
+          # Complete clean slate for deployment
+          rm -rf node_modules package-lock.json
+          
+          # Install with specific npm configuration
+          npm config set fund false
+          npm config set audit false
+          
+          # Install dependencies with specific flags
+          npm install --no-optional --no-package-lock
+          
+          # Explicitly install Rollup native binaries
+          npm install @rollup/rollup-linux-x64-gnu --save-optional --no-package-lock
+          
+          # Force rebuild rollup
+          npm rebuild rollup --no-package-lock
 
       - name: Build application
         run: npm run build
