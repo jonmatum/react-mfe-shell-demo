@@ -1,4 +1,4 @@
-name: CI
+name: CI (Yarn Alternative)
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  test-yarn:
     runs-on: ubuntu-latest
 
     strategy:
@@ -22,29 +22,29 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
 
-      - name: Use npm 8 for better optional dependency handling
-        run: npm install -g npm@8
+      - name: Enable Corepack
+        run: corepack enable
 
-      - name: Clean install dependencies
+      - name: Install dependencies with Yarn
         run: |
-          # Clean install with npm 8 which handles optional deps better
-          rm -rf node_modules package-lock.json
-          npm install --legacy-peer-deps
+          # Use yarn which handles optional dependencies better
+          yarn install --frozen-lockfile || yarn install
 
       - name: Run linter
-        run: npm run lint
+        run: yarn lint
 
       - name: Run type check
-        run: npx tsc --noEmit
+        run: yarn type-check
 
       - name: Build application
-        run: npm run build
+        run: yarn build
 
       - name: Upload build artifacts
         if: matrix.node-version == 22
         uses: actions/upload-artifact@v4
         with:
-          name: dist
+          name: dist-yarn
           path: dist/
           retention-days: 7

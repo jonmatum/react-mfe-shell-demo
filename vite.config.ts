@@ -9,5 +9,13 @@ export default defineConfig(({ mode }) => ({
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: true,
+    rollupOptions: {
+      // Fallback configuration for CI environments with Rollup native dependency issues
+      external: [],
+    },
+  },
+  // Optimize dependencies to avoid optional dependency issues in CI
+  optimizeDeps: {
+    include: ['react', 'react-dom'],
   },
 }))
