@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/jonmatum/react-mfe-shell-demo/compare/react-mfe-shell-demo-v1.2.0...react-mfe-shell-demo-v2.0.0) (2025-08-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* Demo now uses only MFE components for interactive elements
+
+### Features
+
+* replace HTML elements with MFE components and update demo data ([ff1676c](https://github.com/jonmatum/react-mfe-shell-demo/commit/ff1676c73701cf35263b934e626637973b4bad34))
+
 ## [1.2.0](https://github.com/jonmatum/react-mfe-shell-demo/compare/react-mfe-shell-demo-v1.1.0...react-mfe-shell-demo-v1.2.0) (2025-08-24)
 
 
