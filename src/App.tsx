@@ -10,6 +10,7 @@ import {
 } from '@jonmatum/react-mfe-shell';
 import { MaturityScoring } from './components/MaturityScoring';
 import { ModelSelector } from './components/ModelSelector';
+import { PWAInstallPrompt } from './components/PWAInstallPrompt';
 import { platformMaturityModel } from './data/platformMaturityModel';
 import { softwareMaturityModel } from './data/softwareMaturityModel';
 import { getReactMfeShellVersion, getCurrentYear } from './utils/packageInfo';
@@ -200,6 +201,9 @@ function AppContent() {
           </div>
         </footer>
       </div>
+      
+      {/* PWA Install Prompt */}
+      <PWAInstallPrompt />
     </div>
   );
 }

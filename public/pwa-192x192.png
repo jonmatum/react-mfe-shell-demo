@@ -1,0 +1,52 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" rx="64" fill="#3b82f6"/>
+  
+  <!-- Main Icon - Assessment/Checklist -->
+  <g transform="translate(128, 128)">
+    <!-- Clipboard background -->
+    <rect x="32" y="16" width="192" height="240" rx="16" fill="white" opacity="0.95"/>
+    
+    <!-- Clipboard clip -->
+    <rect x="96" y="0" width="64" height="32" rx="8" fill="#1e40af"/>
+    
+    <!-- Checklist items -->
+    <g fill="#3b82f6">
+      <!-- Item 1 - Completed -->
+      <circle cx="64" cy="64" r="8" fill="#10b981"/>
+      <path d="m58 64 4 4 8-8" stroke="white" stroke-width="2" fill="none"/>
+      <rect x="88" y="60" width="120" height="8" rx="4" fill="#e5e7eb"/>
+      
+      <!-- Item 2 - Partial -->
+      <circle cx="64" cy="96" r="8" fill="#f59e0b"/>
+      <path d="m60 96 4 4 4-4" stroke="white" stroke-width="2" fill="none"/>
+      <rect x="88" y="92" width="120" height="8" rx="4" fill="#e5e7eb"/>
+      
+      <!-- Item 3 - Not started -->
+      <circle cx="64" cy="128" r="8" fill="#6b7280"/>
+      <rect x="88" y="124" width="120" height="8" rx="4" fill="#e5e7eb"/>
+      
+      <!-- Item 4 - Completed -->
+      <circle cx="64" cy="160" r="8" fill="#10b981"/>
+      <path d="m58 160 4 4 8-8" stroke="white" stroke-width="2" fill="none"/>
+      <rect x="88" y="156" width="120" height="8" rx="4" fill="#e5e7eb"/>
+      
+      <!-- Item 5 - Partial -->
+      <circle cx="64" cy="192" r="8" fill="#f59e0b"/>
+      <path d="m60 192 4 4 4-4" stroke="white" stroke-width="2" fill="none"/>
+      <rect x="88" y="188" width="120" height="8" rx="4" fill="#e5e7eb"/>
+    </g>
+    
+    <!-- Progress bar at bottom -->
+    <rect x="48" y="224" width="160" height="16" rx="8" fill="#e5e7eb"/>
+    <rect x="48" y="224" width="96" height="16" rx="8" fill="#10b981"/>
+  </g>
+  
+  <!-- App title -->
+  <text x="256" y="440" text-anchor="middle" fill="white" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="600">
+    Maturity
+  </text>
+  <text x="256" y="480" text-anchor="middle" fill="white" font-family="system-ui, -apple-system, sans-serif" font-size="32" font-weight="600">
+    Assessment
+  </text>
+</svg>

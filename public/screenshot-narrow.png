@@ -1,0 +1,77 @@
+<svg width="640" height="1136" viewBox="0 0 640 1136" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="1136" fill="#f8fafc"/>
+  
+  <!-- Header -->
+  <rect x="0" y="0" width="640" height="80" fill="#3b82f6"/>
+  <text x="320" y="50" text-anchor="middle" fill="white" font-family="system-ui" font-size="20" font-weight="600">
+    Maturity Assessment
+  </text>
+  
+  <!-- Mobile content -->
+  <rect x="16" y="100" width="608" height="1000" rx="16" fill="white" stroke="#e5e7eb" stroke-width="2"/>
+  
+  <!-- Model selector -->
+  <rect x="32" y="120" width="576" height="60" rx="12" fill="#f1f5f9" stroke="#e2e8f0"/>
+  <text x="320" y="155" text-anchor="middle" fill="#1e293b" font-family="system-ui" font-size="16" font-weight="600">
+    Platform Engineering Model
+  </text>
+  
+  <!-- Section card -->
+  <rect x="32" y="200" width="576" height="300" rx="12" fill="#ffffff" stroke="#e2e8f0"/>
+  <text x="48" y="230" fill="#1e293b" font-family="system-ui" font-size="18" font-weight="600">
+    1. Architecture & Micro-Frontends
+  </text>
+  
+  <!-- Progress -->
+  <rect x="48" y="250" width="544" height="8" rx="4" fill="#e5e7eb"/>
+  <rect x="48" y="250" width="272" height="8" rx="4" fill="#10b981"/>
+  <text x="592" y="255" text-anchor="end" fill="#10b981" font-family="system-ui" font-size="12" font-weight="600">
+    50%
+  </text>
+  
+  <!-- Assessment items -->
+  <g transform="translate(48, 280)">
+    <circle cx="12" cy="20" r="6" fill="#10b981"/>
+    <text x="32" y="25" fill="#374151" font-family="system-ui" font-size="14">
+      App Shell with branding
+    </text>
+    
+    <circle cx="12" cy="50" r="6" fill="#f59e0b"/>
+    <text x="32" y="55" fill="#374151" font-family="system-ui" font-size="14">
+      Client-side routing
+    </text>
+    
+    <circle cx="12" cy="80" r="6" fill="#6b7280"/>
+    <text x="32" y="85" fill="#374151" font-family="system-ui" font-size="14">
+      State management
+    </text>
+    
+    <circle cx="12" cy="110" r="6" fill="#10b981"/>
+    <text x="32" y="115" fill="#374151" font-family="system-ui" font-size="14">
+      Design system
+    </text>
+    
+    <circle cx="12" cy="140" r="6" fill="#f59e0b"/>
+    <text x="32" y="145" fill="#374151" font-family="system-ui" font-size="14">
+      Cross-team communication
+    </text>
+  </g>
+  
+  <!-- Score selectors -->
+  <g transform="translate(480, 280)">
+    <rect x="0" y="10" width="80" height="30" rx="6" fill="#10b981"/>
+    <text x="40" y="30" text-anchor="middle" fill="white" font-family="system-ui" font-size="12" font-weight="600">2</text>
+    
+    <rect x="0" y="40" width="80" height="30" rx="6" fill="#f59e0b"/>
+    <text x="40" y="60" text-anchor="middle" fill="white" font-family="system-ui" font-size="12" font-weight="600">1</text>
+    
+    <rect x="0" y="70" width="80" height="30" rx="6" fill="#6b7280"/>
+    <text x="40" y="90" text-anchor="middle" fill="white" font-family="system-ui" font-size="12" font-weight="600">0</text>
+    
+    <rect x="0" y="100" width="80" height="30" rx="6" fill="#10b981"/>
+    <text x="40" y="120" text-anchor="middle" fill="white" font-family="system-ui" font-size="12" font-weight="600">2</text>
+    
+    <rect x="0" y="130" width="80" height="30" rx="6" fill="#f59e0b"/>
+    <text x="40" y="150" text-anchor="middle" fill="white" font-family="system-ui" font-size="12" font-weight="600">1</text>
+  </g>
+</svg>
