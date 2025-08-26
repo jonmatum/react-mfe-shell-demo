@@ -10,12 +10,31 @@ export default defineConfig(({ mode }) => ({
     assetsDir: 'assets',
     sourcemap: true,
     rollupOptions: {
-      // Fallback configuration for CI environments with Rollup native dependency issues
+      // Handle dependency resolution issues in CI
       external: [],
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          charts: ['recharts'],
+        },
+      },
     },
+    // Increase chunk size warning limit to handle large bundles
+    chunkSizeWarningLimit: 1000,
   },
-  // Optimize dependencies to avoid optional dependency issues in CI
+  // Optimize dependencies to avoid resolution issues
   optimizeDeps: {
-    include: ['react', 'react-dom'],
+    include: [
+      'react', 
+      'react-dom', 
+      'recharts',
+      'react-is',
+    ],
+    // Force pre-bundling of problematic dependencies
+    force: true,
+  },
+  // Enhanced resolve configuration
+  resolve: {
+    dedupe: ['react', 'react-dom', 'react-is'],
   },
 }))
