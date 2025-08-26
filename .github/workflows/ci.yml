@@ -22,15 +22,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          # Temporarily disable cache to fix rollup native dependency issue
-          # cache: 'npm'
+          cache: 'npm'
 
-      - name: Clean install dependencies
+      - name: Install dependencies
         run: |
-          # Clean install to avoid npm optional dependency issues
-          rm -rf node_modules package-lock.json
-          npm install --no-optional
-          npm install
+          # Use npm ci but with fallback for optional dependencies
+          npm ci || (rm -rf node_modules package-lock.json && npm install)
 
       - name: Run linter
         run: npm run lint
