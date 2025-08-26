@@ -1,5 +1,18 @@
 # Changelog
 
+## [3.2.0](https://github.com/jonmatum/react-mfe-shell-demo/compare/react-mfe-shell-demo-v3.1.0...react-mfe-shell-demo-v3.2.0) (2025-08-26)
+
+
+### Features
+
+* implement comprehensive PWA (Progressive Web App) functionality ([69a33f5](https://github.com/jonmatum/react-mfe-shell-demo/commit/69a33f57221afcc014fe9bc7a577614d0272de1e))
+* implement comprehensive SEO optimization ([a38e7de](https://github.com/jonmatum/react-mfe-shell-demo/commit/a38e7deb069f18eabb4e984ac17bfd2f57c4e937))
+
+
+### Bug Fixes
+
+* resolve all ESLint issues and improve code quality ([8347d15](https://github.com/jonmatum/react-mfe-shell-demo/commit/8347d15dd17c1e8f5079ca51c2ab5c944eb8ca58))
+
 ## [3.1.0](https://github.com/jonmatum/react-mfe-shell-demo/compare/react-mfe-shell-demo-v3.0.2...react-mfe-shell-demo-v3.1.0) (2025-08-26)
 
 
