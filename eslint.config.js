@@ -7,7 +7,18 @@ import prettier from 'eslint-config-prettier';
 
 export default tseslint.config([
   {
-    ignores: ['dist/**', 'build/**', 'node_modules/**', '*.min.js', '*.min.css', 'scripts/**'],
+    ignores: [
+      'dist/**', 
+      'dev-dist/**',
+      'build/**', 
+      'node_modules/**', 
+      '*.min.js', 
+      '*.min.css', 
+      'scripts/**',
+      'sw.js',
+      'workbox-*.js',
+      '*.generated.*'
+    ],
   },
   {
     files: ['**/*.{ts,tsx,js,jsx}'],

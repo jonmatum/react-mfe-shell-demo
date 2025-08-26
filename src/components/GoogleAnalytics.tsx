@@ -20,8 +20,8 @@ export function GoogleAnalytics({
     document.head.appendChild(script);
 
     // Configure gtag
-    window.gtag = window.gtag || function() {
-      (window.gtag.q = window.gtag.q || []).push(arguments);
+    window.gtag = window.gtag || function(...args: unknown[]) {
+      (window.gtag.q = window.gtag.q || []).push(args);
     };
     window.gtag('js', new Date());
     window.gtag('config', trackingId, {
@@ -62,6 +62,9 @@ export function GoogleAnalytics({
 // Extend Window interface for TypeScript
 declare global {
   interface Window {
-    gtag: (...args: any[]) => void;
+    gtag: {
+      (...args: unknown[]): void;
+      q?: unknown[];
+    };
   }
 }

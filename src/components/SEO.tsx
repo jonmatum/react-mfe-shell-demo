@@ -132,12 +132,12 @@ export function SEO({
           "@context": "https://schema.org",
           "@type": "WebApplication",
           "name": "Maturity Assessment Platform",
-          "description": description,
-          "url": url,
-          "image": image,
+          description,
+          url,
+          image,
           "author": {
             "@type": "Organization",
-            "name": author
+            name: author
           },
           "applicationCategory": "BusinessApplication",
           "operatingSystem": "Web Browser",
