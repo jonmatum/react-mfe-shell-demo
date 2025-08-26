@@ -22,12 +22,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          # Disable cache to ensure clean install
+          # cache: 'npm'
 
-      - name: Install dependencies
+      - name: Clean install with all optional dependencies
         run: |
-          # Use npm ci but with fallback for optional dependencies
-          npm ci || (rm -rf node_modules package-lock.json && npm install)
+          # Remove any existing installations
+          rm -rf node_modules package-lock.json
+          # Install with all optional dependencies
+          npm install --include=optional
+          # Force reinstall rollup to ensure native binaries
+          npm rebuild rollup
 
       - name: Run linter
         run: npm run lint
