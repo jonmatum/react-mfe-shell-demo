@@ -81,65 +81,78 @@ Experience a fully functional maturity assessment platform showcasing:
 - ✅ **formatNumber & useSettings** - Utility functions and custom hooks
 
 ### Enhanced Modal Capabilities (v11.0.0)
-The application now uses react-mfe-shell v11.0.0 with optimized full-size modal design that avoids scrollbars and ensures buttons are always visible:
+The application now uses react-mfe-shell v11.0.0 with optimized responsive design and merged score controls:
 
-#### **Item Detail Modal - Optimized Layout Without Scrollbars:**
+#### **Item Detail Modal - Responsive Design with Merged Score Controls:**
 ```typescript
-// Proper height management to avoid scrollbars
+// Responsive layout with merged status and score controls
 <Modal isOpen={isOpen} onClose={onClose} title="Assessment Item Details" size="full">
   <div className="flex flex-col h-full max-w-7xl mx-auto">
-    {/* Fixed Header */}
-    <div className="flex-shrink-0 mb-6">
-      <Badge variant="primary" size="lg">{sectionTitle}</Badge>
-      <Heading level={1} size="3xl">{item.label}</Heading>
-      <Badge variant="success" size="lg">Status</Badge>
-      <Divider />
-    </div>
-
-    {/* Flexible Main Content */}
-    <div className="flex-1 min-h-0 mb-6">
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 h-full">
-        <div className="xl:col-span-1">Description & Score</div>
-        <div className="xl:col-span-2">Success Criteria</div>
+    {/* Responsive Header with Merged Score Section */}
+    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 sm:gap-8">
+      <div className="flex-1 min-w-0">
+        <Badge variant="primary" size="lg">{sectionTitle}</Badge>
+        <Heading level={1} size="3xl">{item.label}</Heading>
+      </div>
+      
+      {/* Merged Status & Score Controls */}
+      <div className="flex-shrink-0">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 rounded-xl bg-surface-secondary">
+          <div className="flex items-center gap-3">
+            <Icon />
+            <div>
+              <Badge variant="success" size="lg">Fully Implemented</Badge>
+              <Text className="text-sm">Score: 2 / 2</Text>
+            </div>
+          </div>
+          <div className="flex sm:flex-col gap-2">
+            <Text className="text-sm">Update Score:</Text>
+            <ScoreSelector />
+          </div>
+        </div>
       </div>
     </div>
 
-    {/* Always Visible Footer */}
-    <div className="flex-shrink-0 pt-4 border-t border-border-primary">
-      <div className="flex items-center justify-between">
-        <Text>Auto-save indicator</Text>
-        <div className="flex gap-4">
-          <Button variant="secondary" size="lg">Close</Button>
-          <Button variant="primary" size="lg">Done</Button>
-        </div>
+    {/* Scrollable Content for Mobile */}
+    <div className="flex-1 min-h-0 mb-6 overflow-y-auto">
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 lg:gap-8">
+        <div className="xl:col-span-1">Description (Sticky on Desktop)</div>
+        <div className="xl:col-span-3">Success Criteria</div>
+      </div>
+    </div>
+
+    {/* Responsive Footer */}
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <Text>Auto-save indicator</Text>
+      <div className="flex gap-4">
+        <Button variant="secondary" size="lg">Close</Button>
+        <Button variant="primary" size="lg">Done</Button>
       </div>
     </div>
   </div>
 </Modal>
 ```
 
-### Layout Optimization Features
-- **No Scrollbars**: Proper flexbox layout prevents unnecessary scrolling
-- **Always Visible Buttons**: Footer buttons remain accessible at all times
-- **Proper Height Management**: `flex-1 min-h-0` ensures content fits available space
-- **Fixed Header/Footer**: Important elements stay in view
-- **Flexible Content**: Main content area adapts to available space
-- **Full Width Usage**: `max-w-7xl` utilizes full modal width efficiently
+### Responsive Design Improvements
+- **Mobile-First Layout**: `flex-col sm:flex-row` for proper mobile stacking
+- **Merged Score Controls**: Status badge and score selector combined in one section
+- **Flexible Header**: Adapts from vertical to horizontal layout
+- **Scrollable Content**: `overflow-y-auto` on mobile for full content access
+- **Sticky Description**: Desktop sidebar stays visible during scrolling
+- **Responsive Grid**: `xl:grid-cols-4` for optimal space distribution
 
-### Height Management Strategy
-- **Container**: `flex flex-col h-full` - Full height flex container
-- **Header**: `flex-shrink-0` - Fixed size, doesn't shrink
-- **Content**: `flex-1 min-h-0` - Takes remaining space, allows content to fit
-- **Footer**: `flex-shrink-0` - Fixed size, always visible
-- **Grid Layout**: Content uses available height without overflow
+### UX Enhancements
+- **Compact Score Section**: Merged status display with score controls
+- **Better Mobile Experience**: Proper stacking and scrolling behavior
+- **Improved Touch Targets**: Larger buttons and controls for mobile
+- **Clear Visual Hierarchy**: Status and controls grouped logically
+- **Space Optimization**: Removed redundant "Update Score" section
 
-### Theme Support Implementation
-- **Dark/Light Variants**: All colors support both themes
-  - `bg-warning-50 dark:bg-warning-900/20` - Background colors
-  - `text-warning-800 dark:text-warning-200` - Text colors
-  - `border-warning-200 dark:border-warning-800` - Border colors
-- **Consistent Theming**: All components follow design system theme patterns
-- **Proper Contrast**: Optimized contrast ratios for both light and dark modes
+### Responsive Breakpoints
+- **Mobile (< 640px)**: Vertical stacking, full-width elements, scrollable content
+- **Tablet (640px+)**: Horizontal header layout, side-by-side score controls
+- **Desktop (1024px+)**: Four-column grid with sticky sidebar
+- **Ultra-wide**: Full width utilization with proper max-width constraints
 
 #### **Reset Confirmation Modal Enhancements:**
 ```typescript

@@ -52,9 +52,9 @@ export function ItemDetailModal({
       <div className="flex flex-col h-full max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="flex-shrink-0 mb-6">
-          <div className="flex items-start justify-between gap-8">
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 sm:gap-8">
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-4 mb-4">
+              <div className="flex flex-wrap items-center gap-3 mb-4">
                 <Badge variant="primary" size="lg">
                   {sectionTitle}
                 </Badge>
@@ -62,28 +62,44 @@ export function ItemDetailModal({
                   Item {itemNumber}
                 </Badge>
               </div>
-              <Heading level={1} size="3xl" className="text-text-primary leading-tight">
+              <Heading level={1} size="3xl" className="text-text-primary leading-tight mb-4 sm:mb-0">
                 {item.label}
               </Heading>
             </div>
-            <div className="flex-shrink-0 flex items-center gap-4">
-              {getScoreIcon(currentScore)}
-              <Badge variant={getScoreBadgeVariant(currentScore)} size="lg">
-                {getScoreLabel(currentScore)}
-              </Badge>
+            
+            {/* Merged Status & Score Section */}
+            <div className="flex-shrink-0">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 rounded-xl bg-surface-secondary border border-border-secondary">
+                <div className="flex items-center gap-3">
+                  {getScoreIcon(currentScore)}
+                  <div>
+                    <Badge variant={getScoreBadgeVariant(currentScore)} size="lg">
+                      {getScoreLabel(currentScore)}
+                    </Badge>
+                    <Text className="text-text-tertiary text-sm mt-1">
+                      Score: {currentScore} / 2
+                    </Text>
+                  </div>
+                </div>
+                <div className="flex sm:flex-col gap-2">
+                  <Text className="text-sm font-medium text-text-secondary whitespace-nowrap">
+                    Update Score:
+                  </Text>
+                  <ScoreSelector value={currentScore} onChange={onScoreChange} />
+                </div>
+              </div>
             </div>
           </div>
           <Divider className="mt-6" />
         </div>
 
-        {/* Main Content - Flexible with proper height management */}
-        <div className="flex-1 min-h-0 mb-6">
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 h-full">
+        {/* Main Content - Responsive with proper scrolling */}
+        <div className="flex-1 min-h-0 mb-6 overflow-y-auto">
+          <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 lg:gap-8">
             
-            {/* Description & Score Column */}
-            <div className="xl:col-span-1 space-y-6">
-              {/* Description */}
-              <div>
+            {/* Description Column */}
+            <div className="xl:col-span-1">
+              <div className="sticky top-0 bg-background-primary pb-4">
                 <Heading level={2} size="2xl" className="text-text-primary mb-4">
                   Description
                 </Heading>
@@ -93,35 +109,10 @@ export function ItemDetailModal({
                   </Text>
                 </div>
               </div>
-
-              {/* Current Score Section */}
-              <div>
-                <Heading level={2} size="2xl" className="text-text-primary mb-4">
-                  Update Score
-                </Heading>
-                <div className="p-6 rounded-xl bg-surface-primary border border-border-primary">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-4">
-                      {getScoreIcon(currentScore)}
-                      <div>
-                        <Text className="font-semibold text-text-primary text-lg">
-                          {getScoreLabel(currentScore)}
-                        </Text>
-                        <Text className="text-text-tertiary">
-                          Current Score: {currentScore} / 2
-                        </Text>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex justify-center">
-                    <ScoreSelector value={currentScore} onChange={onScoreChange} />
-                  </div>
-                </div>
-              </div>
             </div>
 
             {/* Success Criteria Columns */}
-            <div className="xl:col-span-2">
+            <div className="xl:col-span-3">
               <Heading level={2} size="2xl" className="text-text-primary mb-6">
                 Success Criteria & Implementation Guide
               </Heading>
@@ -189,14 +180,14 @@ export function ItemDetailModal({
 
         {/* Footer Section - Always Visible */}
         <div className="flex-shrink-0 pt-4 border-t border-border-primary">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3 order-2 sm:order-1">
               <div className="w-3 h-3 bg-success-500 rounded-full animate-pulse"></div>
-              <Text className="text-text-tertiary">
+              <Text className="text-text-tertiary text-sm">
                 Changes are automatically saved to local storage
               </Text>
             </div>
-            <div className="flex gap-4">
+            <div className="flex gap-4 order-1 sm:order-2">
               <Button variant="secondary" size="lg" onClick={onClose}>
                 Close
               </Button>
