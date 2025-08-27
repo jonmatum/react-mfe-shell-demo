@@ -81,79 +81,82 @@ Experience a fully functional maturity assessment platform showcasing:
 - ✅ **formatNumber & useSettings** - Utility functions and custom hooks
 
 ### Enhanced Modal Capabilities (v11.0.0)
-The application now uses react-mfe-shell v11.0.0 with clean, full-size modal design:
+The application now uses react-mfe-shell v11.0.0 with maximized full-size modal design and proper theme support:
 
-#### **Item Detail Modal - Full Size & Clean Design:**
+#### **Item Detail Modal - Maximized Full-Size Layout:**
 ```typescript
-// Clean, spacious design with React MFE Shell components
-<Modal isOpen={isOpen} onClose={onClose} title="Assessment Item" size="full">
-  <div className="max-w-4xl mx-auto space-y-8">
-    {/* Header with Status */}
-    <div className="flex items-start justify-between gap-6">
-      <div className="flex-1">
-        <Badge variant="primary">Item {itemNumber}</Badge>
-        <Heading level={2} size="xl">{item.label}</Heading>
-      </div>
-      <Badge variant="success" size="lg">Fully Implemented</Badge>
+// Maximized space utilization with theme-aware design
+<Modal isOpen={isOpen} onClose={onClose} title="Assessment Item Details" size="full">
+  <div className="h-full flex flex-col max-w-7xl mx-auto">
+    {/* Fixed Header */}
+    <div className="flex-shrink-0 pb-6 border-b border-border-primary">
+      <Badge variant="primary" size="lg">{sectionTitle}</Badge>
+      <Heading level={1} size="3xl">{item.label}</Heading>
+      <Badge variant="success" size="lg">Status</Badge>
     </div>
 
-    <Divider />
+    {/* Scrollable Main Content */}
+    <div className="flex-1 overflow-y-auto py-8">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 h-full">
+        
+        {/* Description & Score Column */}
+        <div className="xl:col-span-1">
+          <div className="sticky top-0">
+            <Heading level={2} size="2xl">Description</Heading>
+            <div className="p-6 rounded-xl bg-surface-secondary">
+              <Text className="text-lg">{item.description}</Text>
+            </div>
+            <ScoreSelector />
+          </div>
+        </div>
 
-    {/* Two-Column Layout */}
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <div>
-        <Heading level={3}>Description</Heading>
-        <Text>{item.description}</Text>
-      </div>
-      <div>
-        <Heading level={3}>Current Score</Heading>
-        <ScoreSelector />
+        {/* Success Criteria Columns */}
+        <div className="xl:col-span-2">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
+            <div className="p-8 rounded-xl bg-warning-50 dark:bg-warning-900/20 border border-warning-200 dark:border-warning-800">
+              <Heading level={3} size="xl" className="text-warning-800 dark:text-warning-200">
+                Partially Implemented
+              </Heading>
+              <Text className="text-warning-700 dark:text-warning-300">
+                {item.successCriteria.partial}
+              </Text>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <Divider />
-
-    {/* Success Criteria Grid */}
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      <div className="p-6 rounded-lg bg-warning-50 border border-warning-200">
-        <Badge variant="warning" size="lg">Score 1</Badge>
-        <Heading level={4}>Partially Implemented</Heading>
-        <Text>{item.successCriteria.partial}</Text>
-      </div>
-      <div className="p-6 rounded-lg bg-success-50 border border-success-200">
-        <Badge variant="success" size="lg">Score 2</Badge>
-        <Heading level={4}>Fully Implemented</Heading>
-        <Text>{item.successCriteria.complete}</Text>
-      </div>
-    </div>
-
-    <Divider />
-
-    {/* Clean Footer */}
-    <div className="flex items-center justify-between">
-      <Text>Changes are saved automatically</Text>
-      <div className="flex gap-3">
-        <Button variant="secondary" size="lg">Close</Button>
-        <Button variant="primary" size="lg">Done</Button>
-      </div>
+    {/* Fixed Footer */}
+    <div className="flex-shrink-0 pt-6 border-t">
+      <Button variant="primary" size="lg">Done</Button>
     </div>
   </div>
 </Modal>
 ```
 
-### Modal Design Improvements
-- **Full Size Modal**: `size="full"` provides maximum space for content
-- **Clean Layout**: Spacious design with proper grid layouts and spacing
-- **React MFE Shell Components**: Extensive use of standard components:
-  - `Modal` with full size variant
-  - `Heading` with proper hierarchy (h2, h3, h4)
-  - `Text` for all content display
-  - `Badge` for status indicators with large size
-  - `Divider` for visual separation
-  - `Button` for actions with large size
-- **Two-Column Grid**: Efficient use of space with responsive layout
-- **Consistent Spacing**: `space-y-8` and `gap-6/8` for proper visual rhythm
-- **Professional Design**: Clean, uncluttered interface focused on content
+### Maximized Layout Features
+- **Full Viewport Usage**: `h-full flex flex-col` utilizes entire modal space
+- **Three-Column Layout**: `xl:grid-cols-3` for optimal wide-screen usage
+- **Sticky Sidebar**: Description and score selector stay visible during scrolling
+- **Flexible Content**: Success criteria columns adapt to content height
+- **Fixed Header/Footer**: Important elements always visible
+- **Max Width**: `max-w-7xl` for optimal reading on ultra-wide screens
+
+### Theme Support Implementation
+- **Dark/Light Variants**: All colors support both themes
+  - `bg-warning-50 dark:bg-warning-900/20` - Background colors
+  - `text-warning-800 dark:text-warning-200` - Text colors
+  - `border-warning-200 dark:border-warning-800` - Border colors
+- **Icon Colors**: `text-success-600 dark:text-success-400`
+- **Semantic Colors**: Proper contrast ratios in both themes
+- **Consistent Theming**: All components follow design system theme patterns
+
+### Space Optimization
+- **Larger Typography**: `size="3xl"`, `size="2xl"`, `size="xl"` for better readability
+- **Generous Padding**: `p-8` for comfortable content spacing
+- **Proper Gaps**: `gap-8` between major sections for visual breathing room
+- **Responsive Breakpoints**: `xl:col-span-3` and `lg:grid-cols-2` for all screen sizes
+- **Content-Aware Layout**: Flexible heights that adapt to content length
 
 #### **Reset Confirmation Modal Enhancements:**
 ```typescript
