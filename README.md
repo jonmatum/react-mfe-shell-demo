@@ -81,28 +81,59 @@ Experience a fully functional maturity assessment platform showcasing:
 - ✅ **formatNumber & useSettings** - Utility functions and custom hooks
 
 ### Clean Framework Selection
-The Assessment Framework uses a clean, focused design with standard React MFE Shell components:
+The Assessment Framework uses a clean, focused design with standard React MFE Shell components and includes all essential information upfront:
 
 ```typescript
-// Simple, effective framework selection
-<div className="lg:min-w-[320px]">
-  <Text className="text-sm font-medium text-text-primary mb-2">Select Framework</Text>
-  <Select
-    id="model-selector"
-    value={selectedModelKey}
-    onChange={(value) => onModelChange(String(value))}
-    options={options}
-    className="w-full"
-  />
-</div>
+// Complete framework information in one place
+<Card className="p-6 mb-8 bg-gradient-to-r from-surface-primary to-surface-secondary">
+  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+    {/* Framework Description */}
+    <div className="flex items-start gap-4 flex-1">
+      <DocumentTextIcon className="w-6 h-6 text-primary-600" />
+      <div>
+        <Heading level={3} size="lg">Assessment Framework</Heading>
+        <Text>Choose the maturity framework that best aligns with your goals</Text>
+        
+        {/* Selected Model Details */}
+        <div>
+          <Text>Selected Model: {selectedModel.title}</Text>
+          <Text>{selectedModel.description}</Text>
+          <FeatureChip>{categories} Categories</FeatureChip>
+          <FeatureChip>{totalItems} Assessment Items</FeatureChip>
+        </div>
+        
+        {/* Scoring Guide & Maturity Levels */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <Heading level={4}>Scoring Guide</Heading>
+            <div>0 - Not Started | 1 - Partial | 2 - Complete</div>
+          </div>
+          <div>
+            <Heading level={4}>Maturity Levels</Heading>
+            <div>0-30% Initial | 31-60% Developing | 61-85% Established | 86-100% Optimized</div>
+          </div>
+        </div>
+        
+        <Text>Data is automatically saved to your browser's local storage</Text>
+      </div>
+    </div>
+    
+    {/* Framework Selection */}
+    <div className="lg:min-w-[320px]">
+      <Text>Select Framework</Text>
+      <Select options={options} />
+    </div>
+  </div>
+</Card>
 ```
 
 ### Component Features Demonstrated
+- **Comprehensive Information**: All essential details in the Assessment Framework card
 - **Standard Select Component**: Clean dropdown using React MFE Shell Select
-- **Proper Labeling**: Text component for accessible form labels
-- **Full Width Layout**: Responsive design with proper sizing
-- **Type Safety**: Proper TypeScript integration with value handling
-- **Clean Interface**: No redundant UI elements, focused on functionality
+- **Proper Information Hierarchy**: Scoring guide and maturity levels prominently displayed
+- **Accessible Design**: Clear labeling and semantic structure
+- **Upfront Guidance**: Users see scoring and maturity information immediately
+- **Clean Interface**: No redundant bottom sections, everything in logical order
 
 ## SEO & Performance Optimization
 
