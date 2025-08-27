@@ -81,94 +81,75 @@ Experience a fully functional maturity assessment platform showcasing:
 - ✅ **formatNumber & useSettings** - Utility functions and custom hooks
 
 ### Enhanced Modal Capabilities (v11.0.0)
-The application now uses react-mfe-shell v11.0.0 with perfect mobile layout and space distribution:
+The application now uses react-mfe-shell v11.0.0 with comprehensive modal system and proper theme support:
 
-#### **Item Detail Modal - Perfect Mobile Space Distribution:**
+#### **Action Modals - Export and Reset Confirmations:**
 ```typescript
-// Optimal space distribution between status and controls
-<Modal isOpen={isOpen} onClose={onClose} title="Assessment Item Details" size="full">
-  <div className="flex flex-col h-full max-w-7xl mx-auto">
-    {/* Responsive Header with Perfect Space Distribution */}
-    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 sm:gap-8">
-      <div className="flex-1 min-w-0">
-        <Badge variant="primary" size="lg">{sectionTitle}</Badge>
-        <Heading level={1} size="3xl">{item.label}</Heading>
+// Export Confirmation Modal with theme support
+<Modal isOpen={showExportModal} onClose={handleExportCancel} title="Export Assessment Data">
+  <div className="space-y-4">
+    <div className="flex items-start gap-3">
+      <div className="w-10 h-10 bg-primary-100 dark:bg-primary-900 rounded-full flex items-center justify-center">
+        <DownloadIcon className="w-5 h-5 text-primary-600 dark:text-primary-400" />
       </div>
-      
-      {/* Perfectly Balanced Status & Score Controls */}
-      <div className="flex-shrink-0">
-        <div className="flex items-center justify-between gap-4 p-4 rounded-xl bg-surface-secondary overflow-hidden">
-          <div className="flex items-center gap-3 min-w-0">
-            <Icon />
-            <div className="min-w-0">
-              <Badge variant="success" size="lg">Fully Implemented</Badge>
-              <Text className="text-sm">Score: 2 / 2</Text>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 flex-shrink-0">
-            <Text className="text-sm hidden sm:block">Update Score:</Text>
-            <ScoreSelector />
-          </div>
-        </div>
+      <div className="flex-1">
+        <Heading level={3} size="lg">Download Assessment Data</Heading>
+        <Text>Clear explanation of export functionality</Text>
       </div>
     </div>
+    
+    <div className="flex items-center justify-end gap-3 pt-4 border-t">
+      <Button variant="secondary">Cancel</Button>
+      <Button variant="primary" leftIcon={<DownloadIcon />}>Download JSON</Button>
+    </div>
+  </div>
+</Modal>
 
-    {/* Scrollable Content with Proper Overflow Handling */}
-    <div className="flex-1 min-h-0 mb-6 overflow-auto">
-      <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 lg:gap-8 min-w-0">
-        {/* Description Column */}
-        <div className="xl:col-span-1 min-w-0">
-          <div className="xl:sticky xl:top-0">
-            <Heading level={2} size="2xl">Description</Heading>
-            <Text className="text-lg break-words">{item.description}</Text>
-          </div>
-        </div>
-        
-        {/* Success Criteria */}
-        <div className="xl:col-span-3 min-w-0">
-          <Heading level={2} size="2xl">Success Criteria</Heading>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 min-w-0">
-            <div className="p-6 rounded-xl min-w-0">
-              <Text className="break-words">{criteria}</Text>
-            </div>
-          </div>
-        </div>
+// Reset Confirmation Modal with proper warning colors
+<Modal isOpen={showResetModal} onClose={handleResetCancel} title="Reset All Scores">
+  <div className="space-y-4">
+    <div className="flex items-start gap-3">
+      <div className="w-10 h-10 bg-danger-100 dark:bg-danger-900 rounded-full flex items-center justify-center">
+        <ExclamationTriangleIcon className="w-5 h-5 text-danger-600 dark:text-danger-400" />
+      </div>
+      <div className="flex-1">
+        <Heading level={3} size="lg">Reset All Assessment Scores</Heading>
+        <Text>Clear warning about permanent action</Text>
       </div>
     </div>
-
-    {/* Always Visible Footer */}
-    <div className="flex-shrink-0 pt-4 border-t">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <Text>Changes are automatically saved</Text>
-        <div className="flex gap-4">
-          <Button variant="secondary" size="lg">Close</Button>
-          <Button variant="primary" size="lg">Done</Button>
-        </div>
-      </div>
+    
+    <div className="p-3 bg-warning-50 dark:bg-warning-900/20 rounded-lg border border-warning-200 dark:border-warning-800">
+      <Text className="text-warning-700 dark:text-warning-300">💡 Backup recommendation</Text>
+    </div>
+    
+    <div className="flex items-center justify-end gap-3 pt-4 border-t">
+      <Button variant="secondary">Cancel</Button>
+      <Button variant="danger" leftIcon={<RefreshIcon />}>Reset All</Button>
     </div>
   </div>
 </Modal>
 ```
 
-### Perfect Space Distribution
-- **Centered Gap**: `justify-between` distributes space evenly between status and controls
-- **No Right Blank Space**: Controls align to the right edge of container
-- **Balanced Layout**: Space appears in the middle where it should be
-- **Mobile Optimized**: Perfect alignment on small devices
-- **Desktop Clarity**: Maintains proper spacing with labels on larger screens
+### Comprehensive Theme Support
+- **Primary Actions**: `bg-primary-100 dark:bg-primary-900` with `text-primary-600 dark:text-primary-400`
+- **Danger Actions**: `bg-danger-100 dark:bg-danger-900` with `text-danger-600 dark:text-danger-400`
+- **Warning Sections**: `bg-warning-50 dark:bg-warning-900/20` with `border-warning-200 dark:border-warning-800`
+- **Text Colors**: `text-warning-700 dark:text-warning-300` for proper contrast in both themes
+- **Consistent Theming**: All modal elements follow design system theme patterns
 
-### Mobile Layout Optimization
-- **Responsive Text Hiding**: `hidden sm:block` hides "Update Score:" label on mobile
-- **Overflow Protection**: `overflow-hidden` prevents layout breaks
-- **Flexible Status**: `min-w-0` allows status section to adapt
-- **Fixed Controls**: `flex-shrink-0` keeps score selector at proper size
-- **Perfect Alignment**: Controls positioned optimally without wasted space
+### Minimalistic Design Principles
+- **Essential Information Only**: Clear, concise messaging without unnecessary details
+- **Clean Layout**: Proper spacing with `space-y-4` and `gap-3` for visual hierarchy
+- **Professional Icons**: Contextual icons in rounded containers for visual clarity
+- **Focused Actions**: Clear primary and secondary actions with proper button variants
+- **No Visual Clutter**: Removed complex gradients and excessive decorative elements
 
-### Space Distribution Strategy
-- **Left Side**: Status display with icon, badge, and score
-- **Center**: Flexible space that adapts to content
-- **Right Side**: Score controls aligned to container edge
-- **No Waste**: Every pixel used efficiently across all screen sizes
+### Modal System Features
+- **Export Confirmation**: Explains what will be downloaded before action
+- **Reset Warning**: Clear warning about permanent data loss with backup suggestion
+- **Proper Cancellation**: Easy to cancel actions with secondary buttons
+- **Theme Consistency**: All colors adapt properly to light/dark mode
+- **Accessibility**: Proper heading hierarchy and semantic button usage
 
 #### **Reset Confirmation Modal Enhancements:**
 ```typescript
