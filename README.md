@@ -81,11 +81,11 @@ Experience a fully functional maturity assessment platform showcasing:
 - ✅ **formatNumber & useSettings** - Utility functions and custom hooks
 
 ### Enhanced Modal Capabilities (v11.0.0)
-The application now uses react-mfe-shell v11.0.0 with optimized responsive design and proper vertical scrolling:
+The application now uses react-mfe-shell v11.0.0 with proper overflow handling for complete content accessibility:
 
-#### **Item Detail Modal - Final Implementation with Vertical Scrolling:**
+#### **Item Detail Modal - Complete Overflow Handling:**
 ```typescript
-// Complete vertical scrolling for all content access
+// Proper scrolling for both vertical and horizontal overflow
 <Modal isOpen={isOpen} onClose={onClose} title="Assessment Item Details" size="full">
   <div className="flex flex-col h-full max-w-7xl mx-auto">
     {/* Fixed Header */}
@@ -116,22 +116,24 @@ The application now uses react-mfe-shell v11.0.0 with optimized responsive desig
       <Divider />
     </div>
 
-    {/* Scrollable Content Area */}
-    <div className="flex-1 min-h-0 mb-6 overflow-y-auto">
-      <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 lg:gap-8">
+    {/* Scrollable Content with Proper Overflow Handling */}
+    <div className="flex-1 min-h-0 mb-6 overflow-auto">
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 lg:gap-8 min-w-0">
         {/* Description Column */}
-        <div className="xl:col-span-1">
+        <div className="xl:col-span-1 min-w-0">
           <div className="xl:sticky xl:top-0">
             <Heading level={2} size="2xl">Description</Heading>
-            <Text className="text-lg">{item.description}</Text>
+            <Text className="text-lg break-words">{item.description}</Text>
           </div>
         </div>
         
         {/* Success Criteria */}
-        <div className="xl:col-span-3">
+        <div className="xl:col-span-3 min-w-0">
           <Heading level={2} size="2xl">Success Criteria</Heading>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            // Scrollable criteria cards
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 min-w-0">
+            <div className="p-6 rounded-xl min-w-0">
+              <Text className="break-words">{criteria}</Text>
+            </div>
           </div>
         </div>
       </div>
@@ -151,25 +153,25 @@ The application now uses react-mfe-shell v11.0.0 with optimized responsive desig
 </Modal>
 ```
 
-### Perfect Scrolling Implementation
-- **Universal Scrolling**: `overflow-y-auto` on all devices ensures content accessibility
-- **Mobile Optimization**: Users can scroll through all content on small screens
-- **Desktop Compatibility**: Scrolling works seamlessly on larger screens too
-- **Sticky Description**: Desktop sidebar remains visible during scrolling
-- **Always Visible Actions**: Footer buttons stay accessible regardless of content length
+### Complete Overflow Handling
+- **Bidirectional Scrolling**: `overflow-auto` handles both vertical and horizontal overflow
+- **Visible Scrollbars**: Scrollbars appear when content exceeds container dimensions
+- **Text Wrapping**: `break-words` ensures long text wraps properly
+- **Minimum Width Control**: `min-w-0` prevents grid items from expanding beyond container
+- **Flexible Layout**: Content adapts to available space while maintaining accessibility
 
-### Complete Responsive Behavior
-- **Mobile (< 640px)**: Full vertical scrolling, stacked layout, touch-friendly
-- **Tablet (640px+)**: Horizontal header, scrollable content, side-by-side controls
-- **Desktop (1024px+)**: Four-column grid, sticky sidebar, optimal space usage
-- **All Devices**: Consistent scrolling behavior ensures content is never hidden
+### Responsive Overflow Behavior
+- **Mobile (< 640px)**: Full scrolling capability for all content dimensions
+- **Tablet (640px+)**: Horizontal and vertical scrolling as needed
+- **Desktop (1024px+)**: Scrollbars appear only when content exceeds available space
+- **All Devices**: Consistent scrolling behavior ensures no content is hidden
 
-### Final UX Features
-- **Content Accessibility**: All content reachable through natural scrolling
-- **Clean Design**: No unnecessary backgrounds or visual clutter
-- **Merged Controls**: Status and score management in one compact section
-- **Responsive Layout**: Adapts perfectly to any screen size
-- **Theme Support**: Full dark/light mode compatibility
+### Technical Implementation
+- **Container**: `overflow-auto` for bidirectional scrolling
+- **Grid**: `min-w-0` prevents overflow issues in grid layout
+- **Text**: `break-words` ensures proper text wrapping
+- **Icons**: `flex-shrink-0` prevents icon compression
+- **Layout**: Proper flex and grid constraints for overflow handling
 
 #### **Reset Confirmation Modal Enhancements:**
 ```typescript

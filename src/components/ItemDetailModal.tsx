@@ -93,36 +93,36 @@ export function ItemDetailModal({
           <Divider className="mt-6" />
         </div>
 
-        {/* Main Content - Proper vertical scrolling for all devices */}
-        <div className="flex-1 min-h-0 mb-6 overflow-y-auto">
-          <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 lg:gap-8">
+        {/* Main Content - Proper scrolling for all content overflow */}
+        <div className="flex-1 min-h-0 mb-6 overflow-auto">
+          <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 lg:gap-8 min-w-0">
             
             {/* Description Column */}
-            <div className="xl:col-span-1">
+            <div className="xl:col-span-1 min-w-0">
               <div className="xl:sticky xl:top-0">
                 <Heading level={2} size="2xl" className="text-text-primary mb-4">
                   Description
                 </Heading>
-                <Text className="text-text-secondary leading-relaxed text-lg">
+                <Text className="text-text-secondary leading-relaxed text-lg break-words">
                   {item.description}
                 </Text>
               </div>
             </div>
 
             {/* Success Criteria Columns */}
-            <div className="xl:col-span-3">
+            <div className="xl:col-span-3 min-w-0">
               <Heading level={2} size="2xl" className="text-text-primary mb-6">
                 Success Criteria & Implementation Guide
               </Heading>
               
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 min-w-0">
                 {/* Partial Implementation */}
-                <div className="p-6 rounded-xl bg-warning-50 dark:bg-warning-900/20 border border-warning-200 dark:border-warning-800">
+                <div className="p-6 rounded-xl bg-warning-50 dark:bg-warning-900/20 border border-warning-200 dark:border-warning-800 min-w-0">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="w-10 h-10 bg-warning-100 dark:bg-warning-800 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-warning-100 dark:bg-warning-800 rounded-full flex items-center justify-center flex-shrink-0">
                       <ExclamationIcon className="w-5 h-5 text-warning-600 dark:text-warning-400" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <Badge variant="warning" size="lg">
                         Score 1
                       </Badge>
@@ -138,19 +138,19 @@ export function ItemDetailModal({
                     <Heading level={4} size="sm" className="text-warning-700 dark:text-warning-300 mb-3">
                       Requirements for Score 1:
                     </Heading>
-                    <Text className="text-warning-700 dark:text-warning-300 leading-relaxed">
+                    <Text className="text-warning-700 dark:text-warning-300 leading-relaxed break-words">
                       {item.successCriteria.partial}
                     </Text>
                   </div>
                 </div>
 
                 {/* Full Implementation */}
-                <div className="p-6 rounded-xl bg-success-50 dark:bg-success-900/20 border border-success-200 dark:border-success-800">
+                <div className="p-6 rounded-xl bg-success-50 dark:bg-success-900/20 border border-success-200 dark:border-success-800 min-w-0">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="w-10 h-10 bg-success-100 dark:bg-success-800 rounded-full flex items-center justify-center">
+                    <div className="w-10 h-10 bg-success-100 dark:bg-success-800 rounded-full flex items-center justify-center flex-shrink-0">
                       <CheckCircleIcon className="w-5 h-5 text-success-600 dark:text-success-400" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <Badge variant="success" size="lg">
                         Score 2
                       </Badge>
@@ -166,7 +166,7 @@ export function ItemDetailModal({
                     <Heading level={4} size="sm" className="text-success-700 dark:text-success-300 mb-3">
                       Requirements for Score 2:
                     </Heading>
-                    <Text className="text-success-700 dark:text-success-300 leading-relaxed">
+                    <Text className="text-success-700 dark:text-success-300 leading-relaxed break-words">
                       {item.successCriteria.complete}
                     </Text>
                   </div>
