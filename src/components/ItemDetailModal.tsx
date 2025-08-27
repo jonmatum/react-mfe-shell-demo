@@ -69,7 +69,7 @@ export function ItemDetailModal({
             
             {/* Merged Status & Score Section */}
             <div className="flex-shrink-0">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 rounded-xl bg-surface-secondary border border-border-secondary">
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-surface-secondary border border-border-secondary">
                 <div className="flex items-center gap-3">
                   {getScoreIcon(currentScore)}
                   <div>
@@ -81,7 +81,7 @@ export function ItemDetailModal({
                     </Text>
                   </div>
                 </div>
-                <div className="flex sm:flex-col gap-2">
+                <div className="flex items-center gap-2">
                   <Text className="text-sm font-medium text-text-secondary whitespace-nowrap">
                     Update Score:
                   </Text>

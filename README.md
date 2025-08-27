@@ -81,39 +81,36 @@ Experience a fully functional maturity assessment platform showcasing:
 - ✅ **formatNumber & useSettings** - Utility functions and custom hooks
 
 ### Enhanced Modal Capabilities (v11.0.0)
-The application now uses react-mfe-shell v11.0.0 with proper overflow handling for complete content accessibility:
+The application now uses react-mfe-shell v11.0.0 with optimized mobile layout and proper overflow handling:
 
-#### **Item Detail Modal - Complete Overflow Handling:**
+#### **Item Detail Modal - Optimized Mobile Layout:**
 ```typescript
-// Proper scrolling for both vertical and horizontal overflow
+// Efficient horizontal space usage on mobile
 <Modal isOpen={isOpen} onClose={onClose} title="Assessment Item Details" size="full">
   <div className="flex flex-col h-full max-w-7xl mx-auto">
-    {/* Fixed Header */}
-    <div className="flex-shrink-0 mb-6">
-      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 sm:gap-8">
-        <div className="flex-1 min-w-0">
-          <Badge variant="primary" size="lg">{sectionTitle}</Badge>
-          <Heading level={1} size="3xl">{item.label}</Heading>
-        </div>
-        
-        {/* Merged Status & Score Controls */}
-        <div className="flex-shrink-0">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 rounded-xl bg-surface-secondary">
-            <div className="flex items-center gap-3">
-              <Icon />
-              <div>
-                <Badge variant="success" size="lg">Fully Implemented</Badge>
-                <Text className="text-sm">Score: 2 / 2</Text>
-              </div>
+    {/* Responsive Header with Optimized Score Controls */}
+    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 sm:gap-8">
+      <div className="flex-1 min-w-0">
+        <Badge variant="primary" size="lg">{sectionTitle}</Badge>
+        <Heading level={1} size="3xl">{item.label}</Heading>
+      </div>
+      
+      {/* Optimized Status & Score Controls */}
+      <div className="flex-shrink-0">
+        <div className="flex items-center gap-4 p-4 rounded-xl bg-surface-secondary">
+          <div className="flex items-center gap-3">
+            <Icon />
+            <div>
+              <Badge variant="success" size="lg">Fully Implemented</Badge>
+              <Text className="text-sm">Score: 2 / 2</Text>
             </div>
-            <div className="flex sm:flex-col gap-2">
-              <Text className="text-sm">Update Score:</Text>
-              <ScoreSelector />
-            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Text className="text-sm">Update Score:</Text>
+            <ScoreSelector />
           </div>
         </div>
       </div>
-      <Divider />
     </div>
 
     {/* Scrollable Content with Proper Overflow Handling */}
@@ -153,6 +150,13 @@ The application now uses react-mfe-shell v11.0.0 with proper overflow handling f
 </Modal>
 ```
 
+### Optimized Mobile Layout
+- **Horizontal Score Controls**: `flex items-center gap-4` keeps all controls on one line
+- **Efficient Space Usage**: No unnecessary wrapping on mobile devices
+- **Compact Design**: Status, score display, and selector all in one horizontal row
+- **Better Visual Balance**: Eliminates large blank spaces on mobile
+- **Touch-Friendly**: Proper spacing between interactive elements
+
 ### Complete Overflow Handling
 - **Bidirectional Scrolling**: `overflow-auto` handles both vertical and horizontal overflow
 - **Visible Scrollbars**: Scrollbars appear when content exceeds container dimensions
@@ -160,18 +164,11 @@ The application now uses react-mfe-shell v11.0.0 with proper overflow handling f
 - **Minimum Width Control**: `min-w-0` prevents grid items from expanding beyond container
 - **Flexible Layout**: Content adapts to available space while maintaining accessibility
 
-### Responsive Overflow Behavior
-- **Mobile (< 640px)**: Full scrolling capability for all content dimensions
-- **Tablet (640px+)**: Horizontal and vertical scrolling as needed
-- **Desktop (1024px+)**: Scrollbars appear only when content exceeds available space
+### Responsive Behavior
+- **Mobile (< 640px)**: Horizontal score controls, full scrolling capability, stacked header
+- **Tablet (640px+)**: Horizontal header layout, side-by-side score controls
+- **Desktop (1024px+)**: Four-column grid with sticky sidebar, optimal space usage
 - **All Devices**: Consistent scrolling behavior ensures no content is hidden
-
-### Technical Implementation
-- **Container**: `overflow-auto` for bidirectional scrolling
-- **Grid**: `min-w-0` prevents overflow issues in grid layout
-- **Text**: `break-words` ensures proper text wrapping
-- **Icons**: `flex-shrink-0` prevents icon compression
-- **Layout**: Proper flex and grid constraints for overflow handling
 
 #### **Reset Confirmation Modal Enhancements:**
 ```typescript
