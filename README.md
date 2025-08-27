@@ -81,14 +81,14 @@ Experience a fully functional maturity assessment platform showcasing:
 - ✅ **formatNumber & useSettings** - Utility functions and custom hooks
 
 ### Enhanced Modal Capabilities (v11.0.0)
-The application now uses react-mfe-shell v11.0.0 with optimized responsive design and merged score controls:
+The application now uses react-mfe-shell v11.0.0 with optimized responsive design and clean layout:
 
-#### **Item Detail Modal - Responsive Design with Merged Score Controls:**
+#### **Item Detail Modal - Final Optimized Design:**
 ```typescript
-// Responsive layout with merged status and score controls
+// Clean, responsive layout with proper mobile scrolling
 <Modal isOpen={isOpen} onClose={onClose} title="Assessment Item Details" size="full">
   <div className="flex flex-col h-full max-w-7xl mx-auto">
-    {/* Responsive Header with Merged Score Section */}
+    {/* Responsive Header with Merged Score Controls */}
     <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 sm:gap-8">
       <div className="flex-1 min-w-0">
         <Badge variant="primary" size="lg">{sectionTitle}</Badge>
@@ -113,15 +113,28 @@ The application now uses react-mfe-shell v11.0.0 with optimized responsive desig
       </div>
     </div>
 
-    {/* Scrollable Content for Mobile */}
-    <div className="flex-1 min-h-0 mb-6 overflow-y-auto">
+    {/* Mobile-Friendly Scrollable Content */}
+    <div className="flex-1 min-h-0 mb-6 overflow-y-auto lg:overflow-y-visible">
       <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 lg:gap-8">
-        <div className="xl:col-span-1">Description (Sticky on Desktop)</div>
-        <div className="xl:col-span-3">Success Criteria</div>
+        {/* Clean Description (No Background) */}
+        <div className="xl:col-span-1">
+          <div className="xl:sticky xl:top-0">
+            <Heading level={2} size="2xl">Description</Heading>
+            <Text className="text-lg">{item.description}</Text>
+          </div>
+        </div>
+        
+        {/* Success Criteria */}
+        <div className="xl:col-span-3">
+          <Heading level={2} size="2xl">Success Criteria</Heading>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            // Criteria cards
+          </div>
+        </div>
       </div>
     </div>
 
-    {/* Responsive Footer */}
+    {/* Always Visible Footer */}
     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
       <Text>Auto-save indicator</Text>
       <div className="flex gap-4">
@@ -133,26 +146,25 @@ The application now uses react-mfe-shell v11.0.0 with optimized responsive desig
 </Modal>
 ```
 
-### Responsive Design Improvements
-- **Mobile-First Layout**: `flex-col sm:flex-row` for proper mobile stacking
-- **Merged Score Controls**: Status badge and score selector combined in one section
-- **Flexible Header**: Adapts from vertical to horizontal layout
-- **Scrollable Content**: `overflow-y-auto` on mobile for full content access
-- **Sticky Description**: Desktop sidebar stays visible during scrolling
-- **Responsive Grid**: `xl:grid-cols-4` for optimal space distribution
+### Final Design Improvements
+- **Clean Description**: Removed unnecessary background container for cleaner appearance
+- **Mobile Scrolling**: `overflow-y-auto lg:overflow-y-visible` allows proper mobile scrolling
+- **Responsive Sticky**: `xl:sticky xl:top-0` only applies sticky positioning on desktop
+- **Merged Score Controls**: Status badge and score selector combined in one compact section
+- **Proper Mobile Layout**: Content scrolls naturally on mobile devices
+- **Desktop Optimization**: Sticky sidebar and no scrollbars on larger screens
 
-### UX Enhancements
-- **Compact Score Section**: Merged status display with score controls
-- **Better Mobile Experience**: Proper stacking and scrolling behavior
-- **Improved Touch Targets**: Larger buttons and controls for mobile
-- **Clear Visual Hierarchy**: Status and controls grouped logically
-- **Space Optimization**: Removed redundant "Update Score" section
+### Mobile Experience Enhancements
+- **Full Content Access**: Mobile users can scroll to see all content
+- **Touch-Friendly**: Proper spacing and sizing for mobile interaction
+- **Responsive Overflow**: Different overflow behavior for mobile vs desktop
+- **Clean Layout**: No unnecessary backgrounds or containers on mobile
 
-### Responsive Breakpoints
-- **Mobile (< 640px)**: Vertical stacking, full-width elements, scrollable content
-- **Tablet (640px+)**: Horizontal header layout, side-by-side score controls
-- **Desktop (1024px+)**: Four-column grid with sticky sidebar
-- **Ultra-wide**: Full width utilization with proper max-width constraints
+### Desktop Experience Features
+- **Sticky Description**: Left sidebar stays visible during scrolling
+- **No Scrollbars**: Content fits within available space on desktop
+- **Four-Column Layout**: Optimal space distribution (1:3 ratio)
+- **Clean Typography**: Direct text display without background containers
 
 #### **Reset Confirmation Modal Enhancements:**
 ```typescript

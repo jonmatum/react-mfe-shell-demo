@@ -93,21 +93,19 @@ export function ItemDetailModal({
           <Divider className="mt-6" />
         </div>
 
-        {/* Main Content - Responsive with proper scrolling */}
-        <div className="flex-1 min-h-0 mb-6 overflow-y-auto">
+        {/* Main Content - Responsive with proper mobile scrolling */}
+        <div className="flex-1 min-h-0 mb-6 overflow-y-auto lg:overflow-y-visible">
           <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 lg:gap-8">
             
             {/* Description Column */}
             <div className="xl:col-span-1">
-              <div className="sticky top-0 bg-background-primary pb-4">
+              <div className="xl:sticky xl:top-0">
                 <Heading level={2} size="2xl" className="text-text-primary mb-4">
                   Description
                 </Heading>
-                <div className="p-6 rounded-xl bg-surface-secondary border border-border-secondary">
-                  <Text className="text-text-secondary leading-relaxed text-lg">
-                    {item.description}
-                  </Text>
-                </div>
+                <Text className="text-text-secondary leading-relaxed text-lg">
+                  {item.description}
+                </Text>
               </div>
             </div>
 
