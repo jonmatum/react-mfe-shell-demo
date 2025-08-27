@@ -93,8 +93,8 @@ export function ItemDetailModal({
           <Divider className="mt-6" />
         </div>
 
-        {/* Main Content - Proper scrolling for all content overflow */}
-        <div className="flex-1 min-h-0 mb-6 overflow-auto">
+        {/* Main Content - Scrollable content area */}
+        <div className="flex-1 min-h-0 overflow-auto">
           <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 lg:gap-8 min-w-0">
             
             {/* Description Column */}
@@ -176,8 +176,8 @@ export function ItemDetailModal({
           </div>
         </div>
 
-        {/* Footer Section - Always Visible */}
-        <div className="flex-shrink-0 pt-4 border-t border-border-primary">
+        {/* Footer Section - Always at Bottom */}
+        <div className="flex-shrink-0 mt-6 pt-4 border-t border-border-primary">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3 order-2 sm:order-1">
               <div className="w-3 h-3 bg-success-500 rounded-full animate-pulse"></div>
