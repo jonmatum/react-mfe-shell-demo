@@ -81,24 +81,31 @@ Experience a fully functional maturity assessment platform showcasing:
 - ✅ **formatNumber & useSettings** - Utility functions and custom hooks
 
 ### Optimized Assessment Framework Layout
-The Assessment Framework uses an efficient layout that maximizes space utilization with all essential information organized clearly:
+The Assessment Framework uses an efficient, fully responsive layout with standard React MFE Shell components:
 
 ```typescript
-// Optimized layout with better space utilization
+// Fully responsive layout with React MFE Shell Select component
 <Card className="Assessment Framework">
-  {/* Header with Framework Selection */}
-  <div className="flex items-start gap-4 mb-6">
+  {/* Responsive Header with Framework Selection */}
+  <div className="flex flex-col sm:flex-row sm:items-start gap-4 mb-6">
     <DocumentTextIcon />
-    <div className="flex-1">
+    <div className="flex-1 min-w-0">
       <Heading>Assessment Framework</Heading>
       <Text>Choose the maturity framework...</Text>
     </div>
-    <div className="min-w-[280px]">
-      <Select options={options} />
+    <div className="w-full sm:w-auto sm:min-w-[280px] sm:max-w-[320px]">
+      <Text>Select Framework</Text>
+      <Select
+        id="model-selector"
+        value={selectedModelKey}
+        onChange={(value) => onModelChange(String(value))}
+        options={options}
+        className="w-full"
+      />
     </div>
   </div>
 
-  {/* Three-Column Information Grid */}
+  {/* Three-Column Responsive Information Grid */}
   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <div>Selected Model Info</div>
     <div>Scoring Guide</div>
@@ -109,13 +116,21 @@ The Assessment Framework uses an efficient layout that maximizes space utilizati
 </Card>
 ```
 
-### Layout Features
-- **Header Integration**: Framework selection moved to header for better space usage
-- **Three-Column Grid**: Selected Model, Scoring Guide, and Maturity Levels in organized columns
-- **Responsive Design**: Stacks to single column on mobile, three columns on desktop
-- **Visual Hierarchy**: Clear separation between header, content grid, and footer notice
-- **Compact Presentation**: Efficient use of space while maintaining readability
-- **Consistent Styling**: All information uses standard React MFE Shell components
+### React MFE Shell Components Used
+- ✅ **Select**: Standard dropdown component from `@jonmatum/react-mfe-shell`
+- ✅ **Card**: Layout container with consistent styling
+- ✅ **Text**: Typography with semantic meaning and proper contrast
+- ✅ **Heading**: Semantic heading hierarchy (h3, h4)
+- ✅ **FeatureChip**: Status indicators with consistent variants
+- ✅ **Divider**: Visual separation elements
+
+### Responsive Layout Features
+- **Mobile (< 640px)**: Full-width stacked layout, Select Framework takes full width
+- **Tablet (640px+)**: Header becomes horizontal, Select Framework maintains optimal width
+- **Desktop (1024px+)**: Three-column grid for information sections
+- **Flexible Sizing**: Select Framework adapts from full-width to constrained optimal size
+- **Text Overflow**: Proper handling with `min-w-0` for text truncation
+- **Touch-Friendly**: Adequate spacing and sizing for mobile interaction
 
 ## SEO & Performance Optimization
 

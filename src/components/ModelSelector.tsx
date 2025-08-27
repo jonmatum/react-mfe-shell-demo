@@ -27,11 +27,11 @@ export function ModelSelector({ models, selectedModelKey, onModelChange }: Model
   return (
     <Card className="p-6 mb-8 bg-gradient-to-r from-surface-primary to-surface-secondary border border-border-primary hover:shadow-lg transition-all duration-200">
       {/* Header Section */}
-      <div className="flex items-start gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-start gap-4 mb-6">
         <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
           <DocumentTextIcon className="w-6 h-6 text-primary-600" />
         </div>
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-2">
             <Heading level={3} size="lg" className="text-text-primary">
               Assessment Framework
@@ -43,8 +43,8 @@ export function ModelSelector({ models, selectedModelKey, onModelChange }: Model
           </Text>
         </div>
         
-        {/* Framework Selection - Moved to Header */}
-        <div className="min-w-[280px]">
+        {/* Framework Selection - Responsive */}
+        <div className="w-full sm:w-auto sm:min-w-[280px] sm:max-w-[320px]">
           <Text className="text-sm font-medium text-text-primary mb-2">Select Framework</Text>
           <Select
             id="model-selector"
