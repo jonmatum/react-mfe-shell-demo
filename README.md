@@ -81,32 +81,32 @@ Experience a fully functional maturity assessment platform showcasing:
 - ✅ **formatNumber & useSettings** - Utility functions and custom hooks
 
 ### Enhanced Modal Capabilities (v11.0.0)
-The application now uses react-mfe-shell v11.0.0 with optimized mobile layout and proper overflow handling:
+The application now uses react-mfe-shell v11.0.0 with mobile-optimized layout and overflow protection:
 
-#### **Item Detail Modal - Optimized Mobile Layout:**
+#### **Item Detail Modal - Mobile-Optimized with Overflow Protection:**
 ```typescript
-// Efficient horizontal space usage on mobile
+// Mobile-optimized layout with responsive text and overflow handling
 <Modal isOpen={isOpen} onClose={onClose} title="Assessment Item Details" size="full">
   <div className="flex flex-col h-full max-w-7xl mx-auto">
-    {/* Responsive Header with Optimized Score Controls */}
+    {/* Responsive Header with Mobile-Optimized Score Controls */}
     <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 sm:gap-8">
       <div className="flex-1 min-w-0">
         <Badge variant="primary" size="lg">{sectionTitle}</Badge>
         <Heading level={1} size="3xl">{item.label}</Heading>
       </div>
       
-      {/* Optimized Status & Score Controls */}
+      {/* Mobile-Optimized Status & Score Controls */}
       <div className="flex-shrink-0">
-        <div className="flex items-center gap-4 p-4 rounded-xl bg-surface-secondary">
-          <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4 p-4 rounded-xl bg-surface-secondary overflow-hidden">
+          <div className="flex items-center gap-3 min-w-0">
             <Icon />
-            <div>
+            <div className="min-w-0">
               <Badge variant="success" size="lg">Fully Implemented</Badge>
               <Text className="text-sm">Score: 2 / 2</Text>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <Text className="text-sm">Update Score:</Text>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <Text className="text-sm hidden sm:block">Update Score:</Text>
             <ScoreSelector />
           </div>
         </div>
@@ -150,25 +150,25 @@ The application now uses react-mfe-shell v11.0.0 with optimized mobile layout an
 </Modal>
 ```
 
-### Optimized Mobile Layout
-- **Horizontal Score Controls**: `flex items-center gap-4` keeps all controls on one line
-- **Efficient Space Usage**: No unnecessary wrapping on mobile devices
-- **Compact Design**: Status, score display, and selector all in one horizontal row
-- **Better Visual Balance**: Eliminates large blank spaces on mobile
-- **Touch-Friendly**: Proper spacing between interactive elements
+### Mobile Optimization Features
+- **Responsive Text Hiding**: `hidden sm:block` hides "Update Score:" label on mobile to save space
+- **Overflow Protection**: `overflow-hidden` on control container prevents layout breaks
+- **Flexible Layout**: `min-w-0` and `flex-shrink-0` ensure proper space distribution
+- **Compact Mobile Design**: Score selector appears without label on small screens
+- **Desktop Clarity**: Full labels visible on larger screens for better UX
 
-### Complete Overflow Handling
-- **Bidirectional Scrolling**: `overflow-auto` handles both vertical and horizontal overflow
-- **Visible Scrollbars**: Scrollbars appear when content exceeds container dimensions
+### Overflow Handling Strategy
+- **Control Container**: `overflow-hidden` prevents content from breaking layout bounds
+- **Flexible Sections**: `min-w-0` allows content to shrink when needed
+- **Protected Elements**: `flex-shrink-0` keeps essential controls at proper size
+- **Content Scrolling**: `overflow-auto` on main content area for full accessibility
 - **Text Wrapping**: `break-words` ensures long text wraps properly
-- **Minimum Width Control**: `min-w-0` prevents grid items from expanding beyond container
-- **Flexible Layout**: Content adapts to available space while maintaining accessibility
 
 ### Responsive Behavior
-- **Mobile (< 640px)**: Horizontal score controls, full scrolling capability, stacked header
-- **Tablet (640px+)**: Horizontal header layout, side-by-side score controls
-- **Desktop (1024px+)**: Four-column grid with sticky sidebar, optimal space usage
-- **All Devices**: Consistent scrolling behavior ensures no content is hidden
+- **Mobile (< 640px)**: Hidden label text, compact controls, overflow protection
+- **Tablet (640px+)**: Visible labels, horizontal layout, proper spacing
+- **Desktop (1024px+)**: Full labels, optimal spacing, four-column grid
+- **All Devices**: Consistent functionality with device-appropriate presentation
 
 #### **Reset Confirmation Modal Enhancements:**
 ```typescript

@@ -69,10 +69,10 @@ export function ItemDetailModal({
             
             {/* Merged Status & Score Section */}
             <div className="flex-shrink-0">
-              <div className="flex items-center gap-4 p-4 rounded-xl bg-surface-secondary border border-border-secondary">
-                <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-surface-secondary border border-border-secondary overflow-hidden">
+                <div className="flex items-center gap-3 min-w-0">
                   {getScoreIcon(currentScore)}
-                  <div>
+                  <div className="min-w-0">
                     <Badge variant={getScoreBadgeVariant(currentScore)} size="lg">
                       {getScoreLabel(currentScore)}
                     </Badge>
@@ -81,8 +81,8 @@ export function ItemDetailModal({
                     </Text>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Text className="text-sm font-medium text-text-secondary whitespace-nowrap">
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <Text className="text-sm font-medium text-text-secondary whitespace-nowrap hidden sm:block">
                     Update Score:
                   </Text>
                   <ScoreSelector value={currentScore} onChange={onScoreChange} />
