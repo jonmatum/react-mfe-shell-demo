@@ -3,7 +3,6 @@ import {
   Card,
   Text,
   Heading,
-  Badge,
   Divider,
   FeatureChip,
   formatNumber,
@@ -24,15 +23,6 @@ export function ModelSelector({ models, selectedModelKey, onModelChange }: Model
   }));
 
   const selectedModel = models.find((m) => m.key === selectedModelKey)?.model;
-
-  const getModelFeatures = (model: MaturityModel) => {
-    const totalItems = model.sections.reduce((acc, section) => acc + section.items.length, 0);
-    return {
-      categories: model.sections.length,
-      items: totalItems,
-      storageKey: model.storageKey,
-    };
-  };
 
   return (
     <Card className="p-6 mb-8 bg-gradient-to-r from-surface-primary to-surface-secondary border border-border-primary hover:shadow-lg transition-all duration-200">
@@ -66,14 +56,15 @@ export function ModelSelector({ models, selectedModelKey, onModelChange }: Model
 
                   <div className="flex flex-wrap gap-2">
                     {(() => {
-                      const features = getModelFeatures(selectedModel);
+                      const totalItems = selectedModel.sections.reduce((acc, section) => acc + section.items.length, 0);
+                      const categories = selectedModel.sections.length;
                       return (
                         <>
                           <FeatureChip variant="primary" size="sm">
-                            {formatNumber(features.categories)} Categories
+                            {formatNumber(categories)} Categories
                           </FeatureChip>
                           <FeatureChip variant="success" size="sm">
-                            {formatNumber(features.items)} Assessment Items
+                            {formatNumber(totalItems)} Assessment Items
                           </FeatureChip>
                           <FeatureChip variant="secondary" size="sm">
                             Auto-Save Enabled
@@ -97,39 +88,6 @@ export function ModelSelector({ models, selectedModelKey, onModelChange }: Model
             options={options}
             className="w-full"
           />
-
-          {/* Available Models - Compact Design with Better Contrast */}
-          <div className="mt-4 p-4 bg-surface-secondary border border-border-secondary rounded-lg">
-            <Text className="text-sm font-medium text-text-primary mb-3">Available Models</Text>
-            <div className="space-y-2">
-              {models.map(({ key, model }) => {
-                const features = getModelFeatures(model);
-                const isSelected = key === selectedModelKey;
-                return (
-                  <div
-                    key={key}
-                    className={`flex items-center justify-between p-3 rounded-lg text-sm transition-all duration-200 cursor-pointer hover:shadow-sm ${
-                      isSelected
-                        ? 'bg-primary-100 border border-primary-300 shadow-sm'
-                        : 'bg-background-primary border border-border-secondary hover:border-primary-200 hover:bg-surface-primary'
-                    }`}
-                    onClick={() => onModelChange(key)}
-                  >
-                    <Text
-                      className={`font-medium ${
-                        isSelected ? 'text-primary-800' : 'text-text-primary'
-                      }`}
-                    >
-                      {model.title.replace(' Maturity Model', '')}
-                    </Text>
-                    <Badge variant={isSelected ? 'primary' : 'secondary'} size="sm">
-                      {features.items} items
-                    </Badge>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
         </div>
       </div>
     </Card>

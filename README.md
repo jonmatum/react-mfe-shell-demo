@@ -80,43 +80,29 @@ Experience a fully functional maturity assessment platform showcasing:
 - ✅ **Modal** - Confirmation dialogs and detailed overlays
 - ✅ **formatNumber & useSettings** - Utility functions and custom hooks
 
-### Enhanced Available Models Section
-The "Available Models" section in the Assessment Framework uses a clean, compact design with React MFE Shell components:
+### Clean Framework Selection
+The Assessment Framework uses a clean, focused design with standard React MFE Shell components:
 
 ```typescript
-// Compact design with improved contrast
-<div className="mt-4 p-4 bg-surface-secondary border border-border-secondary rounded-lg">
-  <Text className="text-sm font-medium text-text-primary mb-3">Available Models</Text>
-  <div className="space-y-2">
-    {models.map(({ key, model }) => (
-      <div
-        key={key}
-        className={`flex items-center justify-between p-3 rounded-lg text-sm transition-all duration-200 cursor-pointer hover:shadow-sm ${
-          isSelected
-            ? 'bg-primary-100 border border-primary-300 shadow-sm'
-            : 'bg-background-primary border border-border-secondary hover:border-primary-200 hover:bg-surface-primary'
-        }`}
-        onClick={() => onModelChange(key)}
-      >
-        <Text className={`font-medium ${isSelected ? 'text-primary-800' : 'text-text-primary'}`}>
-          {model.title}
-        </Text>
-        <Badge variant={isSelected ? 'primary' : 'secondary'} size="sm">
-          {features.items} items
-        </Badge>
-      </div>
-    ))}
-  </div>
+// Simple, effective framework selection
+<div className="lg:min-w-[320px]">
+  <Text className="text-sm font-medium text-text-primary mb-2">Select Framework</Text>
+  <Select
+    id="model-selector"
+    value={selectedModelKey}
+    onChange={(value) => onModelChange(String(value))}
+    options={options}
+    className="w-full"
+  />
 </div>
 ```
 
 ### Component Features Demonstrated
-- **Compact Layout**: Clean, space-efficient design
-- **Interactive Elements**: Clickable model selection with hover states
-- **Improved Contrast**: Better color contrast for accessibility
-- **Status Indicators**: Badges for model information
-- **Smooth Transitions**: Hover effects and state changes
-- **Semantic Components**: Proper use of Text and Badge components
+- **Standard Select Component**: Clean dropdown using React MFE Shell Select
+- **Proper Labeling**: Text component for accessible form labels
+- **Full Width Layout**: Responsive design with proper sizing
+- **Type Safety**: Proper TypeScript integration with value handling
+- **Clean Interface**: No redundant UI elements, focused on functionality
 
 ## SEO & Performance Optimization
 
