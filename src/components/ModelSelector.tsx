@@ -6,6 +6,7 @@ import {
   Badge,
   Divider,
   FeatureChip,
+  Button,
   formatNumber,
 } from '@jonmatum/react-mfe-shell';
 import type { MaturityModel } from '../types/maturity';
@@ -98,35 +99,76 @@ export function ModelSelector({ models, selectedModelKey, onModelChange }: Model
             className="w-full"
           />
 
-          {/* Model Comparison */}
-          <div className="mt-4 p-3 bg-surface-secondary rounded-lg">
-            <Text className="text-xs font-medium text-text-primary mb-2">Available Models</Text>
-            <div className="space-y-2">
+          {/* Available Models Section - Enhanced with Standard Components */}
+          <Card className="mt-4 p-4 bg-surface-secondary border border-border-secondary">
+            <Heading level={4} size="sm" className="text-text-primary mb-3">
+              Available Models
+            </Heading>
+            <div className="space-y-3">
               {models.map(({ key, model }) => {
                 const features = getModelFeatures(model);
                 const isSelected = key === selectedModelKey;
                 return (
-                  <div
+                  <Card
                     key={key}
-                    className={`flex items-center justify-between p-2 rounded text-xs ${
+                    className={`p-3 transition-all duration-200 cursor-pointer hover:shadow-sm ${
                       isSelected
-                        ? 'bg-primary-100 border border-primary-200'
-                        : 'bg-background-primary border border-border-secondary'
+                        ? 'bg-primary-50 border-primary-200 shadow-sm'
+                        : 'bg-background-primary border-border-secondary hover:border-border-primary'
                     }`}
+                    onClick={() => onModelChange(key)}
                   >
-                    <Text
-                      className={`font-medium ${isSelected ? 'text-primary-700' : 'text-text-secondary'}`}
-                    >
-                      {model.title.replace(' Maturity Model', '')}
-                    </Text>
-                    <Badge variant={isSelected ? 'primary' : 'secondary'} size="sm">
-                      {features.items} items
-                    </Badge>
-                  </div>
+                    <div className="flex items-center justify-between mb-2">
+                      <Text
+                        className={`font-medium text-sm ${
+                          isSelected ? 'text-primary-700' : 'text-text-primary'
+                        }`}
+                      >
+                        {model.title.replace(' Maturity Model', '')}
+                      </Text>
+                      <Badge variant={isSelected ? 'primary' : 'secondary'} size="sm">
+                        {features.items} items
+                      </Badge>
+                    </div>
+                    
+                    <div className="flex items-center justify-between">
+                      <div className="flex gap-1">
+                        <FeatureChip variant="secondary" size="sm">
+                          {features.categories} sections
+                        </FeatureChip>
+                      </div>
+                      
+                      {!isSelected && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onModelChange(key);
+                          }}
+                          className="text-xs px-2 py-1"
+                        >
+                          Select
+                        </Button>
+                      )}
+                      
+                      {isSelected && (
+                        <FeatureChip variant="success" size="sm">
+                          Active
+                        </FeatureChip>
+                      )}
+                    </div>
+                  </Card>
                 );
               })}
             </div>
-          </div>
+            
+            <Divider className="my-3" />
+            
+            <Text className="text-xs text-text-tertiary text-center">
+              Click on any model card to switch frameworks
+            </Text>
+          </Card>
         </div>
       </div>
     </Card>

@@ -65,6 +65,83 @@ Experience a fully functional maturity assessment platform showcasing:
 - **PostCSS**: CSS processing and optimization
 - **GitHub Actions**: Automated deployment to GitHub Pages
 
+## React MFE Shell Component Showcase
+
+### Component Usage Statistics (16/16 - 100%)
+- ✅ **SettingsProvider** - Theme management and global state
+- ✅ **Card** - Layout containers and content grouping
+- ✅ **Text & Heading** - Typography system with semantic levels
+- ✅ **Button** - Interactive elements with multiple variants
+- ✅ **Badge & FeatureChip** - Status indicators and feature highlights
+- ✅ **SearchBox & Select** - Form controls and user input
+- ✅ **Switch & Label** - Settings controls and form labels
+- ✅ **Avatar & Divider** - UI elements and content separation
+- ✅ **LoadingSpinner** - Loading states and async operations
+- ✅ **Modal** - Confirmation dialogs and detailed overlays
+- ✅ **formatNumber & useSettings** - Utility functions and custom hooks
+
+### Enhanced Available Models Section
+The "Available Models" section in the Assessment Framework now uses comprehensive React MFE Shell components:
+
+```typescript
+// Enhanced with standard components
+<Card className="mt-4 p-4 bg-surface-secondary border border-border-secondary">
+  <Heading level={4} size="sm" className="text-text-primary mb-3">
+    Available Models
+  </Heading>
+  <div className="space-y-3">
+    {models.map(({ key, model }) => (
+      <Card
+        key={key}
+        className={`p-3 transition-all duration-200 cursor-pointer hover:shadow-sm ${
+          isSelected ? 'bg-primary-50 border-primary-200' : 'bg-background-primary'
+        }`}
+        onClick={() => onModelChange(key)}
+      >
+        <div className="flex items-center justify-between mb-2">
+          <Text className={`font-medium text-sm ${isSelected ? 'text-primary-700' : 'text-text-primary'}`}>
+            {model.title}
+          </Text>
+          <Badge variant={isSelected ? 'primary' : 'secondary'} size="sm">
+            {features.items} items
+          </Badge>
+        </div>
+        
+        <div className="flex items-center justify-between">
+          <FeatureChip variant="secondary" size="sm">
+            {features.categories} sections
+          </FeatureChip>
+          
+          {!isSelected ? (
+            <Button variant="ghost" size="sm" onClick={() => onModelChange(key)}>
+              Select
+            </Button>
+          ) : (
+            <FeatureChip variant="success" size="sm">
+              Active
+            </FeatureChip>
+          )}
+        </div>
+      </Card>
+    ))}
+  </div>
+  
+  <Divider className="my-3" />
+  
+  <Text className="text-xs text-text-tertiary text-center">
+    Click on any model card to switch frameworks
+  </Text>
+</Card>
+```
+
+### Component Features Demonstrated
+- **Interactive Cards**: Clickable model selection with hover states
+- **Semantic Typography**: Proper heading hierarchy and text variants
+- **Status Indicators**: Badges and chips for model information
+- **Action Buttons**: Ghost buttons for secondary actions
+- **Visual Feedback**: Active states and transitions
+- **Accessibility**: Proper semantic structure and interactive elements
+
 ## SEO & Performance Optimization
 
 ### Search Engine Optimization
