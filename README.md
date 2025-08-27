@@ -77,8 +77,82 @@ Experience a fully functional maturity assessment platform showcasing:
 - ✅ **Switch & Label** - Settings controls and form labels
 - ✅ **Avatar & Divider** - UI elements and content separation
 - ✅ **LoadingSpinner** - Loading states and async operations
-- ✅ **Modal** - Confirmation dialogs and detailed overlays
+- ✅ **Modal** - Enhanced confirmation dialogs and detailed overlays with v11.0.0 improvements
 - ✅ **formatNumber & useSettings** - Utility functions and custom hooks
+
+### Enhanced Modal Capabilities (v11.0.0)
+The application now uses react-mfe-shell v11.0.0 with significantly improved modal UX:
+
+#### **Item Detail Modal Enhancements:**
+```typescript
+// Enhanced with better visual design and UX
+<Modal isOpen={isOpen} onClose={onClose} title={`Assessment Item ${itemNumber}`}>
+  <div className="space-y-6 max-h-[70vh] overflow-y-auto">
+    {/* Sticky Header with Status */}
+    <div className="sticky top-0 bg-background-primary pb-4 border-b">
+      <Heading level={3}>Item Title</Heading>
+      <Badge variant="success">Fully Implemented</Badge>
+    </div>
+
+    {/* Enhanced Success Criteria Cards */}
+    <div className="rounded-xl bg-gradient-to-r from-success-50 to-success-25 border border-success-200 hover:shadow-sm transition-all duration-200">
+      <div className="w-8 h-8 bg-success-100 rounded-full flex items-center justify-center">
+        <CheckCircleIcon />
+      </div>
+      <Text className="font-semibold">Fully Implemented</Text>
+    </div>
+
+    {/* Sticky Footer with Auto-save Indicator */}
+    <div className="sticky bottom-0 bg-background-primary border-t">
+      <div className="w-2 h-2 bg-success-500 rounded-full animate-pulse"></div>
+      <Text>Changes saved automatically</Text>
+    </div>
+  </div>
+</Modal>
+```
+
+#### **Reset Confirmation Modal Enhancements:**
+```typescript
+// Enhanced with detailed impact information and better actions
+<Modal isOpen={showResetModal} onClose={handleResetCancel} title="Reset All Scores">
+  {/* Warning Header with Gradient Background */}
+  <div className="bg-gradient-to-r from-danger-50 to-warning-50 rounded-xl border border-danger-200">
+    <ExclamationTriangleIcon className="w-6 h-6 text-danger-600" />
+    <Heading className="text-danger-800">Permanent Action Warning</Heading>
+  </div>
+
+  {/* Detailed Impact List */}
+  <div>
+    <Heading>What will be reset:</Heading>
+    <div className="w-2 h-2 bg-danger-500 rounded-full"></div>
+    <Text>All assessment item scores</Text>
+    <Text>Section progress calculations</Text>
+    <Text>Overall maturity percentages</Text>
+  </div>
+
+  {/* Recommendation Card */}
+  <div className="bg-primary-50 rounded-lg border border-primary-200">
+    <Text>💡 Recommendation: Consider exporting your data first</Text>
+  </div>
+
+  {/* Enhanced Action Buttons */}
+  <div className="flex justify-between">
+    <Button variant="secondary">Cancel</Button>
+    <Button variant="primary" leftIcon={<DownloadIcon />}>Export First</Button>
+    <Button variant="danger" leftIcon={<RefreshIcon />}>Reset All</Button>
+  </div>
+</Modal>
+```
+
+### Modal UX Improvements
+- **Scrollable Content**: Max height with overflow-y-auto for long content
+- **Sticky Elements**: Headers and footers stay visible during scrolling
+- **Enhanced Visual Design**: Gradient backgrounds and rounded corners
+- **Better Status Indicators**: Animated elements and clear visual feedback
+- **Improved Actions**: Multiple action options with clear visual hierarchy
+- **Auto-save Feedback**: Real-time indication of data persistence
+- **Warning Systems**: Clear visual warnings for destructive actions
+- **Responsive Layout**: Proper spacing and sizing for all screen sizes
 
 ### Optimized Assessment Framework Layout
 The Assessment Framework uses an efficient, fully responsive layout with standard React MFE Shell components:

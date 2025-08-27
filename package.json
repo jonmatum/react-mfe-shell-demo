@@ -46,7 +46,7 @@
     "safelist:mfe": "node scripts/mfe-shell-safelist.js"
   },
   "dependencies": {
-    "@jonmatum/react-mfe-shell": "^10.0.0",
+    "@jonmatum/react-mfe-shell": "^11.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-helmet-async": "^2.0.5",
