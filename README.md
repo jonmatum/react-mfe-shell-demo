@@ -81,66 +81,42 @@ Experience a fully functional maturity assessment platform showcasing:
 - ✅ **formatNumber & useSettings** - Utility functions and custom hooks
 
 ### Enhanced Available Models Section
-The "Available Models" section in the Assessment Framework now uses comprehensive React MFE Shell components:
+The "Available Models" section in the Assessment Framework uses a clean, compact design with React MFE Shell components:
 
 ```typescript
-// Enhanced with standard components
-<Card className="mt-4 p-4 bg-surface-secondary border border-border-secondary">
-  <Heading level={4} size="sm" className="text-text-primary mb-3">
-    Available Models
-  </Heading>
-  <div className="space-y-3">
+// Compact design with improved contrast
+<div className="mt-4 p-4 bg-surface-secondary border border-border-secondary rounded-lg">
+  <Text className="text-sm font-medium text-text-primary mb-3">Available Models</Text>
+  <div className="space-y-2">
     {models.map(({ key, model }) => (
-      <Card
+      <div
         key={key}
-        className={`p-3 transition-all duration-200 cursor-pointer hover:shadow-sm ${
-          isSelected ? 'bg-primary-50 border-primary-200' : 'bg-background-primary'
+        className={`flex items-center justify-between p-3 rounded-lg text-sm transition-all duration-200 cursor-pointer hover:shadow-sm ${
+          isSelected
+            ? 'bg-primary-100 border border-primary-300 shadow-sm'
+            : 'bg-background-primary border border-border-secondary hover:border-primary-200 hover:bg-surface-primary'
         }`}
         onClick={() => onModelChange(key)}
       >
-        <div className="flex items-center justify-between mb-2">
-          <Text className={`font-medium text-sm ${isSelected ? 'text-primary-700' : 'text-text-primary'}`}>
-            {model.title}
-          </Text>
-          <Badge variant={isSelected ? 'primary' : 'secondary'} size="sm">
-            {features.items} items
-          </Badge>
-        </div>
-        
-        <div className="flex items-center justify-between">
-          <FeatureChip variant="secondary" size="sm">
-            {features.categories} sections
-          </FeatureChip>
-          
-          {!isSelected ? (
-            <Button variant="ghost" size="sm" onClick={() => onModelChange(key)}>
-              Select
-            </Button>
-          ) : (
-            <FeatureChip variant="success" size="sm">
-              Active
-            </FeatureChip>
-          )}
-        </div>
-      </Card>
+        <Text className={`font-medium ${isSelected ? 'text-primary-800' : 'text-text-primary'}`}>
+          {model.title}
+        </Text>
+        <Badge variant={isSelected ? 'primary' : 'secondary'} size="sm">
+          {features.items} items
+        </Badge>
+      </div>
     ))}
   </div>
-  
-  <Divider className="my-3" />
-  
-  <Text className="text-xs text-text-tertiary text-center">
-    Click on any model card to switch frameworks
-  </Text>
-</Card>
+</div>
 ```
 
 ### Component Features Demonstrated
-- **Interactive Cards**: Clickable model selection with hover states
-- **Semantic Typography**: Proper heading hierarchy and text variants
-- **Status Indicators**: Badges and chips for model information
-- **Action Buttons**: Ghost buttons for secondary actions
-- **Visual Feedback**: Active states and transitions
-- **Accessibility**: Proper semantic structure and interactive elements
+- **Compact Layout**: Clean, space-efficient design
+- **Interactive Elements**: Clickable model selection with hover states
+- **Improved Contrast**: Better color contrast for accessibility
+- **Status Indicators**: Badges for model information
+- **Smooth Transitions**: Hover effects and state changes
+- **Semantic Components**: Proper use of Text and Badge components
 
 ## SEO & Performance Optimization
 
