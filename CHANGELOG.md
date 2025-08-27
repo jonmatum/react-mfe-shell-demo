@@ -1,5 +1,38 @@
 # Changelog
 
+## [3.3.0](https://github.com/jonmatum/react-mfe-shell-demo/compare/react-mfe-shell-demo-v3.2.0...react-mfe-shell-demo-v3.3.0) (2025-08-27)
+
+
+### Features
+
+* enhance Available Models section with comprehensive React MFE Shell components ([5c360d2](https://github.com/jonmatum/react-mfe-shell-demo/commit/5c360d29723afaf25f7bd95ac369c8964f7cd6cd))
+* enhance modal UX with react-mfe-shell v11.0.0 capabilities ([8e77e14](https://github.com/jonmatum/react-mfe-shell-demo/commit/8e77e142e222b52c82e8426e546dab59bc6c5cf6))
+* implement universal vertical scrolling for complete content access ([c6026e8](https://github.com/jonmatum/react-mfe-shell-demo/commit/c6026e8e8e153581b41ca4cad3bc943b7df1db00))
+* improve responsiveness and merge score controls with status badge ([13d92c4](https://github.com/jonmatum/react-mfe-shell-demo/commit/13d92c4f41224037c0977091a7a6c1689aa840c9))
+* improve responsiveness of Select Framework section ([acf61d3](https://github.com/jonmatum/react-mfe-shell-demo/commit/acf61d30bcf12616db27f1369336c30d5e35b8c2))
+* maximize full modal space utilization with comprehensive theme support ([8abdf74](https://github.com/jonmatum/react-mfe-shell-demo/commit/8abdf740625c7d45c5c6340f5a2dc31312dc43c6))
+* move Scoring Guide and Maturity Levels to Assessment Framework card ([df35237](https://github.com/jonmatum/react-mfe-shell-demo/commit/df35237b3121932ab3fee19ec6420dace263040b))
+* optimize Assessment Framework layout for better space utilization ([c5003bf](https://github.com/jonmatum/react-mfe-shell-demo/commit/c5003bff0442ca8d57c99f24ed991d59ac33f0db))
+* optimize mobile layout for efficient horizontal space usage in score controls ([ddecbbd](https://github.com/jonmatum/react-mfe-shell-demo/commit/ddecbbd82d57c42732868efbaafc89c6901b6fc0))
+* optimize mobile layout with responsive text hiding and overflow protection ([5f3597a](https://github.com/jonmatum/react-mfe-shell-demo/commit/5f3597a00dc7e4fdd8d1cf514dec6697b27de80b))
+* optimize modal layout to eliminate scrollbars and ensure always visible buttons ([13fa021](https://github.com/jonmatum/react-mfe-shell-demo/commit/13fa0217e049212be9993a73d1573b6881ec1584))
+* perfect mobile space distribution with centered gap between status and controls ([f164bcc](https://github.com/jonmatum/react-mfe-shell-demo/commit/f164bcc734a7f80332bf89a373223564b81bd003))
+
+
+### Bug Fixes
+
+* ensure footer sticks to bottom in fullscreen modal layout ([2a36b68](https://github.com/jonmatum/react-mfe-shell-demo/commit/2a36b6863e9d7251a790b064d3653208d1ee2508))
+* ensure inner content scrolls vertically instead of horizontally ([b2f8c8f](https://github.com/jonmatum/react-mfe-shell-demo/commit/b2f8c8f6ed19ec664f9090638b7843be7a2a10a5))
+* implement proper overflow handling for both vertical and horizontal scrolling ([91e9efd](https://github.com/jonmatum/react-mfe-shell-demo/commit/91e9efd9e9fbcbf3e1aa1fe007176fcbeadf8b77))
+* remove description background and improve mobile scrolling ([40ad853](https://github.com/jonmatum/react-mfe-shell-demo/commit/40ad8533cd9635e4b87adf5c25d25f22c492a85e))
+
+
+### Code Refactoring
+
+* remove redundant Available Models section, keep only Select Framework dropdown ([7c13aa4](https://github.com/jonmatum/react-mfe-shell-demo/commit/7c13aa48762a039714feb59b60bb5daa3e652e71))
+* restore compact Available Models design with improved contrast ([9ee57b8](https://github.com/jonmatum/react-mfe-shell-demo/commit/9ee57b8f652f21d939590460d0462c7f134a459c))
+* simplify ItemDetailModal with clean full-size design ([0be4345](https://github.com/jonmatum/react-mfe-shell-demo/commit/0be43454a41990407a7b49a87fdcd35fc1831b68))
+
 ## [3.2.0](https://github.com/jonmatum/react-mfe-shell-demo/compare/react-mfe-shell-demo-v3.1.0...react-mfe-shell-demo-v3.2.0) (2025-08-26)
 
 
