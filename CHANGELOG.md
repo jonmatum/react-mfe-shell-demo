@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.4.0](https://github.com/jonmatum/react-mfe-shell-demo/compare/react-mfe-shell-demo-v3.3.0...react-mfe-shell-demo-v3.4.0) (2025-08-27)
+
+
+### Features
+
+* enhance action modals with proper theme colors and minimalistic design ([f200622](https://github.com/jonmatum/react-mfe-shell-demo/commit/f20062297cd64fa4ded242eebcd4984f7160a071))
+
+
+### Bug Fixes
+
+* replace emoji with proper InformationCircleIcon in reset modal ([5ae6f82](https://github.com/jonmatum/react-mfe-shell-demo/commit/5ae6f82b458f1addf9e669587b4cd01082222d5a))
+
+
+### Documentation
+
+* update README to document enhanced action modals with theme support ([43f883e](https://github.com/jonmatum/react-mfe-shell-demo/commit/43f883ee140618ac6bcfffba1b0032cdfecb02d8))
+
 ## [3.3.0](https://github.com/jonmatum/react-mfe-shell-demo/compare/react-mfe-shell-demo-v3.2.0...react-mfe-shell-demo-v3.3.0) (2025-08-27)
 
 

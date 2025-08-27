@@ -1,7 +1,7 @@
 {
   "name": "react-mfe-shell-demo",
   "private": false,
-  "version": "3.3.0",
+  "version": "3.4.0",
   "type": "module",
   "description": "Maturity Assessment Platform - Comprehensive organizational maturity evaluation tool built with @jonmatum/react-mfe-shell",
   "repository": {
